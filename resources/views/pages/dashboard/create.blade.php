@@ -100,7 +100,7 @@
                 <div class="row my-3">
 
                     <div class=" col-6">
-                        <label for="full_address" class="form-label">Insert the full address</label>
+                        <label for="full_address" class="form-label">Insert the street, number, postal code and city</label>
                         <input type="text" class="form-control @error('full_address') is-invalid @enderror"
                             id="full_address" aria-describedby="full_address" name="full_address"
                             value='{{ old('full_address') }}' maxlength="255" required>

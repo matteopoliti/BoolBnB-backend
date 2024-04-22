@@ -6,6 +6,9 @@ use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -62,7 +65,36 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        //
+        $validated_data = $request->validated();
+
+        $slug = Str::slug($request->title, '-');
+        $validated_data['slug'] = $slug;
+
+        $userId = Auth::id();
+        $validated_data['user_id'] = $userId;
+        dd($validated_data);
+
+        $apiKey = env('TOMTOM_API_KEY');
+        $response = Http::get('https://api.tomtom.com/search/2/geocode/' . urlencode($request->input('full_address')) . '.json?key=' . $apiKey);
+
+        if ($response->successful()) {
+            $data = $response;
+            // Ottieni i dati come array JSON
+        } else {
+            // Gestisci eventuali errori
+            $statusCode = $response->status();
+            $errorMessage = $response->body();
+        }
+        if ($request->hasFile('cover_image')) {
+            $path = Storage::disk('public')->put('apartments_images', $request->cover_image);
+
+            $validated_data['cover_image'] = $path;
+        }
+
+        $new_apartment = new Apartment();
+        $new_apartment = Apartment::create($validated_data);
+
+        return redirect()->route('dashboard.apartments.index');
     }
 
     /**
