@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
@@ -28,7 +27,17 @@ class ApartmentController extends Controller
             'Created At',
             'Updated At'
         ];
-        return view('pages.dashboard.index', compact('apartments', 'table_headers_values'));
+
+        $categories = [
+            'villa',
+            'apartment',
+            'agriturismo',
+            'baita',
+            'castello',
+            'loft',
+            'mobile house'
+        ];
+        return view('pages.dashboard.index', compact('apartments', 'table_headers_values', 'categories'));
     }
 
     /**
@@ -36,7 +45,16 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        //
+        $categories = [
+            'villa',
+            'apartment',
+            'agriturismo',
+            'baita',
+            'castello',
+            'loft',
+            'mobile house'
+        ];
+        return view('pages.dashboard.create', compact('categories'));
     }
 
     /**

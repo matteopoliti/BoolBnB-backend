@@ -30,7 +30,7 @@ return new class extends Migration
             $table->decimal('latitude', 15, 13);
             $table->decimal('longitude', 15, 13);
             $table->string('cover_image', 255);
-            $table->boolean('is_available');
+            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
 
