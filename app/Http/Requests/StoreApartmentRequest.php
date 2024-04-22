@@ -30,10 +30,9 @@ class StoreApartmentRequest extends FormRequest
             'num_rooms' => ['required', 'integer'],
             'num_beds' => ['required', 'integer'],
             'num_bathrooms' => ['required', 'integer'],
-            'square_meters' => ['required', 'numeric', 'min:0', 'max:999.99'],
+            'square_meters' => ['required', 'numeric', 'min:30.00', 'max:999.99'],
             'full_address' => ['required', 'string', 'max:255'],
-            // 'cover_image' => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,gif'],
-            'is_available' => ['required', 'boolean'],
+            'cover_image' => ['required', 'image'],
         ];
     }
 }
