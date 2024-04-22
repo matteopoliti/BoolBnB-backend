@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ApartmentController extends Controller
 {
@@ -13,7 +15,20 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        //
+        $userId = Auth::id();
+
+        $apartments = Apartment::where('user_id', $userId)->get();
+
+        $table_headers_values = [
+            'ID',
+            'Title',
+            'Slug',
+            'Description',
+            'Image',
+            'Created At',
+            'Updated At'
+        ];
+        return view('pages.dashboard.index', compact('apartments', 'table_headers_values'));
     }
 
     /**
