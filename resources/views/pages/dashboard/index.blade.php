@@ -20,8 +20,7 @@
                 @foreach ($apartments as $apartment)
                     <tr>
                         <td>{{ $apartment->id }}</td>
-                        <td> <a
-                                href="{{ route('dashboard.apartments.show', ['apartment' => $apartment->id]) }}">{{ $apartment->title }}</a>
+                        <td> <a href="{{ route('dashboard.apartments.show', $apartment->slug) }}">{{ $apartment->title }}</a>
                         </td>
                         <td>{{ $apartment->slug }}</td>
                         <td>{{ $apartment->description }}</td>
@@ -31,12 +30,11 @@
                         <td>{{ $apartment->created_at }}</td>
                         <td>{{ $apartment->updated_at }}</td>
                         <td>
-                            <a href="{{ route('dashboard.apartments.edit', $apartment->id) }}" class="btn btn-warning">
+                            <a href="{{ route('dashboard.apartments.edit', $apartment->slug) }}" class="btn btn-warning">
                                 <i class="bi bi-pencil"></i> Edit
                             </a>
 
-                            <form action="{{ route('dashboard.apartments.destroy', ['apartment' => $apartment->id]) }}"
-                                method="POST">
+                            <form action="{{ route('dashboard.apartments.destroy', $apartment->slug) }}" method="POST">
 
                                 @csrf
 

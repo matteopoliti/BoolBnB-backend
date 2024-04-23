@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::resource('apartments', ApartmentController::class);
+    Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);;
 });
 
 require __DIR__ . '/auth.php';

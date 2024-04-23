@@ -93,7 +93,7 @@ class ApartmentController extends Controller
 
         $new_apartment = Apartment::create($validated_data);
 
-        return redirect()->route('dashboard.apartments.index');
+        return redirect()->route('dashboard.apartments.show', ['apartment' => $new_apartment->slug]);
     }
 
     /**
@@ -101,7 +101,8 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+
+        return view('pages.dashboard.show', compact('apartment'));
     }
 
     /**
@@ -158,7 +159,7 @@ class ApartmentController extends Controller
 
         $apartment->update($validated_data);
 
-        return redirect()->route('dashboard.apartments.index');
+        return redirect()->route('dashboard.apartments.show', ['apartment' => $apartment->slug]);
     }
 
     /**

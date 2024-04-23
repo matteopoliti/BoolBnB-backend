@@ -6,7 +6,7 @@
         <div class="container">
             <h1 class="mt-2 fw-bold">Create a new apartment:</h1>
 
-            <form action="{{ route('dashboard.apartments.update', ['apartment' => $apartment->id]) }}" method="POST"
+            <form action="{{ route('dashboard.apartments.update', $apartment->slug) }}" method="POST"
                 enctype="multipart/form-data" class="mb-5">
 
                 @csrf
