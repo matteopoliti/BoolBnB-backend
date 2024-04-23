@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreign('apartment_id')->references('id')->on('apartments')->cascadeOnDelete();
             $table->unsignedBigInteger('service_id')->nullable();
             $table->foreign('service_id')->references('id')->on('services')->cascadeOnDelete();
-            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

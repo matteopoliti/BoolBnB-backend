@@ -19,7 +19,7 @@ return [
     ],
     [
         'name' => 'private parking',
-        'icon' => 'wifi.svg',
+        'icon' => 'private-parking.svg',
     ],
     [
         'name' => 'balcony',

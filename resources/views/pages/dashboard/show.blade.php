@@ -9,8 +9,6 @@
             <p class="mt-3">{{ $apartment->description }}</p>
 
             <span>Category: <strong>{{ $apartment->category }}</strong></span>
-            <br>
-
 
             <figure class="my-3">
                 @if (Str::startsWith($apartment->cover_image, 'https://images.unsplash.com'))
@@ -20,7 +18,7 @@
                 @endif
             </figure>
 
-            <ul class=" list-unstyled  ">
+            <ul class="list-unstyled  ">
                 <li><strong>Price/night:</strong> {{ $apartment->price }}$</li>
                 <li><strong>Rooms:</strong> {{ $apartment->num_rooms }}</li>
                 <li><strong>Beds:</strong> {{ $apartment->num_beds }}</li>
@@ -30,7 +28,16 @@
                 <li><strong>Square meters:</strong> {{ $apartment->is_available }}</li>
             </ul>
 
-
+            <span><strong>Services:</strong></span>
+            @if ($apartment->services->count())
+                @foreach ( $apartment->services as $item )
+                    <span class="badge rounded-pill text-bg-primary">
+                        <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px"> {{$item->name}}
+                    </span>
+                @endforeach
+            @else
+                <span>Non ci sono servizi disponibili.</span>
+            @endif
 
             <a href="{{ route('dashboard.apartments.index') }}" class="btn btn-primary w-100">
                 Torna a tutti gli appartamenti
