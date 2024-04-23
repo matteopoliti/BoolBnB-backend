@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -56,7 +57,10 @@ class ApartmentController extends Controller
             'loft',
             'mobile house'
         ];
-        return view('pages.dashboard.create', compact('categories'));
+
+        $services = Service::all();
+
+        return view('pages.dashboard.create', compact('categories', 'services'));
     }
 
     /**
@@ -93,6 +97,10 @@ class ApartmentController extends Controller
 
         $new_apartment = Apartment::create($validated_data);
 
+        if ($request->has('services')) {
+            $new_apartment->services()->attach($request->services);
+        };
+
         return redirect()->route('dashboard.apartments.show', ['apartment' => $new_apartment->slug]);
     }
 
@@ -101,7 +109,6 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-
         return view('pages.dashboard.show', compact('apartment'));
     }
 
@@ -119,7 +126,10 @@ class ApartmentController extends Controller
             'loft',
             'mobile house'
         ];
-        return view('pages.dashboard.edit', compact('categories', 'apartment'));
+
+        $services = Service::all();
+
+        return view('pages.dashboard.edit', compact('categories', 'apartment', 'services'));
     }
 
     /**
@@ -159,6 +169,10 @@ class ApartmentController extends Controller
 
         $apartment->update($validated_data);
 
+        if ($request->has('services')) {
+            $apartment->services()->sync($request->services);
+        };
+
         return redirect()->route('dashboard.apartments.show', ['apartment' => $apartment->slug]);
     }
 
@@ -167,6 +181,7 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
+        $apartment->services()->sync([]);
 
         if ($apartment->cover_image) {
 

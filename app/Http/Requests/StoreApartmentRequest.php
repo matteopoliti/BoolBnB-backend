@@ -33,6 +33,7 @@ class StoreApartmentRequest extends FormRequest
             'square_meters' => ['required', 'numeric', 'min:30.00', 'max:999.99'],
             'full_address' => ['required', 'string', 'max:255'],
             'cover_image' => ['required', 'image'],
+            'services' => ['exists:services,id'],
         ];
     }
 }
