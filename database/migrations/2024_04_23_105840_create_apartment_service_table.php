@@ -15,10 +15,10 @@ return new class extends Migration
 
         Schema::create('apartment_service', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('apartment_id');
-            $table->foreign('apartment_id')->references('id')->on('apartments');
-            $table->bigInteger('service_id');
-            $table->foreign('service_id')->references('id')->on('services');
+            $table->unsignedBigInteger('apartment_id')->nullable();
+            $table->foreign('apartment_id')->references('id')->on('apartments')->cascadeOnDelete();
+            $table->unsignedBigInteger('service_id')->nullable();
+            $table->foreign('service_id')->references('id')->on('services')->cascadeOnDelete();
             $table->timestamps();
         });
 
