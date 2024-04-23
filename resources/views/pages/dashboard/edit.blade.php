@@ -153,11 +153,13 @@
                 </div> --}}
 
                 <div class="mb-3">
-                    @if ($apartment->cover_image)
-                        <figure class="mb-3">
+                    <figure class="my-3">
+                        @if (Str::startsWith($apartment->cover_image, 'https://images.unsplash.com'))
+                            <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}">
+                        @else
                             <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}">
-                        </figure>
-                    @endif
+                        @endif
+                    </figure>
                     <input type="file" name="cover_image" id="cover_image"
                         class="form-control
                         @error('cover_image') is-invalid @enderror">

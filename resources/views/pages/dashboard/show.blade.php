@@ -13,7 +13,11 @@
 
 
             <figure class="my-3">
-                <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}">
+                @if (Str::startsWith($apartment->cover_image, 'https://images.unsplash.com'))
+                    <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}">
+                @else
+                    <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}">
+                @endif
             </figure>
 
             <ul class=" list-unstyled  ">
