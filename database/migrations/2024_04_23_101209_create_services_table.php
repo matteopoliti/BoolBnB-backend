@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->string('icon', 255);
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

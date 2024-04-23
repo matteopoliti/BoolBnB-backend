@@ -1,11 +1,36 @@
 <?php
+
 return [
-    "wifi",
-    "concierge",
-    "pool",
-    "sauna",
-    "private parking",
-    "balcony",
-    "Sea view",
-    "pet friendly",
+    [
+        'name' => 'wifi',
+        'icon' => 'wifi.svg',
+    ],
+    [
+        'name' => 'concierge',
+        'icon' => 'concierge.svg',
+    ],
+    [
+        'name' => 'pool',
+        'icon' => 'pool.svg',
+    ],
+    [
+        'name' => 'sauna',
+        'icon' => 'sauna.png',
+    ],
+    [
+        'name' => 'private parking',
+        'icon' => 'wifi.svg',
+    ],
+    [
+        'name' => 'balcony',
+        'icon' => 'balcony.png',
+    ],
+    [
+        'name' => 'Sea view',
+        'icon' => 'sea-view.svg',
+    ],
+    [
+        'name' => 'pet friendly',
+        'icon' => 'pet-friendly.svg',
+    ],
 ];
