@@ -1,4 +1,5 @@
 <?php
+
 return [
     [
         "title" => "Luxury Apartment with Ocean View",
@@ -10,9 +11,8 @@ return [
         "full_address" => "Via Tommaso Rook, Pisa",
         "lat" => 43.71824747491754,
         "long" => 10.373659451312106,
-        "category" => "apartment",
         "price" => 520,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Modern City Center Loft",
@@ -24,9 +24,8 @@ return [
         "full_address" => "Via Traversa Che Guevara, Pisa",
         "lat" =>  43.74514853213075,
         "long" => 10.388608813262628,
-        "category" => "loft",
         "price" => 300,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Charming Countryside Cottage",
@@ -38,9 +37,8 @@ return [
         "full_address" => "Via dei Sepolcri, Pisa",
         "lat" =>  43.6964235347685,
         "long" => 10.417038500532348,
-        "category" => "villa",
         "price" => 600,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Seaside Villa with Private Pool",
@@ -52,9 +50,8 @@ return [
         "full_address" => "Via Benedetto Croce, , Pisa",
         "lat" => 43.71039338828906,
         "long" => 10.404005646137943,
-        "category" => "villa",
         "price" => 700,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Cosy Mountain Cabin Retreat",
@@ -66,9 +63,8 @@ return [
         "full_address" => "Viale delle Cascine, Pisa",
         "lat" =>  43.72052085057006,
         "long" => 10.358051592166627,
-        "category" => "mobile house",
         "price" => 200,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Urban Studio Apartment",
@@ -80,9 +76,8 @@ return [
         "full_address" => "Via Camillo Guidi, Pisa",
         "lat" =>  43.65939147759814,
         "long" => 10.283416046546925,
-        "category" => "apartment",
         "price" => 150,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Historic Townhouse in the Old Town",
@@ -94,9 +89,8 @@ return [
         "full_address" => "Via di Gualduccio, Pisa",
         "lat" =>  43.67099812596552,
         "long" => 10.278129544336132,
-        "category" => "villa",
         "price" => 500,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Sunny Beachfront Condo",
@@ -108,9 +102,8 @@ return [
         "full_address" => "Via delle Torri,Pisa",
         "lat" =>  43.70720834590505,
         "long" => 10.432780208834568,
-        "category" => "apartment",
         "price" => 350,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Riverside Townhome with Garden",
@@ -122,9 +115,8 @@ return [
         "full_address" => "Via G. Puccini, Ghezzano",
         "lat" =>  43.727615127505295,
         "long" => 10.446799696887668,
-        "category" => "apartment",
         "price" => 450,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Penthouse Suite with Skyline Views",
@@ -136,9 +128,8 @@ return [
         "full_address" => "Via Giuseppe Moruzzi,Pisa",
         "lat" =>   43.719159539685386,
         "long" => 10.424692981614763,
-        "category" => "apartment",
         "price" => 600,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Oceanview Retreat",
@@ -150,9 +141,8 @@ return [
         "full_address" => "Via Angelo Battelli, Pisa",
         "lat" =>   43.72147053933051,
         "long" => 10.412565872590427,
-        "category" => "villa",
         "price" => 300,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "City Center Penthouse",
@@ -164,9 +154,8 @@ return [
         "full_address" => "Via Maiorca,Pisa",
         "lat" =>   43.67663543617843,
         "long" =>  10.274167270276019,
-        "category" => "apartment",
         "price" => 550,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Lakefront Cottage",
@@ -178,9 +167,8 @@ return [
         "full_address" => "Via della Sofina,Pisa",
         "lat" =>   43.63526264913449,
         "long" =>  10.3642607834347,
-        "category" => "villa",
         "price" => 400,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Rustic Farmhouse Getaway",
@@ -192,9 +180,8 @@ return [
         "full_address" => "Via le Rene, Pisa",
         "lat" =>  43.68372915942565,
         "long" => 10.422302143334969,
-        "category" => "villa",
         "price" => 650,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Downtown Loft with City Views",
@@ -206,9 +193,8 @@ return [
         "full_address" => "Via Giuseppe Mazzini, Pisa ",
         "lat" =>  43.71456364656329,
         "long" => 10.399009414306246,
-        "category" => "apartment",
         "price" => 250,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Coastal Retreat",
@@ -220,9 +206,8 @@ return [
         "full_address" => "Via Roma, Pisa",
         "lat" =>  43.721641393798656,
         "long" => 10.395709671821313,
-        "category" => "villa",
         "price" => 550,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Luxury Ski Chalet",
@@ -234,9 +219,8 @@ return [
         "full_address" => "Via Orazio Gentileschi, Pisa",
         "lat" =>  43.72754707194224,
         "long" => 10.39766651869493,
-        "category" => "villa",
         "price" => 700,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Riverside Apartment with Terrace",
@@ -248,9 +232,8 @@ return [
         "full_address" => "Via del Cuore, Pisa",
         "lat" =>  43.716121670774946,
         "long" => 10.405491938021859,
-        "category" => "apartment",
         "price" => 350,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Sunny Garden Villa",
@@ -262,9 +245,8 @@ return [
         "full_address" => "Via San Paolo, Pisa",
         "lat" =>  43.713790322369725,
         "long" =>   10.395349839877245,
-        "category" => "villa",
         "price" => 600,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Mountain View Retreat",
@@ -276,9 +258,8 @@ return [
         "full_address" => "Via Giordano Bruno, Pisa",
         "lat" =>  43.711809372664504,
         "long" => 10.403833778493084,
-        "category" => "villa",
         "price" => 450,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Seaside Townhouse",
@@ -290,9 +271,8 @@ return [
         "full_address" => "Via Emilia , Pisa",
         "lat" =>  43.694028633452454,
         "long" => 10.413966139875898,
-        "category" => "villa",
         "price" => 500,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Urban Luxury Loft",
@@ -304,9 +284,8 @@ return [
         "full_address" => "Via delle Belle Torri, Pisa",
         "lat" =>  43.71598543458901,
         "long" => 10.404763724531382,
-        "category" => "apartment",
         "price" => 300,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Countryside Manor",
@@ -318,9 +297,8 @@ return [
         "full_address" => "Via San Martino, Pisa",
         "lat" => 43.714094357168264,
         "long" => 10.403341893839226,
-        "category" => "villa",
         "price" => 800,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Lakefront Chalet",
@@ -332,9 +310,8 @@ return [
         "full_address" => "Via Ulisse Dini, Pisa",
         "lat" => 43.71882452944517,
         "long" => 10.401213655223573,
-        "category" => "villa",
         "price" => 400,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Sleek City Apartment",
@@ -346,9 +323,8 @@ return [
         "full_address" => "Via Enrico Avanzi, Pisa",
         "lat" =>  43.707185033799846,
         "long" => 10.419734270610805,
-        "category" => "apartment",
         "price" => 200,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Coastal Cottage",
@@ -360,9 +336,8 @@ return [
         "full_address" => "Via Alessandro Volta, Pisa",
         "lat" => 43.71846010122448,
         "long" => 10.396225038022031,
-        "category" => "villa",
         "price" => 250,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Urban Penthouse with Terrace",
@@ -374,9 +349,8 @@ return [
         "full_address" => "Via del Capannone, Pisa",
         "lat" => 43.71976798989642,
         "long" => 10.373352355223659,
-        "category" => "apartment",
         "price" => 400,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Ski-In/Ski-Out Chalet",
@@ -388,9 +362,8 @@ return [
         "full_address" => "Via Sant'Agostino, Pisa",
         "lat" => 43.702356753437336,
         "long" => 10.397284411039958,
-        "category" => "villa",
         "price" => 600,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Riverside Cabin",
@@ -402,9 +375,8 @@ return [
         "full_address" => "Via Santa Maria, Pisa",
         "lat" => 43.722767398722214,
         "long" => 10.401975061169583,
-        "category" => "villa",
         "price" => 300,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ],
     [
         "title" => "Downtown Studio Apartment",
@@ -416,8 +388,7 @@ return [
         "full_address" => "Via Santa Caterina, Pisa",
         "lat" => 43.72494496430022,
         "long" => 10.392553864826777,
-        "category" => "apartment",
         "price" => 150,
-        "img" => 'https://drive.google.com/file/d/1wUo8SddPsTn8vKm1S3-dVf6Wa2wHakid/view?usp=drive_link'
+        "img" => ''
     ]
 ];
