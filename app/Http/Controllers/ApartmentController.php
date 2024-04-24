@@ -126,9 +126,11 @@ class ApartmentController extends Controller
             'mobile house'
         ];
 
+        $apiKey = env('TOMTOM_API_KEY');
+
         $services = Service::all();
 
-        return view('pages.dashboard.edit', compact('categories', 'apartment', 'services'));
+        return view('pages.dashboard.edit', compact('categories', 'apartment', 'services', 'apiKey'));
     }
 
     /**
