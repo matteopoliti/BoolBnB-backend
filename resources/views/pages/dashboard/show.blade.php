@@ -18,7 +18,7 @@
                 @endif
             </figure>
 
-            <ul class="list-unstyled  ">
+            <ul class="list-unstyled">
                 <li><strong>Price/night:</strong> {{ $apartment->price }}$</li>
                 <li><strong>Rooms:</strong> {{ $apartment->num_rooms }}</li>
                 <li><strong>Beds:</strong> {{ $apartment->num_beds }}</li>
@@ -29,19 +29,12 @@
             </ul>
 
             <span><strong>Services:</strong></span>
-            @if ($apartment->services->count())
-                @foreach ( $apartment->services as $item )
-                    <span class="badge rounded-pill text-bg-primary">
-                        <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px"> {{$item->name}}
-                    </span>
-                @endforeach
-            @else
-                <span>Non ci sono servizi disponibili.</span>
-            @endif
+            @foreach ( $apartment->services as $item )
+                <span class="badge rounded-pill text-bg-primary">
+                    <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px"> {{$item->name}}
+                </span>
+            @endforeach
 
-            <a href="{{ route('dashboard.apartments.index') }}" class="btn btn-primary w-100">
-                Torna a tutti gli appartamenti
-            </a>
         </div>
     </div>
 @endsection

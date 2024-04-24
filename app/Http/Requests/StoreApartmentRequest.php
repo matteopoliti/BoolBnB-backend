@@ -25,15 +25,15 @@ class StoreApartmentRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:100', 'unique:apartments,title'],
             'category' => ['required', Rule::in(["villa", "apartment", "agriturismo", "baita", "castello", "loft", "mobile house"])],
-            'price' => ['required', 'integer'],
+            'price' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string'],
-            'num_rooms' => ['required', 'integer'],
-            'num_beds' => ['required', 'integer'],
-            'num_bathrooms' => ['required', 'integer'],
-            'square_meters' => ['required', 'numeric', 'min:30.00', 'max:999.99'],
+            'num_rooms' => ['required', 'integer', 'min:0'],
+            'num_beds' => ['required', 'integer', 'min:0'],
+            'num_bathrooms' => ['required', 'integer', 'min:0'],
+            'square_meters' => ['required', 'numeric', 'min:0'],
             'full_address' => ['required', 'string', 'max:255'],
             'cover_image' => ['required', 'image'],
-            'services' => ['exists:services,id'],
+            'services' => ['required', 'exists:services,id'],
         ];
     }
 }

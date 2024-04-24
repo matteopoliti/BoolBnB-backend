@@ -72,7 +72,7 @@
 
         <div class="mb-2">
             <label for="date_of_birth">{{__('Date of birth')}}</label>
-            <input class="form-control" type="date" name="date_of_birth" id="date_of_birth" autocomplete="date_of_birth" value="{{old('date_of_birth', $user->date_of_birth)}}" required autofocus>
+            <input class="form-control" type="date" name="date_of_birth" id="date_of_birth" autocomplete="date_of_birth" value="{{old('date_of_birth', $user->date_of_birth)}}" required autofocus min="{{ date('Y-m-d', strtotime('-100 years')) }}" max="{{ date('Y-m-d', strtotime('-18 years')) }}">
             @error('date_of_birth')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('date_of_birth')}}</strong>

@@ -22,13 +22,10 @@ class ApartmentController extends Controller
         $apartments = Apartment::where('user_id', $userId)->get();
 
         $table_headers_values = [
-            'ID',
-            'Title',
-            'Slug',
-            'Description',
-            'Image',
-            'Created At',
-            'Updated At'
+            'Titolo',
+            'Descrizione',
+            'Aggiunta',
+            'Ultima modifica'
         ];
 
         $categories = [
@@ -90,7 +87,7 @@ class ApartmentController extends Controller
         $validated_data['longitude'] = $lon;
 
         if ($request->hasFile('cover_image')) {
-            $path = Storage::disk('public')->put('apartments_images', $request->cover_image);
+            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
 
             $validated_data['cover_image'] = $path;
         }
