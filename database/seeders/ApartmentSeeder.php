@@ -21,12 +21,12 @@ class ApartmentSeeder extends Seeder
 
         $categories = [
             'villa',
-            'apartment',
+            'appartamento',
             'agriturismo',
             'baita',
             'castello',
             'loft',
-            'mobile house'
+            'roulotte'
         ];
 
         $i = 0;

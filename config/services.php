@@ -10,7 +10,7 @@ return [
         'icon' => 'concierge.svg',
     ],
     [
-        'name' => 'pool',
+        'name' => 'piscina',
         'icon' => 'pool.svg',
     ],
     [
@@ -18,19 +18,19 @@ return [
         'icon' => 'sauna.png',
     ],
     [
-        'name' => 'private parking',
+        'name' => 'parcheggio privato',
         'icon' => 'private-parking.svg',
     ],
     [
-        'name' => 'balcony',
+        'name' => 'balcone',
         'icon' => 'balcony.png',
     ],
     [
-        'name' => 'Sea view',
+        'name' => 'vista mare',
         'icon' => 'sea-view.svg',
     ],
     [
-        'name' => 'pet friendly',
+        'name' => 'animali ammessi',
         'icon' => 'pet-friendly.svg',
     ],
 ];

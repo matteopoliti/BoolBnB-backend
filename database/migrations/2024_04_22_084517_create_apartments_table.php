@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title', 100)->unique();
             $table->string('slug', 100);
-            $table->enum('category', ["villa", "apartment", "agriturismo", "baita", "castello", "loft", "mobile house"]);
+            $table->enum('category', ["villa", "appartamento", "agriturismo", "baita", "castello", "loft", "roulotte"]);
             $table->integer('price');
             $table->text('description')->nullable();
             $table->integer('num_rooms');
