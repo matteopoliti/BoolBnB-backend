@@ -198,5 +198,18 @@
                 }
             });
         });
+
+        document.getElementById('full_address').addEventListener('input', function (event) {
+
+            const apiQuery = document.getElementById('full_address')
+
+            const apiKey = "{{ $apiKey }}";
+
+            axios.get(`https://api.tomtom.com/search/2/autocomplete/${apiQuery.value}.json?key=${apiKey}&language=it-IT`).then( response => {
+                console.log(response)
+            })
+
+        });
+
     </script>
 @endsection
