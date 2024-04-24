@@ -112,11 +112,12 @@
                         <label for="full_address" class="form-label">Indirizzo completo*</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
-                            <input type="text" class="form-control @error('full_address') is-invalid @enderror"
+                            <input list="addressList" type="text" class="form-control @error('full_address') is-invalid @enderror"
                                 id="full_address" aria-describedby="full_address" name="full_address"
                                 value='{{ old('full_address') }}' maxlength="255" required>
+                            <datalist id="addressList">
+                            </datalist>
                           </div>
-                          <div class="form-text">Inserisci via, numero civico, codice postale e città</div>
                         @error('full_address')
                             <div class="alert alert-danger mt-1">
                                 {{ $message }}
@@ -201,15 +202,58 @@
 
         document.getElementById('full_address').addEventListener('input', function (event) {
 
-            const apiQuery = document.getElementById('full_address')
-
             const apiKey = "{{ $apiKey }}";
 
-            axios.get(`https://api.tomtom.com/search/2/autocomplete/${apiQuery.value}.json?key=${apiKey}&language=it-IT`).then( response => {
-                console.log(response)
-            })
+            const apiQuery = document.getElementById('full_address');
+            
+            let apiRequest = `https://api.tomtom.com/search/2/search/${apiQuery.value}.json?key=${apiKey}&language=it-IT`;
 
+            const parentElement = document.getElementById('addressList');
+
+            if (apiQuery.value === ''){
+
+                while (parentElement.firstChild) {
+                    parentElement.removeChild(parentElement.firstChild);
+                }
+
+                return
+            }
+
+            fetch(apiRequest)
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    return response.json();
+                })
+                .then(data => {
+                    
+                    let apiResults = data.results
+
+                    let arrayResults = []
+
+                    apiResults.forEach(element => {
+                        arrayResults.push(element.address.freeformAddress)
+                    });
+
+                    console.log(arrayResults)
+
+                    while (parentElement.firstChild) {
+                        parentElement.removeChild(parentElement.firstChild);
+                    }
+
+                    arrayResults.forEach(element => {
+                        const childElement = document.createElement('option');
+                        parentElement.append(childElement);
+                        childElement.value = element;
+                    });
+                })
+                .catch(error => {
+
+                    console.error('There was a problem with the fetch operation:', error);
+                });
         });
-
     </script>
 @endsection
