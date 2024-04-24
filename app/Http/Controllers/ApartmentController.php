@@ -90,7 +90,7 @@ class ApartmentController extends Controller
         $validated_data['longitude'] = $lon;
 
         if ($request->hasFile('cover_image')) {
-            $path = Storage::disk('public')->put('apartments_images', $request->cover_image);
+            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
 
             $validated_data['cover_image'] = $path;
         }

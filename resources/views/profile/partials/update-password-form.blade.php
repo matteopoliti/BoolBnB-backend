@@ -15,7 +15,7 @@
 
         <div class="mb-2">
             <label for="current_password">{{__('Current Password')}}</label>
-            <input class="mt-1 form-control" type="password" name="current_password" id="current_password" autocomplete="current-password">
+            <input class="mt-1 form-control" type="password" name="current_password" id="current_password" autocomplete="current-password" minlength="8">
             @error('current_password')
             <span class="invalid-feedback mt-2" role="alert">
                 <strong>{{ $errors->updatePassword->get('current_password') }}</strong>
@@ -25,7 +25,7 @@
 
         <div class="mb-2">
             <label for="password">{{__('New Password')}}</label>
-            <input class="mt-1 form-control" type="password" name="password" id="password" autocomplete="new-password">
+            <input class="mt-1 form-control" type="password" name="password" id="password" autocomplete="new-password" minlength="8">
             @error('password')
             <span class="invalid-feedback mt-2" role="alert">
                 <strong>{{ $errors->updatePassword->get('password')}}</strong>
@@ -36,7 +36,7 @@
         <div class="mb-2">
 
             <label for="password_confirmation">{{__('Confirm Password')}}</label>
-            <input class="mt-2 form-control" type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password">
+            <input class="mt-2 form-control" type="password" name="password_confirmation" id="password_confirmation" autocomplete="new-password" minlength="8">
             @error('password_confirmation')
             <span class="invalid-feedback mt-2" role="alert">
                 <strong>{{ $errors->updatePassword->get('password_confirmation')}}</strong>
