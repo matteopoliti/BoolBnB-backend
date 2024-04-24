@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form id="userForm" method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="mb-4 row">
@@ -88,6 +88,9 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" minlength="8">
                             </div>
+                            <div id="servicesError" class="alert alert-danger mt-1 d-none" role="alert">
+                                Le password non corrispondono.
+                            </div>
                         </div>
 
                         <div class="mb-4 row mb-0">
@@ -103,4 +106,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('userForm').addEventListener('submit', function (event) {
+
+            const firstPassword = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("password-confirm").value;
+
+            if (firstPassword !== confirmPassword) {
+                event.preventDefault();
+                document.getElementById('servicesError').classList.remove('d-none');
+            } else {
+                document.getElementById('servicesError').classList.add('d-none');
+            }
+        });
+    });
+</script>
 @endsection

@@ -22,13 +22,10 @@ class ApartmentController extends Controller
         $apartments = Apartment::where('user_id', $userId)->get();
 
         $table_headers_values = [
-            'ID',
-            'Title',
-            'Slug',
-            'Description',
-            'Image',
-            'Created At',
-            'Updated At'
+            'Titolo',
+            'Descrizione',
+            'Aggiunta',
+            'Ultima modifica'
         ];
 
         $categories = [
