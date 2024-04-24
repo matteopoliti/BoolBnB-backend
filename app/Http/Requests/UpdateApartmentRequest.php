@@ -25,7 +25,7 @@ class UpdateApartmentRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:100', Rule::unique('apartments')->ignore($this->apartment)],
-            'category' => ['required', Rule::in(["villa", "apartment", "agriturismo", "baita", "castello", "loft", "mobile house"])],
+            'category' => ['required', Rule::in(["villa", "appartamento", "agriturismo", "baita", "castello", "loft", "roulotte"])],
             'price' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string'],
             'num_rooms' => ['required', 'integer', 'min:0'],

@@ -30,13 +30,14 @@ class ApartmentController extends Controller
 
         $categories = [
             'villa',
-            'apartment',
+            'appartamento',
             'agriturismo',
             'baita',
             'castello',
             'loft',
-            'mobile house'
+            'roulotte'
         ];
+
         return view('pages.dashboard.index', compact('apartments', 'table_headers_values', 'categories'));
     }
 
@@ -47,12 +48,12 @@ class ApartmentController extends Controller
     {
         $categories = [
             'villa',
-            'apartment',
+            'appartamento',
             'agriturismo',
             'baita',
             'castello',
             'loft',
-            'mobile house'
+            'roulotte'
         ];
 
         $apiKey = env('TOMTOM_API_KEY');
@@ -118,12 +119,12 @@ class ApartmentController extends Controller
     {
         $categories = [
             'villa',
-            'apartment',
+            'appartamento',
             'agriturismo',
             'baita',
             'castello',
             'loft',
-            'mobile house'
+            'roulotte'
         ];
 
         $apiKey = env('TOMTOM_API_KEY');
