@@ -57,8 +57,8 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item"
-                                    href="{{ route('dashboard.apartments.index') }}">{{ __('My Apartments') }}</a>
-                                <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
+                                    href="{{ route('dashboard.apartments.index') }}">{{ __('Apartamenti') }}</a>
+                                <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profilo') }}</a>
                             </div>
                         </li>
                     @endguest
@@ -127,38 +127,33 @@
 
 
         <div class="dashboard">
-            <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: fit-content;">
+            <div class="d-flex flex-column align-items-center  flex-shrink-0 p-3 bg-body-tertiary"
+                style="width: 200px;">
 
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
                         <a href="{{ route('dashboard.apartments.index') }}" class="nav-link link-body-emphasis">
-                            <svg class="bi pe-none me-2" width="16" height="16">
-                                <use xlink:href="#speedometer2"></use>
-                            </svg>
-                            {{ __('My Apartment') }}
+                            <i class="fa-solid fa-house"></i>
+                            {{ __('Appartamenti') }}
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link link-body-emphasis">
-                            <svg class="bi pe-none me-2" width="16" height="16">
-                                <use xlink:href="#table"></use>
-                            </svg>
-                            Statistics
+                            <i class="fa-solid fa-chart-simple"></i>
+                            Statistiche
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link link-body-emphasis">
-                            <svg class="bi pe-none me-2" width="16" height="16">
-                                <use xlink:href="#grid"></use>
-                            </svg>
-                            Messages
+                            <i class="fa-solid fa-message"></i>
+                            Messaggi
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link link-body-emphasis">
-                            <svg class="bi pe-none me-2" width="16" height="16">
-                                <use xlink:href="#people-circle"></use>
-                            </svg>
+
+                            <i class="fa-solid fa-credit-card"></i>
+
                             Sponsor
                         </a>
                     </li>

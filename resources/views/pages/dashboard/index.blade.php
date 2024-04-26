@@ -3,11 +3,11 @@
 @section('content')
     {{-- @dd($apartments) --}}
     <div class="container-fluid mt-3">
-        <h1 class="text-center">Appartamenti - {{ count($apartments) }}</h1>
+        <h1 class="mx-3">Appartamenti - {{ count($apartments) }}</h1>
 
         <div class="mx-3 mt-3">
-            <a href="{{ route('dashboard.apartments.create') }}" class="btn btn-primary mx-auto d-block w-25">
-                <i class="bi bi-pencil"></i> Create
+            <a href="{{ route('dashboard.apartments.create') }}" class="btn btn-success ">
+                Aggiungi
             </a>
 
             <table class="table table-striped text-center">
