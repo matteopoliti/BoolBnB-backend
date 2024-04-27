@@ -1,1 +1,26 @@
-@import '~bootstrap/scss/bootstrap'
+@import '~bootstrap/scss/bootstrap';
+
+#app{
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.navbar {
+    height: 80px;
+}
+
+.dashboard{
+   height: 100vh ;
+   display: flex;
+   width: 100%;
+   padding-top: 80px;
+   ul{
+        li{
+            i {
+                font-size: 20px;
+                margin-right: 10px;
+            }
+        }
+   }
+}
+
