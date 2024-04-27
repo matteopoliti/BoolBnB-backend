@@ -36,6 +36,7 @@
                 </a>
 
                 <h2>Dashboard</h2>
+
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
@@ -127,26 +128,25 @@
 
 
         <div class="dashboard">
-            <div class="d-flex flex-column align-items-center  flex-shrink-0 p-3 bg-body-tertiary"
-                style="width: 200px;">
+            <div class="d-flex flex-column align-items-center flex-shrink-0 p-3 bg-body-tertiary" style="width: 400px;">
 
-                <ul class="nav nav-pills flex-column mb-auto">
+                <ul class="nav nav-pills flex-column gap-4  mb-auto">
                     <li>
                         <a href="{{ route('dashboard.apartments.index') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-house"></i>
-                            {{ __('Appartamenti') }}
+                            <span class="fs-3">{{ __('Appartamenti') }}</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-chart-simple"></i>
-                            Statistiche
+                            <span class="fs-3">Statistiche</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-message"></i>
-                            Messaggi
+                            <span class="fs-3">Messaggi</span>
                         </a>
                     </li>
                     <li>
@@ -154,7 +154,7 @@
 
                             <i class="fa-solid fa-credit-card"></i>
 
-                            Sponsor
+                            <span class="fs-3">Sponsor</span>
                         </a>
                     </li>
                 </ul>
