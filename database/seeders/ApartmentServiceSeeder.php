@@ -19,7 +19,7 @@ class ApartmentServiceSeeder extends Seeder
 
         $serviceIds = Service::pluck('id')->all();
 
-        for ($i = 1; $i <= 60; $i++) {
+        for ($i = 1; $i <= 1200; $i++) {
 
             $randomApartmentId = $apartmentIds[array_rand($apartmentIds)];
 
