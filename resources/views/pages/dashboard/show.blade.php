@@ -11,7 +11,7 @@
             <span>Category: <strong>{{ $apartment->category }}</strong></span>
 
             <figure class="my-3">
-                @if (Str::startsWith($apartment->cover_image, 'https://images.unsplash.com'))
+                @if (Str::startsWith($apartment->cover_image, 'https'))
                     <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}">
                 @else
                     <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}">
