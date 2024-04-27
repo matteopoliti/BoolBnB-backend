@@ -10,7 +10,7 @@ class ApartmentController extends Controller
 {
     public function index()
     {
-        $apartments = Apartment::with('services')->paginate(10);
+        $apartments = Apartment::with('services')->paginate(12);
 
         return response()->json([
             'success' => true,
@@ -42,7 +42,7 @@ class ApartmentController extends Controller
             ")
             ->having('distance', '<=', $maxDistance)
             ->orderBy('distance')
-            ->paginate(10);
+            ->paginate(12);
 
         return response()->json([
             'success' => true,
