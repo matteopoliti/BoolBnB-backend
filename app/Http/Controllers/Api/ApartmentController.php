@@ -27,6 +27,9 @@ class ApartmentController extends Controller
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
         $radius = $request->input('radius');
+        $beds = $request->input('num_beds');
+        $rooms = $request->input('num_rooms');
+        $services = $request->input('services');
 
         // Calcola la distanza massima in metri dalla latitudine e longitudine specificate
         // Il raggio in metri è il radius convertito da km a metri
@@ -34,16 +37,29 @@ class ApartmentController extends Controller
         $maxDistance = $radius * 1000; // Converti il raggio da km a metri
 
         $apartments = Apartment::with('services')
+            ->when($beds, function ($query, $beds) {
+                return $query->where('num_beds', '>=', $beds);
+            })
+            ->when($rooms, function ($query, $rooms) {
+                return $query->where('num_rooms', '>=', $rooms);
+            })
+            ->when(!empty($services), function ($query) use ($services) {
+                foreach ($services as $service) {
+                    $query->whereHas('services', function ($q) use ($service) {
+                        $q->where('services.id', $service);
+                    });
+                }
+            })
             ->selectRaw("
-                *,
-                ( $earthRadius * acos(
-                    cos( radians( $latitude ) )
-                    * cos( radians( latitude ) )
-                    * cos( radians( longitude ) - radians( $longitude ) )
-                    + sin( radians( $latitude ) )
-                    * sin( radians( latitude ) )
-                ) ) AS distance
-            ")
+            *,
+            ( $earthRadius * acos(
+                cos( radians( $latitude ) )
+                * cos( radians( latitude ) )
+                * cos( radians( longitude ) - radians( $longitude ) )
+                + sin( radians( $latitude ) )
+                * sin( radians( latitude ) )
+            ) ) AS distance
+        ")
             ->having('distance', '<=', $maxDistance)
             ->orderBy('distance')
             ->paginate(12);
