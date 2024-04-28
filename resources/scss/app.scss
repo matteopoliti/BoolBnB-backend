@@ -24,3 +24,15 @@
    }
 }
 
+.gradient-custom-2 {
+    background: hsla(174, 77%, 44%, 1);
+    
+    background: linear-gradient(315deg, hsla(174, 77%, 44%, 1) 0%, hsla(170, 100%, 15%, 1) 100%);
+    
+    background: -moz-linear-gradient(315deg, hsla(174, 77%, 44%, 1) 0%, hsla(170, 100%, 15%, 1) 100%);
+    
+    background: -webkit-linear-gradient(315deg, hsla(174, 77%, 44%, 1) 0%, hsla(170, 100%, 15%, 1) 100%);
+    
+       
+}
+
