@@ -14,8 +14,13 @@
                 <div class="card my-3">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="{{ asset($apartment->cover_image) }}" class="img-fluid rounded-start"
-                                alt="{{ $apartment->title }}">
+                            @if (Str::startsWith($apartment->cover_image, 'https'))
+                                <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}"
+                                    class="img-fluid rounded-start">
+                            @else
+                                <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}"
+                                    class="img-fluid rounded-start">
+                            @endif
                         </div>
                         <div class="col-md-8 d-flex">
                             <div class="card-body">
