@@ -18,14 +18,14 @@
 
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
-                                        <p><strong>Please login to your account</strong></p>
+                                        <p><strong>Effettua l'accesso al tuo account</strong></p>
 
                                         <div class="form-outline mb-4">
                                             <input id="email" type="email"
                                                 class="form-control @error('email') is-invalid @enderror" name="email"
                                                 value="{{ old('email') }}" required autocomplete="email" autofocus>
                                             <label for="email"
-                                                class="col-form-label text-md-right">{{ __('E-Mail Address') }}
+                                                class="col-form-label text-md-right">{{ __('Indirizzo E-Mail') }}
                                             </label>
 
                                             @error('email')
@@ -57,7 +57,7 @@
                                                         id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                                     <label class="form-check-label" for="remember">
-                                                        {{ __('Remember Me') }}
+                                                        {{ __('Ricordami') }}
                                                     </label>
                                                 </div>
                                             </div>

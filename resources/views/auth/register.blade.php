@@ -126,7 +126,7 @@
                                 {{-- Submit button --}}
                                 <button type="submit" data-mdb-button-init data-mdb-ripple-init
                                     class="btn btn-secondary btn-block mb-4 w-75">
-                                    {{ __('Register') }}
+                                    {{ __('Registrati') }}
                                 </button>
 
                                 {{-- Login buttons --}}
