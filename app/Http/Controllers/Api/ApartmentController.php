@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -12,9 +13,12 @@ class ApartmentController extends Controller
     {
         $apartments = Apartment::with('services')->paginate(12);
 
+        $services = Service::all();
+
         return response()->json([
             'success' => true,
-            'apartments' => $apartments
+            'apartments' => $apartments,
+            'services' => $services
         ]);
     }
 
