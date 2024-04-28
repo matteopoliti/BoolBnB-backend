@@ -8,7 +8,7 @@
 
             <p class="mt-3">{{ $apartment->description }}</p>
 
-            <span>Category: <strong>{{ $apartment->category }}</strong></span>
+            <span>Categoria: <strong>{{ $apartment->category }}</strong></span>
 
             <figure class="my-3">
                 @if (Str::startsWith($apartment->cover_image, 'https'))
@@ -19,19 +19,26 @@
             </figure>
 
             <ul class="list-unstyled">
-                <li><strong>Price/night:</strong> {{ $apartment->price }}$</li>
-                <li><strong>Rooms:</strong> {{ $apartment->num_rooms }}</li>
-                <li><strong>Beds:</strong> {{ $apartment->num_beds }}</li>
-                <li><strong>Bathrooms:</strong> {{ $apartment->num_bathrooms }}</li>
-                <li><strong>Full address:</strong> {{ $apartment->full_address }}</li>
-                <li><strong>Square meters:</strong> {{ $apartment->square_meters }} m2</li>
-                <li><strong>Square meters:</strong> {{ $apartment->is_available }}</li>
+                <li><strong>Prezzo/Notte:</strong> {{ $apartment->price }}$</li>
+                <li><strong>Stanze:</strong> {{ $apartment->num_rooms }}</li>
+                <li><strong>Letti:</strong> {{ $apartment->num_beds }}</li>
+                <li><strong>Bagni:</strong> {{ $apartment->num_bathrooms }}</li>
+                <li><strong>Indirizzo completo:</strong> {{ $apartment->full_address }}</li>
+                <li><strong>Metri quadri:</strong> {{ $apartment->square_meters }} m<sup>2</sup></li>
+                <li><strong>Disponibile: </strong>
+                    @if ($apartment->is_available)
+                        <i class="fa-solid fa-check"></i>
+                    @else
+                        <i class="fa-solid fa-xmark"></i>
+                    @endif
+                </li>
             </ul>
 
             <span><strong>Services:</strong></span>
-            @foreach ( $apartment->services as $item )
+            @foreach ($apartment->services as $item)
                 <span class="badge rounded-pill text-bg-primary">
-                    <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px"> {{$item->name}}
+                    <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px">
+                    {{ $item->name }}
                 </span>
             @endforeach
 
