@@ -16,19 +16,33 @@ class ApartmentServiceSeeder extends Seeder
     public function run(): void
     {
         $apartmentIds = Apartment::pluck('id')->all();
-
         $serviceIds = Service::pluck('id')->all();
 
-        for ($i = 1; $i <= 60; $i++) {
+        $existingPairs = [];  // Array to keep track of already inserted pairs
+        $servicesPerApartment = array_fill_keys($apartmentIds, 0);
 
-            $randomApartmentId = $apartmentIds[array_rand($apartmentIds)];
+        do {
+            do {
+                $randomApartmentId = $apartmentIds[array_rand($apartmentIds)];
+                $randomServiceId = $serviceIds[array_rand($serviceIds)];
+                $pair = $randomApartmentId . '-' . $randomServiceId;
+            } while (isset($existingPairs[$pair]));  // Check if the pair has been already used
 
-            $randomServiceId = $serviceIds[array_rand($serviceIds)];
+            $existingPairs[$pair] = true;  // Mark this pair as used
+            $servicesPerApartment[$randomApartmentId]++;
 
             DB::table('apartment_service')->insert([
                 'apartment_id' => $randomApartmentId,
                 'service_id' => $randomServiceId,
             ]);
-        }
+
+            $allCovered = true;
+            foreach ($servicesPerApartment as $servicesCount) {
+                if ($servicesCount == 0) {
+                    $allCovered = false;
+                    break;
+                }
+            }
+        } while (!$allCovered);
     }
 }

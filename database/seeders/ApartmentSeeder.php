@@ -15,7 +15,6 @@ class ApartmentSeeder extends Seeder
      */
     public function run(): void
     {
-        $apartments = config('apartments');
 
         $userIds = User::pluck('id')->all();
 
@@ -29,42 +28,73 @@ class ApartmentSeeder extends Seeder
             'roulotte'
         ];
 
-        $i = 0;
+        $categoriesQuery = [
+            "villa+house",
+            "apartment+building",
+            "farmhouse+building",
+            "cabin+in+woods",
+            "castle+building",
+            "skyline+apartment",
+            "roulotte+camper",
+        ];
 
-        foreach ($apartments as $element) {
+        $apiKey = env('PIXABAY_API_KEY');
 
-            $randomUserId = $userIds[array_rand($userIds)];
+        foreach ($categories as $index => $category) {
 
-            $randomCategory = $categories[array_rand($categories)];
+            $apartments = config('apartments');
 
-            $apiKey = env('UNSPLASH_API_KEY');
+            $filtered_array = array_filter($apartments, function ($element) use ($category) {
+                return $element['category'] === $category;
+            });
 
-            $apiRequest = "https://api.unsplash.com//search/photos/?client_id=" . $apiKey . "&query=house&per_page=" . count($apartments);
+            $apiQuery = $categoriesQuery[$index];
+            $apiPage = 1;
 
-            $json = file_get_contents($apiRequest);
+            $index_image = 0;  // Initialize image index outside the loop
+
+            $json = file_get_contents("https://pixabay.com/api/?key=" . $apiKey . "&q=" . $apiQuery . "&per_page=200&page=" . $apiPage);
             $obj = json_decode($json);
 
-            $apiImg = $obj->results[$i]->urls->regular;
+            foreach ($filtered_array as $index => $filtered_apartment) {
+                if (count($obj->hits) == 200 && $index == 199) {
+                    $apiPage++;  // Increment page number to fetch next set of images
+                    $json = file_get_contents("https://pixabay.com/api/?key=" . $apiKey . "&q=" . $apiQuery . "&per_page=200&page=" . $apiPage);
+                    $obj = json_decode($json);
+                    $index_image = 0;  // Reset the image index for the new batch of images
 
-            $i++;
+                } elseif ($index_image >= count($obj->hits)) {
+                    // Use fallback query
+                    $apiQuery = "italian+houses";
+                    $apiPage = 1;
+                    $json = file_get_contents("https://pixabay.com/api/?key=" . $apiKey . "&q=" . $apiQuery . "&per_page=200&page=" . $apiPage);
+                    $obj = json_decode($json);
+                    $index_image = 0;
+                }
 
-            Apartment::create([
-                'user_id' => $randomUserId,
-                'title' => $element['title'],
-                'slug' => Str::slug($element['title'], '-'),
-                'category' => $randomCategory,
-                'price' => $element['price'],
-                'description' => $element['description'],
-                'num_rooms' => $element['num_of_rooms'],
-                'num_beds' => $element['num_of_beds'],
-                'num_bathrooms' => $element['num_bathrooms'],
-                'square_meters' => $element['square_meters'],
-                'full_address' => $element['full_address'],
-                'latitude' => $element['lat'],
-                'longitude' => $element['long'],
-                'cover_image' => $apiImg,
-                'is_available' => true,
-            ]);
+                $apiImg = $obj->hits[$index_image]->webformatURL;
+                $index_image++;
+
+                $randomUserId = $userIds[array_rand($userIds)];
+
+                Apartment::create([
+                    'user_id' => $randomUserId,
+                    'title' => $filtered_apartment['title'],
+                    'slug' => Str::slug($filtered_apartment['title'], '-'),
+                    'category' => $filtered_apartment['category'],
+                    'price' => $filtered_apartment['price'],
+                    'description' => $filtered_apartment['description'],
+                    'num_rooms' => $filtered_apartment['num_of_rooms'],
+                    'num_beds' => $filtered_apartment['num_of_beds'],
+                    'num_bathrooms' => $filtered_apartment['num_bathrooms'],
+                    'square_meters' => $filtered_apartment['square_meters'],
+                    'full_address' => $filtered_apartment['full_address'],
+                    'latitude' => $filtered_apartment['lat'],
+                    'longitude' => $filtered_apartment['long'],
+                    'cover_image' => $apiImg,
+                    'is_available' => true,
+                ]);
+            }
         }
     }
 }
