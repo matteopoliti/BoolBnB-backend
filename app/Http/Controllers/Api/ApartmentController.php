@@ -9,9 +9,14 @@ use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $apartments = Apartment::with('services')->paginate(12);
+        $category = $request->input('category');
+
+        $apartments = Apartment::with('services')
+            ->when($category, function ($query, $category) {
+                return $query->where('category', $category);
+            })->paginate(12);
 
         $services = Service::all();
 
@@ -29,40 +34,49 @@ class ApartmentController extends Controller
         $radius = $request->input('radius');
         $beds = $request->input('num_beds');
         $rooms = $request->input('num_rooms');
-        $services = $request->input('services');
+        $services = $request->input('services', []); // Default to an empty array if not provided
+        $category = $request->input('category');
 
-        // Calcola la distanza massima in metri dalla latitudine e longitudine specificate
-        // Il raggio in metri è il radius convertito da km a metri
-        $earthRadius = 6371000; // Raggio approssimativo della Terra in metri
-        $maxDistance = $radius * 1000; // Converti il raggio da km a metri
+        $earthRadius = 6371000;
+        $maxDistance = $radius * 1000;
 
-        $apartments = Apartment::with('services')
-            ->when($beds, function ($query, $beds) {
-                return $query->where('num_beds', '>=', $beds);
-            })
-            ->when($rooms, function ($query, $rooms) {
-                return $query->where('num_rooms', '>=', $rooms);
-            })
-            ->when(!empty($services), function ($query) use ($services) {
+        $query = Apartment::with('services');
+
+        if ($category) {
+            $query->where('category', $category);
+        }
+        if ($beds) {
+            $query->where('num_beds', '>=', $beds);
+        }
+        if ($rooms) {
+            $query->where('num_rooms', '>=', $rooms);
+        }
+        if (count($services) > 0) {
+            $query->when(!empty($services), function ($query) use ($services) {
                 foreach ($services as $service) {
                     $query->whereHas('services', function ($q) use ($service) {
                         $q->where('services.id', $service);
                     });
                 }
-            })
-            ->selectRaw("
-            *,
-            ( $earthRadius * acos(
-                cos( radians( $latitude ) )
-                * cos( radians( latitude ) )
-                * cos( radians( longitude ) - radians( $longitude ) )
-                + sin( radians( $latitude ) )
-                * sin( radians( latitude ) )
-            ) ) AS distance
-        ")
-            ->having('distance', '<=', $maxDistance)
-            ->orderBy('distance')
-            ->paginate(12);
+            });
+        }
+
+        if ($latitude && $longitude && $radius) {
+            $query->selectRaw("
+                *,
+                ($earthRadius * acos(
+                    cos(radians($latitude))
+                    * cos(radians(latitude))
+                    * cos(radians(longitude) - radians($longitude))
+                    + sin(radians($latitude))
+                    * sin(radians(latitude))
+                )) AS distance
+            ")
+                ->having('distance', '<=', $maxDistance)
+                ->orderBy('distance');
+        }
+
+        $apartments = $query->paginate(12);
 
         return response()->json([
             'success' => true,

@@ -221,7 +221,7 @@
 
             const apiQuery = document.getElementById('full_address');
 
-            let apiRequest = `https://api.tomtom.com/search/2/search/${apiQuery.value}.json?key=${apiKey}&language=it-IT`;
+            let apiRequest = `https://api.tomtom.com/search/2/search/${apiQuery.value}.json?key=${apiKey}&language=it-IT&countrySet=IT`;
 
             const parentElement = document.getElementById('addressList');
 
