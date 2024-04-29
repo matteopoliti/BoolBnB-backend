@@ -35,6 +35,7 @@ class UpdateApartmentRequest extends FormRequest
             'full_address' => ['required', 'string', 'max:255'],
             'cover_image' => ['image'],
             'services' => ['required', 'exists:services,id'],
+            'is_available' => ['boolean'],
         ];
     }
 }

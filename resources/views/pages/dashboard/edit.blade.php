@@ -202,6 +202,11 @@
                         onchange="updateLabel()">
                     <label class="form-check-label" for="is_available" id="visibilityLabel">
                     </label>
+                    @error('is_available')
+                        <div class="alert alert-danger mt-1">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary mx-auto d-block mt-3">Modifica</button>
@@ -292,8 +297,10 @@
             let label = document.getElementById('visibilityLabel');
             if (checkBox.checked) {
                 label.innerHTML = "Rendi visibile";
+                checkBox.value = 1;
             } else {
                 label.innerHTML = "Rendi non visibile";
+                checkBox.value = 0;
             }
         }
     </script>
