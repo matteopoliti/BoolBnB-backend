@@ -1,7 +1,7 @@
 @extends('layouts.access')
 
 @section('content')
-    <section class="text-center text-lg-start">
+    <section class="text-center text-lg-start" style="padding-top: 130px;">
         <style>
             .cascading-right {
                 margin-right: -50px;

@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Boolbnb</title>
+    <title>BoolBnB</title>
 
 
     <!-- Fonts -->
@@ -29,8 +29,8 @@
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('http://localhost:5174/') }}">
                     <div class="logo_laravel">
-                        <img src="{{ Vite::asset('resources/assets/img/photo_5839426266103660487_x.jpg') }}"
-                            alt="" class="w-25">
+                        <img src="{{ Vite::asset('resources/assets/img/logo-boolbnb-nome-tiny.png') }}"
+                            alt="" class="w-50">
                     </div>
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
