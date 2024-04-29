@@ -13,7 +13,7 @@ class ApartmentController extends Controller
     {
         $category = $request->input('category');
 
-        $apartments = Apartment::with('services')
+        $apartments = Apartment::with('services')->where('is_available', 1)
             ->when($category, function ($query, $category) {
                 return $query->where('category', $category);
             })->paginate(12);
@@ -40,7 +40,7 @@ class ApartmentController extends Controller
         $earthRadius = 6371000;
         $maxDistance = $radius * 1000;
 
-        $query = Apartment::with('services');
+        $query = Apartment::with('services')->where('is_available', 1);
 
         if ($category) {
             $query->where('category', $category);

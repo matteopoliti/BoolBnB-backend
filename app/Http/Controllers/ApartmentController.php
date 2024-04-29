@@ -144,6 +144,10 @@ class ApartmentController extends Controller
         $slug = Str::slug($request->title, '-');
         $validated_data['slug'] = $slug;
 
+        if (!$request->has('is_available')) {
+            $validated_data['is_available'] = 0;
+        }
+
         if ($apartment->full_address !== $validated_data['full_address']) {
             $apiKey = env('TOMTOM_API_KEY');
             $addressQuery = str_replace(' ', '+', $validated_data['full_address']);
@@ -168,6 +172,7 @@ class ApartmentController extends Controller
 
             $validated_data['cover_image'] = $path;
         }
+
 
         $apartment->update($validated_data);
 
