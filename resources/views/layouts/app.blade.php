@@ -29,8 +29,8 @@
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('http://localhost:5174/') }}">
                     <div class="logo_laravel">
-                        <img src="{{ Vite::asset('resources/assets/img/logo-boolbnb-nome.png') }}"
-                            alt="" class="w-25">
+                        <img src="{{ Vite::asset('resources/assets/img/logo-boolbnb-nome-tiny.png') }}"
+                            alt="" class="w-50">
                     </div>
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
