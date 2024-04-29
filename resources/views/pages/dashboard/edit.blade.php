@@ -87,8 +87,8 @@
                         <label for="num_beds" class="form-label">Letti*</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-bed"></i></span>
-                            <input type="number" class="form-control @error('num_beds') is-invalid @enderror" id="num_beds"
-                                aria-describedby="num_beds" name="num_beds"
+                            <input type="number" class="form-control @error('num_beds') is-invalid @enderror"
+                                id="num_beds" aria-describedby="num_beds" name="num_beds"
                                 value='{{ old('num_beds') ?? $apartment->num_beds }}' min="0" required>
                         </div>
                         @error('num_beds')
@@ -104,8 +104,7 @@
                             <span class="input-group-text"><i class="fa-solid fa-bath"></i></span>
                             <input type="number" class="form-control @error('num_bathrooms') is-invalid @enderror"
                                 id="num_bathrooms" aria-describedby="num_bathrooms" name="num_bathrooms"
-                                value='{{ old('num_bathrooms') ?? $apartment->num_bathrooms }}' min="0"
-                                required>
+                                value='{{ old('num_bathrooms') ?? $apartment->num_bathrooms }}' min="0" required>
                         </div>
                         @error('num_bathrooms')
                             <div class="alert alert-danger mt-1">
@@ -120,12 +119,13 @@
                         <label for="full_address" class="form-label">Indirizzo completo*</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
-                            <input list="addressList" type="text" class="form-control @error('full_address') is-invalid @enderror"
-                                id="full_address" aria-describedby="full_address" name="full_address"
+                            <input list="addressList" type="text"
+                                class="form-control @error('full_address') is-invalid @enderror" id="full_address"
+                                aria-describedby="full_address" name="full_address"
                                 value='{{ old('full_address') ?? $apartment->full_address }}' maxlength="255" required>
                             <datalist id="addressList">
                             </datalist>
-                          </div>
+                        </div>
                         @error('full_address')
                             <div class="alert alert-danger mt-1">
                                 {{ $message }}
@@ -141,7 +141,7 @@
                                 aria-describedby="square_meters" name="square_meters"
                                 value='{{ old('square_meters') ?? $apartment->square_meters }}' required>
                             <span class="input-group-text">m<sup>2</sup></span>
-                          </div>
+                        </div>
                         @error('square_meters')
                             <div class="alert alert-danger mt-1">
                                 {{ $message }}
@@ -172,11 +172,14 @@
                 <div class="mb-3">
                     <label class="form-label">Servizi*</label>
                     <div class="form-check">
-                        @foreach($services as $item)
-                            <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px">
-                            <input class="form-check-input" type="checkbox" name="services[]" id="service_{{ $item->id }}" value="{{ $item->id }}"
-                            {{ $apartment->services->contains($item->id) || (is_array(old('services')) && in_array($item->id, old('services'))) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="service_{{ $item->id }}">{{ ucfirst($item->name) }}</label><br>
+                        @foreach ($services as $item)
+                            <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}"
+                                style="width: 15px">
+                            <input class="form-check-input" type="checkbox" name="services[]"
+                                id="service_{{ $item->id }}" value="{{ $item->id }}"
+                                {{ $apartment->services->contains($item->id) || (is_array(old('services')) && in_array($item->id, old('services'))) ? 'checked' : '' }}>
+                            <label class="form-check-label"
+                                for="service_{{ $item->id }}">{{ ucfirst($item->name) }}</label><br>
                         @endforeach
                     </div>
                     @error('services')
@@ -187,21 +190,32 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary mx-auto d-block">Modifica</button>
-                
-                <div class="alert alert-secondary mt-3" role="alert">
-                    Ricorda di compilare tutti i campi con *
+                <label class="form-check-label" for="is_available">
+                    {!! $apartment->is_available
+                        ? "L'appartamento al momento <strong>è visibile</strong>"
+                        : "L'appartamento al momento <strong>non è visibile</strong>" !!}
+                </label>
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="is_available"
+                        name="is_available" {{ old('is_available', $apartment->is_available) ? 'checked' : '' }}
+                        onchange="updateLabel()">
+                    <label class="form-check-label" for="is_available" id="visibilityLabel">
+                    </label>
                 </div>
+
+                <button type="submit" class="btn btn-primary mx-auto d-block mt-3">Modifica</button>
             </form>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('apartmentForm').addEventListener('submit', function (event) {
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLabel()
+            document.getElementById('apartmentForm').addEventListener('submit', function(event) {
                 const checkboxes = document.querySelectorAll('input[name="services[]"]');
                 let checked = false;
-                checkboxes.forEach(function (checkbox) {
+                checkboxes.forEach(function(checkbox) {
                     if (checkbox.checked) {
                         checked = true;
                     }
@@ -215,17 +229,18 @@
             });
         });
 
-        document.getElementById('full_address').addEventListener('input', function (event) {
+        document.getElementById('full_address').addEventListener('input', function(event) {
 
             const apiKey = "{{ $apiKey }}";
 
             const apiQuery = document.getElementById('full_address');
 
-            let apiRequest = `https://api.tomtom.com/search/2/search/${apiQuery.value}.json?key=${apiKey}&language=it-IT&countrySet=IT`;
+            let apiRequest =
+                `https://api.tomtom.com/search/2/search/${apiQuery.value}.json?key=${apiKey}&language=it-IT&countrySet=IT`;
 
             const parentElement = document.getElementById('addressList');
 
-            if (apiQuery.value === ''){
+            if (apiQuery.value === '') {
 
                 while (parentElement.firstChild) {
                     parentElement.removeChild(parentElement.firstChild);
@@ -244,7 +259,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    
+
                     let apiResults = data.results
 
                     let arrayResults = []
@@ -270,5 +285,16 @@
                     console.error('There was a problem with the fetch operation:', error);
                 });
         });
+
+
+        function updateLabel() {
+            let checkBox = document.getElementById('is_available');
+            let label = document.getElementById('visibilityLabel');
+            if (checkBox.checked) {
+                label.innerHTML = "Rendi visibile";
+            } else {
+                label.innerHTML = "Rendi non visibile";
+            }
+        }
     </script>
 @endsection
