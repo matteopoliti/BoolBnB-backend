@@ -1,7 +1,7 @@
 @extends('layouts.access')
 
 @section('content')
-    <section class="h-100" style="background-color: #eee;">
+    <section style="background-color: #eee;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10">
@@ -11,7 +11,7 @@
                                 <div class="card-body p-md-5 mx-md-4">
 
                                     <div class="text-center">
-                                        <img src="{{ Vite::asset('resources/assets/img/photo_5839426266103660487_x.jpg') }}"
+                                        <img src="{{ Vite::asset('resources/assets/img/logo-boolbnb-nome.png') }}"
                                             style="width: 185px;" alt="logo">
                                         <h4 class="mt-1 mb-5 pb-1">Area personale</h4>
                                     </div>
@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-lg-6 d-flex align-items-center gradient-custom-2 rounded-end">
                                 <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                    <h3 class="mb-4 fs-2">Benvenuto su BoolBnb: Gestisci le Tue Proprietà!</h3>
+                                    <h3 class="mb-4 fs-2">Benvenuto su BoolBnB: Gestisci le Tue Proprietà!</h3>
                                     <p class="mb-0">Sei pronto a far brillare le tue case? Accedi come host su
                                         BoolBnb
                                         e inizia a gestire le tue proprietà come mai prima d'ora. Inserisci le tue

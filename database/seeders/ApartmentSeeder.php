@@ -40,6 +40,12 @@ class ApartmentSeeder extends Seeder
 
         $apiKey = env('PIXABAY_API_KEY');
 
+        $availability = array_fill(0, 500, true);
+        $availability = array_merge($availability, array_fill(0, 50, false));
+        shuffle($availability);
+
+        $availabilityIndex = 0;
+
         foreach ($categories as $index => $category) {
 
             $apartments = config('apartments');
@@ -92,7 +98,7 @@ class ApartmentSeeder extends Seeder
                     'latitude' => $filtered_apartment['lat'],
                     'longitude' => $filtered_apartment['long'],
                     'cover_image' => $apiImg,
-                    'is_available' => true,
+                    'is_available' => $availability[$availabilityIndex++],
                 ]);
             }
         }
