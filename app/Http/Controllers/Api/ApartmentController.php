@@ -86,7 +86,7 @@ class ApartmentController extends Controller
 
     public function show($slug)
     {
-        $apartment = Apartment::with('services')->where('slug', $slug)->first();
+        $apartment = Apartment::with('services')->where('is_available', 1)->where('slug', $slug)->first();
 
 
         if ($apartment) {
