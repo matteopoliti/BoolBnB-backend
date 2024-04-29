@@ -36,7 +36,7 @@
                 </a>
             </div>
         </nav>
-        <main class=" overflow-auto mx-auto d-flex justify-content-center" style="background-color: #eee; padding-top: 130px; height: calc(100vh - 80px)">
+        <main class=" overflow-auto mx-auto d-flex justify-content-center" style="background-color: #eee; height: calc(100vh - 80px)">
             @yield('content')
         </main>
     </div>
