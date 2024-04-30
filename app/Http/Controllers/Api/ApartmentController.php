@@ -111,7 +111,7 @@ class ApartmentController extends Controller
             case 'homePage':
                 return 12;
             case 'advancedSearch':
-                return 50;
+                return 51;
             default:
                 return 10; // Default pagination value if from_where is not recognized
         }
