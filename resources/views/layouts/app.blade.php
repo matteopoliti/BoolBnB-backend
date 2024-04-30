@@ -159,9 +159,7 @@
                     </li>
                     <li>
                         <a href="#" class="nav-link link-body-emphasis">
-
                             <i class="fa-solid fa-credit-card"></i>
-
                             <span class="fs-3">Sponsor</span>
                         </a>
                     </li>
