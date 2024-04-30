@@ -36,4 +36,6 @@ Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(functi
 
 Route::get('/apartments/{apartment}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
 
+Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::class, 'store'])->name('sponsorships.store');
+
 require __DIR__ . '/auth.php';
