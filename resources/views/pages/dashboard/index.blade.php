@@ -32,6 +32,7 @@
                             </div>
 
                             <div class=" d-flex flex-column justify-content-center align-items-center  gap-5 p-3">
+                                
                                 {{-- Apartment show --}}
                                 <div class="">
                                     <a class="btn btn-info"
@@ -39,6 +40,7 @@
                                         <i class="fa-solid fa-circle-info"></i> Info
                                     </a>
                                 </div>
+
                                 {{-- Edit button --}}
                                 <div class="">
                                     <a class="btn btn-warning"
@@ -46,6 +48,15 @@
                                         <i class="fa-solid fa-pen"></i> Modifica
                                     </a>
                                 </div>
+
+                                {{-- Sponsor button --}}
+                                <div class="">
+                                    <a class="btn btn-success"
+                                        href="{{ route('apartments.sponsorships', $apartment->slug) }}">
+                                        <i class="fa-solid fa-dollar"></i> Promuovi
+                                    </a>
+                                </div>
+
                                 {{-- Delete button --}}
                                 <div class="">
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
