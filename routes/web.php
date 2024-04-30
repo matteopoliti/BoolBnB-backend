@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SponsorshipController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,5 +33,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);;
 });
+
+Route::get('/apartments/{apartment}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
+
+Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::class, 'store'])->name('sponsorships.store');
 
 require __DIR__ . '/auth.php';
