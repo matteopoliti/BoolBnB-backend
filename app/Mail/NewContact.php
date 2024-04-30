@@ -28,7 +28,7 @@ class NewContact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            replyTo: $this->message->address,
+            replyTo: $this->message->email,
             subject: 'Nuovo Contatto',
         );
     }
@@ -39,7 +39,7 @@ class NewContact extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.mew-contact-mail',
+            view: 'emails.new-contact-mail',
         );
     }
 

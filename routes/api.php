@@ -26,4 +26,4 @@ Route::get('/apartments/search', [ApartmentController::class, 'filter']);
 
 Route::get('/apartments/{slug}', [ApartmentController::class, 'show']);
 
-Route::post('/apartments/{slug}', [MessageController::class, 'store']);
+Route::post('/messages', [MessageController::class, 'store']);
