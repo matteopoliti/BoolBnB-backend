@@ -11,12 +11,14 @@ class ApartmentController extends Controller
 {
     public function index(Request $request)
     {
+        $pagination_value = $this->determinePagination($request->input('from_where'));
+
         $category = $request->input('category');
 
         $apartments = Apartment::with('services')->where('is_available', 1)
             ->when($category, function ($query, $category) {
                 return $query->where('category', $category);
-            })->paginate(12);
+            })->paginate($pagination_value);
 
         $services = Service::all();
 
@@ -29,6 +31,8 @@ class ApartmentController extends Controller
 
     public function filter(Request $request)
     {
+        $pagination_value = $this->determinePagination($request->input('from_where'));
+
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
         $radius = $request->input('radius');
@@ -76,7 +80,7 @@ class ApartmentController extends Controller
                 ->orderBy('distance');
         }
 
-        $apartments = $query->paginate(12);
+        $apartments = $query->paginate($pagination_value);
 
         return response()->json([
             'success' => true,
@@ -88,7 +92,6 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::with('services')->where('is_available', 1)->where('slug', $slug)->first();
 
-
         if ($apartment) {
             return response()->json([
                 'success' => true,
@@ -99,6 +102,18 @@ class ApartmentController extends Controller
                 'success' => false,
                 'error' => "L'appartamento selezionato non esiste"
             ]);
+        }
+    }
+
+    private function determinePagination($fromWhere)
+    {
+        switch ($fromWhere) {
+            case 'homePage':
+                return 12;
+            case 'advancedSearch':
+                return 50;
+            default:
+                return 10; // Default pagination value if from_where is not recognized
         }
     }
 }
