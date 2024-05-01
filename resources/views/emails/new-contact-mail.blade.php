@@ -1,10 +1,10 @@
 <h1>Ciao Host</h1>
 <h4>Hai ricevuto un nuovo messaggio:</h4>
 <p>
-    {{-- Nome: {{ $message->name }} <br>
-    Email: {{ $message->email }} <br>
+    Nome: {{ $lead->name }} <br>
+    Email: {{ $lead->email }} <br>
     Messaggio: <br>
-    {{ $message->message }} --}}
+    {{ $lead->message }}
 </p>
 <p>
 
