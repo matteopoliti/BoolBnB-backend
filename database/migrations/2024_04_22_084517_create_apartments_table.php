@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('cover_image', 255);
             $table->boolean('is_available')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();
