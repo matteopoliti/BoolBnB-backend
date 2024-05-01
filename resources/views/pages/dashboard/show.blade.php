@@ -1,47 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mx-3 mt-3">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <img src="{{ Str::startsWith($apartment->cover_image, 'https') ? $apartment->cover_image : asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}" class="card-img-top">
 
-        <div class="container">
-            <h1 class="mt-2 fw-bold">{{ $apartment->title }}</h1>
+                <div class="card-body">
+                    <h1 class="card-title">{{ $apartment->title }}</h1>
+                    <p class="card-text">{{ $apartment->description }}</p>
+                    <p class="text-capitalize text-muted">Categoria: <strong>{{ $apartment->category }}</strong></p>
+                </div>
 
-            <p class="mt-3">{{ $apartment->description }}</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Prezzo/Notte: <strong>{{ $apartment->price }}$</strong></li>
+                    <li class="list-group-item">Stanze: <strong>{{ $apartment->num_rooms }}</strong></li>
+                    <li class="list-group-item">Letti: <strong>{{ $apartment->num_beds }}</strong></li>
+                    <li class="list-group-item">Bagni: <strong>{{ $apartment->num_bathrooms }}</strong></li>
+                    <li class="list-group-item">Metri quadri: <strong>{{ $apartment->square_meters }} m²</strong></li>
+                    <li class="list-group-item">Indirizzo completo: <strong>{{ $apartment->full_address }}</strong></li>
+                    <li class="list-group-item">Disponibilità: <strong>{!! $apartment->is_available ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa-solid fa-xmark text-danger"></i>' !!}</strong></li>
+                </ul>
 
-            <span>Categoria: <strong>{{ $apartment->category }}</strong></span>
-
-            <figure class="my-3">
-                @if (Str::startsWith($apartment->cover_image, 'https'))
-                    <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}">
-                @else
-                    <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}">
-                @endif
-            </figure>
-
-            <ul class="list-unstyled">
-                <li><strong>Prezzo/Notte:</strong> {{ $apartment->price }}$</li>
-                <li><strong>Stanze:</strong> {{ $apartment->num_rooms }}</li>
-                <li><strong>Letti:</strong> {{ $apartment->num_beds }}</li>
-                <li><strong>Bagni:</strong> {{ $apartment->num_bathrooms }}</li>
-                <li><strong>Indirizzo completo:</strong> {{ $apartment->full_address }}</li>
-                <li><strong>Metri quadri:</strong> {{ $apartment->square_meters }} m<sup>2</sup></li>
-                <li><strong>Disponibile: </strong>
-                    @if ($apartment->is_available)
-                        <i class="fa-solid fa-check"></i>
-                    @else
-                        <i class="fa-solid fa-xmark"></i>
-                    @endif
-                </li>
-            </ul>
-
-            <span><strong>Services:</strong></span>
-            @foreach ($apartment->services as $item)
-                <span class="badge rounded-pill text-bg-primary">
-                    <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px">
-                    {{ $item->name }}
-                </span>
-            @endforeach
-
+                <div class="card-body">
+                    <h5 class="card-title">Services</h5>
+                    <div>
+                        @foreach ($apartment->services as $item)
+                        <span class="badge gradient-custom-2 px-3 py-2" style="color: white;">
+                            <img src="{{ asset('storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 20px; vertical-align: middle; margin-right: 5px; filter: brightness(0) invert(1);">
+                            {{ $item->name }}
+                        </span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 @endsection

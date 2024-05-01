@@ -31,7 +31,7 @@
                         @endif
                     </td>
                     <td class="h-100 align-middle">{{ $apartment->title }}</td>
-                    <td class="h-100 align-middle">{{ $apartment->category }}</td>
+                    <td class="text-capitalize h-100 align-middle">{{ $apartment->category }}</td>
                     <td class="h-100 align-middle">{{ $apartment->full_address }}</td>
                     <td class="h-100 align-middle">
                         @if ($apartment->is_available)
