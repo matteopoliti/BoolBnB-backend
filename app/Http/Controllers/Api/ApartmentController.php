@@ -16,6 +16,7 @@ class ApartmentController extends Controller
         $category = $request->input('category');
 
         $apartments = Apartment::with('services')->where('is_available', 1)
+            ->whereNull('deleted_at')
             ->when($category, function ($query, $category) {
                 return $query->where('category', $category);
             })->paginate($pagination_value);
@@ -44,7 +45,9 @@ class ApartmentController extends Controller
         $earthRadius = 6371000;
         $maxDistance = $radius * 1000;
 
-        $query = Apartment::with('services')->where('is_available', 1);
+        $query = Apartment::with('services')
+            ->whereNull('deleted_at')
+            ->where('is_available', 1);
 
         if ($category) {
             $query->where('category', $category);
