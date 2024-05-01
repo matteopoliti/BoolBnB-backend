@@ -152,7 +152,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link link-body-emphasis">
+                        <a href="{{ route('dashboard.messages') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-message"></i>
                             <span class="fs-3">Messaggi</span>
                         </a>

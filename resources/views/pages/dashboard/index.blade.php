@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid mt-3">
-    <h1 class="mx-3">Appartamenti - {{ count($apartments) }}</h1>
+    <h1 class="mx-3 fw-bold">Appartamenti &#40;{{ count($apartments) }}&#41;</h1>
 
     <div class="mx-3 mt-3">
         <a href="{{ route('dashboard.apartments.create') }}" class="btn btn-success">
