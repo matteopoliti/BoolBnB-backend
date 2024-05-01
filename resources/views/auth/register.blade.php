@@ -20,9 +20,11 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <div class="card cascading-right bg-body-tertiary" style="backdrop-filter: blur(30px);">
                         <div class="card-body p-5 shadow-5 text-center">
-                            <h2 class="fw-bold mb-5">{{ __('Registrati ora') }}</h2>
+                            <h2 class="fw-bold mb-3">{{ __('Registrati ora') }}</h2>
                             <form id="userForm" method="POST" action="{{ route('register') }}">
                                 @csrf
+
+                                <div class="form-text text-start mb-4">Tutti i campi sono obbligatori.</div>
                                 {{-- 3 column grid layout with text inputs for the first and last names and datof birth --}}
                                 <div class="row">
                                     <div class="col-md-4 mb-4">
