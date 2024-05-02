@@ -47,4 +47,9 @@ Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::cl
 Route::get('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
 Route::post('/braintree/payment', [BraintreeController::class, 'payment'])->name('payment.process');
 
+Route::get('/payment/success', function () {
+    return view('pages.braintree.payment');
+})->name('payment.success');
+
+
 require __DIR__ . '/auth.php';

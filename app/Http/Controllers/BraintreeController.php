@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Braintree\Gateway as BraintreeGateway;
+use Illuminate\Support\Facades\Session;
 
 class BraintreeController extends Controller
 {
@@ -21,8 +22,11 @@ class BraintreeController extends Controller
         ]);
     }
 
-    public function token()
+    public function token(Request $request)
     {
+        $amount = $request->amount;  // Recupera l'importo dal form
+        Session::put('payment_amount', $amount);  // Salva l'importo nella sessione
+
         $token = $this->gateway->clientToken()->generate();
         return view('pages.braintree.token', ['token' => $token]);
     }
@@ -31,16 +35,16 @@ class BraintreeController extends Controller
     {
         $nonce = $request->payment_method_nonce;
 
+        $amount = Session::get('payment_amount');  // Recupera l'importo dalla sessione
+
         $result = $this->gateway->transaction()->sale([
-            'amount' => '10.00',
+            'amount' => $amount,
             'paymentMethodNonce' => $nonce,
-            'options' => [
-                'submitForSettlement' => true
-            ]
+            'options' => ['submitForSettlement' => true]
         ]);
 
         if ($result->success) {
-            return redirect()->route('dashboard')->with('success', 'Transaction successful!');
+            return redirect()->route('payment.success')->with('success', 'Transaction successful!');
         } else {
             return back()->withErrors('An error occurred with the payment.');
         }
