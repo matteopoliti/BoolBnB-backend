@@ -24,7 +24,7 @@
                 </ul>
 
                 <div class="card-body">
-                    <h5 class="card-title">Services</h5>
+                    <h5 class="card-title">Servizi</h5>
                     <div>
                         @foreach ($apartment->services as $item)
                         <span class="badge gradient-custom-2 px-3 py-2" style="color: white;">
