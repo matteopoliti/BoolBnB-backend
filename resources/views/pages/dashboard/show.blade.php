@@ -14,7 +14,7 @@
                 </div>
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Prezzo/Notte: <strong>{{ $apartment->price }}$</strong></li>
+                    <li class="list-group-item">Prezzo/Notte: <strong>{{ $apartment->price }} €</strong></li>
                     <li class="list-group-item">Stanze: <strong>{{ $apartment->num_rooms }}</strong></li>
                     <li class="list-group-item">Letti: <strong>{{ $apartment->num_beds }}</strong></li>
                     <li class="list-group-item">Bagni: <strong>{{ $apartment->num_bathrooms }}</strong></li>
