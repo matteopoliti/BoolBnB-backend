@@ -44,6 +44,7 @@ Route::get('/apartments/{apartment}/sponsorships', [SponsorshipController::class
 
 Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::class, 'store'])->name('sponsorships.store');
 
-Route::any('/payment', [BraintreeController::class, 'token'])->name('token')->middleware('auth');
+Route::get('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
+Route::post('/braintree/payment', [BraintreeController::class, 'payment'])->name('payment.process');
 
 require __DIR__ . '/auth.php';

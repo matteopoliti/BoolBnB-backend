@@ -7,30 +7,42 @@ use Braintree\Gateway as BraintreeGateway;
 
 class BraintreeController extends Controller
 {
-    public function token(Request $request)
-    {
+    protected $gateway;
 
-        $gateway = new BraintreeGateway([
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['payment']); // Ensure only authenticated users can access the payment route
+
+        $this->gateway = new BraintreeGateway([
             'environment' => env('BRAINTREE_ENVIRONMENT'),
-            'merchantId' => env("BRAINTREE_MERCHANT_ID"),
-            'publicKey' => env("BRAINTREE_PUBLIC_KEY"),
-            'privateKey' => env("BRAINTREE_PRIVATE_KEY")
+            'merchantId' => env('BRAINTREE_MERCHANT_ID'),
+            'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
+            'privateKey' => env('BRAINTREE_PRIVATE_KEY'),
+        ]);
+    }
+
+    public function token()
+    {
+        $token = $this->gateway->clientToken()->generate();
+        return view('pages.braintree.token', ['token' => $token]);
+    }
+
+    public function payment(Request $request)
+    {
+        $nonce = $request->payment_method_nonce;
+
+        $result = $this->gateway->transaction()->sale([
+            'amount' => '10.00',
+            'paymentMethodNonce' => $nonce,
+            'options' => [
+                'submitForSettlement' => true
+            ]
         ]);
 
-        if ($request->input('nonce') != null) {
-            $nonceFromTheClient = $request->input('nonce');
-
-            $gateway->transaction()->sale([
-                'amount' => '10.00',
-                'paymentMethodNonce' => $nonceFromTheClient,
-                'options' => [
-                    'submitForSettlement' => true
-                ]
-            ]);
-            return view('pages.dashboard.index');
+        if ($result->success) {
+            return redirect()->route('dashboard')->with('success', 'Transaction successful!');
         } else {
-            $clientToken = $gateway->clientToken()->generate();
-            return view('pages.dashboard.braintree', ['token' => $clientToken]);
+            return back()->withErrors('An error occurred with the payment.');
         }
     }
 }
