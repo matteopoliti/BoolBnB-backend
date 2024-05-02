@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartment;
+use App\Models\ApartmentSponsorship;
 use Illuminate\Http\Request;
 use Braintree\Gateway as BraintreeGateway;
 use Illuminate\Support\Facades\Session;
+
 
 class BraintreeController extends Controller
 {
@@ -25,7 +28,14 @@ class BraintreeController extends Controller
     public function token(Request $request)
     {
         $amount = $request->amount;  // Recupera l'importo dal form
+        $sponsorship_id = $request->sponsorship_id;  // Recupera l'importo dal form
+        $apartment_id = $request->apartment_id;  // Recupera l'importo dal form
+
+        // Session::flush();
+
         Session::put('payment_amount', $amount);  // Salva l'importo nella sessione
+        Session::put('sponsorship_id', $sponsorship_id);  // Salva l'importo nella sessione
+        Session::put('apartment_id', $apartment_id);  // Salva l'importo nella sessione
 
         $token = $this->gateway->clientToken()->generate();
         return view('pages.braintree.token', ['token' => $token]);
@@ -44,7 +54,13 @@ class BraintreeController extends Controller
         ]);
 
         if ($result->success) {
-            return redirect()->route('payment.success')->with('success', 'Transaction successful!');
+
+            $apartmentSponsorship = ApartmentSponsorship::create([
+                'apartment_id' => Session::get('apartment_id'),
+                'sponsorship_id' => Session::get('sponsorship_id'),
+            ]);
+
+            return redirect()->route('payment.success')->with('apartmentSponsorshipId', $apartmentSponsorship->id);
         } else {
             return back()->withErrors('An error occurred with the payment.');
         }

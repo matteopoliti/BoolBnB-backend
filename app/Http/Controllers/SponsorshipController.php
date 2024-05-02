@@ -8,14 +8,17 @@ use Illuminate\Http\Request;
 
 class SponsorshipController extends Controller
 {
-    public function index($slug)
+    public function index($slug, $id)
     {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
-        
+
         $sponsorships = Sponsorship::all();
-        
-        return view('pages.dashboard.sponsorships', compact('sponsorships', 'apartment'));
+
+        $apartment_id = Apartment::findOrFail($id)->id;
+
+        return view('pages.dashboard.sponsorships', compact('sponsorships', 'apartment', 'apartment_id'));
     }
+
     public function store(Request $request, $apartmentId)
     {
         // Validazione del form input

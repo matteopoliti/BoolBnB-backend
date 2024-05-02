@@ -5,7 +5,9 @@ use App\Http\Controllers\BraintreeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorshipController;
+use App\Models\ApartmentSponsorship;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,16 +42,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/messages', [MessageController::class, 'showAllMessages'])->name('dashboard.messages');
 });
 
-Route::get('/apartments/{apartment}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
+Route::get('/apartments/{slug}/sponsorships/{id}', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
 
 Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::class, 'store'])->name('sponsorships.store');
 
-Route::get('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
+Route::post('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
 Route::post('/braintree/payment', [BraintreeController::class, 'payment'])->name('payment.process');
 
-Route::get('/payment/success', function () {
-    return view('pages.braintree.payment');
-})->name('payment.success');
+Route::get('/braintree/payment/success', function () {
+    $apartmentSponsorshipId = Session::get('apartmentSponsorshipId');
+    $apartmentSponsorship = ApartmentSponsorship::with(['apartment', 'sponsorship'])
+        ->find($apartmentSponsorshipId);
 
+    return view('pages.braintree.payment', compact('apartmentSponsorship'));
+})->name('payment.success');
 
 require __DIR__ . '/auth.php';

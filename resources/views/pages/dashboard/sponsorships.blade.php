@@ -37,16 +37,17 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">{{ $sponsorship->duration }} ore di visibilità</p>
-                                    <h5 class="card-title fw-semibold">€{{ $sponsorship->amount }}</h5>
+                                    <h5 class="card-title fw-semibold">{{ $sponsorship->amount }} €</h5>
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                    <form action="{{ route('braintree.token') }}" method="GET" id="sponsorship-form"
+                    <form action="{{ route('braintree.token') }}" method="POST" id="sponsorship-form"
                         class="text-center">
                         @csrf
                         <input type="hidden" name="sponsorship_id" id="selected-sponsorship">
                         <input type="hidden" name="amount" id="selected-sponsorship-amount"> <!-- Aggiunto campo nascosto per l'importo -->
+                        <input type="hidden" name="apartment_id" id="current-apartment-id" value="{{ $apartment_id }}"> <!-- Aggiunto campo nascosto per l'importo -->
                         <button type="submit" class="btn btn-primary mt-3">Procedi al pagamento</button> <!-- Cambiato da 'a' a 'button' -->
                     </form>
                     <!-- Div per il messaggio di errore -->
@@ -67,6 +68,7 @@
                 cards.forEach(c => c.classList.remove('selected'));
                 this.classList.add('selected');
                 document.getElementById('selected-sponsorship').value = this.dataset.id;
+                console.log(this.dataset.id);
                 document.getElementById('selected-sponsorship-amount').value = this.querySelector('.card-title').innerText.replace('€', ''); // Aggiorna l'importo
             });
         });
