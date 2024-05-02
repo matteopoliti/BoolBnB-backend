@@ -32,7 +32,7 @@
                             <h6>Dettagli dell'Appartamento:</h6>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><strong>Titolo:</strong> {{ $apartmentSponsorship->apartment->title }}</li>
-                                <li class="list-group-item"><strong>Prezzo:</strong> €{{ $apartmentSponsorship->apartment->price }}</li>
+                                <li class="list-group-item"><strong>Prezzo: </strong>{{ $apartmentSponsorship->apartment->price }} €</li>
                                 <li class="list-group-item"><strong>Indirizzo:</strong> {{ $apartmentSponsorship->apartment->full_address }}</li>
                                 <li class="list-group-item"><strong>Descrizione:</strong> {{ $apartmentSponsorship->apartment->description }}</li>
                             </ul>
@@ -42,7 +42,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><strong>Pacchetto:</strong> {{ $apartmentSponsorship->sponsorship->name }}</li>
                                 <li class="list-group-item"><strong>Durata:</strong> {{ $apartmentSponsorship->sponsorship->duration }} ore</li>
-                                <li class="list-group-item"><strong>Costo:</strong> €{{ $apartmentSponsorship->sponsorship->amount }}</li>
+                                <li class="list-group-item"><strong>Costo: </strong>{{ $apartmentSponsorship->sponsorship->amount }} €</li>
                                 <li class="list-group-item"><strong>Data Transazione:</strong> <span class="datetime">{{ $apartmentSponsorship->created_at->toIso8601String() }}</span></li>
                             </ul>
                         </div>

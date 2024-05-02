@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 
 class SponsorshipController extends Controller
 {
-    public function index($slug, $id)
+    public function index($slug)
     {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
 
         $sponsorships = Sponsorship::all();
 
-        $apartment_id = Apartment::findOrFail($id)->id;
+        $apartment_id =  $apartment->id;
 
         return view('pages.dashboard.sponsorships', compact('sponsorships', 'apartment', 'apartment_id'));
     }

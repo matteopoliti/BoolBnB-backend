@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/messages', [MessageController::class, 'showAllMessages'])->name('dashboard.messages');
 });
 
-Route::get('/apartments/{slug}/sponsorships/{id}', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
+Route::get('/apartments/{slug}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
 
 Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::class, 'store'])->name('sponsorships.store');
 

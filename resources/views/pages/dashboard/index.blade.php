@@ -53,7 +53,7 @@
                                 </a>
                             </div>
                             <div class="col-6 p-1">
-                                <a href="{{ route('apartments.sponsorships', ['slug' => $apartment->slug, 'id' => $apartment->id]) }}" class="btn btn-success btn-sm w-100 {{ $apartment->is_available == 0 ? 'disabled' : '' }}">
+                                <a href="{{ route('apartments.sponsorships', $apartment->slug) }}" class="btn btn-success btn-sm w-100 {{ $apartment->is_available == 0 ? 'disabled' : '' }}">
                                     <i class="fa-solid fa-dollar"></i> Promuovi
                                 </a>
                             </div>
