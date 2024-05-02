@@ -15,7 +15,10 @@ class MessageController extends Controller
     public function showAllMessages()
     {
         $userId = Auth::id();  // Get the ID of the currently authenticated user
-        $apartments = Apartment::with('messages')->where('user_id', $userId)->get();  // Eager load messages related to the user's apartments
+        $apartments = Apartment::with('messages')
+            ->where('is_available', 1)
+            ->whereNull('deleted_at')
+            ->where('user_id', $userId)->get();  // Eager load messages related to the user's apartments
 
         $totalMessages = $apartments->reduce(function ($carry, $apartment) {
             return $carry + $apartment->messages->count();
