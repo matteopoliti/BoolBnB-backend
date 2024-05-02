@@ -31,7 +31,7 @@ class MessageSeeder extends Seeder
                 // Genera dati casuali per il messaggio
                 $name = $faker->firstName . ' ' . $faker->lastName;
                 $email = $faker->email;
-                $message = $faker->sentence();
+                $message = $faker->realText();
                 $createdAt = $faker->dateTimeBetween('-1 year', 'now');
 
                 // Crea un nuovo messaggio
