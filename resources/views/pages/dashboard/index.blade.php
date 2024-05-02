@@ -40,26 +40,28 @@
                             <i class="fa-solid fa-xmark"></i>
                         @endif
                     </td>
-                    <td class="h-100 d-flex flex-wrap">
-                        <div class="col-6 p-1">
-                            <a href="{{ route('dashboard.apartments.show', $apartment->slug) }}" class="btn btn-info btn-sm w-100">
-                                <i class="fa-solid fa-circle-info"></i> Info
-                            </a>
-                        </div>
-                        <div class="col-6 p-1">
-                            <a href="{{ route('dashboard.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn-sm w-100">
-                                <i class="fa-solid fa-pen"></i> Modifica
-                            </a>
-                        </div>
-                        <div class="col-6 p-1">
-                            <a href="{{ route('apartments.sponsorships', $apartment->slug) }}" class="btn btn-success btn-sm w-100">
-                                <i class="fa-solid fa-dollar"></i> Promuovi
-                            </a>
-                        </div>
-                        <div class="col-6 p-1">
-                            <button type="button" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $apartment->id }}">
-                                <i class="fa-solid fa-trash"></i> Elimina
-                            </button>
+                    <td class="h-100">
+                        <div class="d-flex flex-wrap">
+                            <div class="col-6 p-1">
+                                <a href="{{ route('dashboard.apartments.show', $apartment->slug) }}" class="btn btn-info btn-sm w-100">
+                                    <i class="fa-solid fa-circle-info"></i> Info
+                                </a>
+                            </div>
+                            <div class="col-6 p-1">
+                                <a href="{{ route('dashboard.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn-sm w-100">
+                                    <i class="fa-solid fa-pen"></i> Modifica
+                                </a>
+                            </div>
+                            <div class="col-6 p-1">
+                                <a href="{{ route('apartments.sponsorships', $apartment->slug) }}" class="btn btn-success btn-sm w-100">
+                                    <i class="fa-solid fa-dollar"></i> Promuovi
+                                </a>
+                            </div>
+                            <div class="col-6 p-1">
+                                <button type="button" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $apartment->id }}">
+                                    <i class="fa-solid fa-trash"></i> Elimina
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </tr>
