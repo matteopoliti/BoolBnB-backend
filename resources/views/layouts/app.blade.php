@@ -26,6 +26,9 @@
     {{-- Favicon --}}
     <link rel="icon" href="{{ Vite::asset('resources/assets/img/logo-boolbnb.png') }}">
 
+    {{-- Script braintree --}}
+    <script src="https://js.braintreegateway.com/web/dropin/1.42.0/js/dropin.js"></script>
+
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
 </head>

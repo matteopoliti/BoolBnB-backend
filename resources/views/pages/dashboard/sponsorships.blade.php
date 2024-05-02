@@ -46,7 +46,7 @@
                         class="text-center">
                         @csrf
                         <input type="hidden" name="sponsorship_id" id="selected-sponsorship">
-                        <button type="submit" class="btn btn-primary mt-3">Procedi al pagamento</button>
+                        <a href="{{ route('token') }}" class="btn btn-primary mt-3">Procedi al pagamento</a>
                     </form>
                 </div>
 

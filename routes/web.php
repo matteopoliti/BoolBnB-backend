@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\BraintreeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorshipController;
@@ -42,5 +43,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/apartments/{apartment}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
 
 Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::class, 'store'])->name('sponsorships.store');
+
+Route::any('/payment', [BraintreeController::class, 'token'])->name('token')->middleware('auth');
 
 require __DIR__ . '/auth.php';
