@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.access')
 
 @section('content')
     <div class="container">
@@ -10,6 +10,8 @@
                     <div class="card-body">
                         The page you are looking for could not be found.
                     </div>
+
+                    <a href="http://127.0.0.1:8000/dashboard" class="btn gradient-custom-2">Torna alla homepage</a>
                 </div>
             </div>
         </div>
