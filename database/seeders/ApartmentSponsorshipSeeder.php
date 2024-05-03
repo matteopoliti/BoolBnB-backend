@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Apartment;
 use App\Models\Sponsorship;
 use Faker\Factory as Faker;
+use Carbon\Carbon; // Aggiungi questo per usare Carbon
 
 class ApartmentSponsorshipSeeder extends Seeder
 {
@@ -29,9 +30,15 @@ class ApartmentSponsorshipSeeder extends Seeder
                 // Seleziona casualmente una sponsorship
                 $sponsorship = $sponsorships->random();
 
+                $current_time = Carbon::instance($faker->dateTimeBetween('-1 year', 'now'));
+                $expirationDate = (clone $current_time)->addHours($sponsorship->duration);
+
                 // Crea una nuova riga nella tabella pivot
                 $apartment->sponsorships()->attach($sponsorship->id, [
-                    'created_at' => $faker->dateTimeBetween('-1 year', 'now')
+                    'created_at' => $current_time,
+                    'expiration_date' => $expirationDate,
+                    'created_at' => $current_time,
+                    'expiration_date' => $expirationDate
                 ]);
             }
         }

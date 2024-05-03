@@ -33,6 +33,7 @@
                                 <p><strong>Durata:</strong> {{ $sponsorship->sponsorship->duration }} ore</p>
                                 <p><strong>Costo:</strong> {{ $sponsorship->sponsorship->amount }} €</p>
                                 <p><strong>Data Transazione:</strong> <span class="datetime">{{ $sponsorship->created_at->toIso8601String() }}</span></p>
+                                <p><strong>Data Scadenza:</strong> <span class="datetime">{{ $sponsorship->expiration_date->toIso8601String() }}</span></p>
                             </div>
                         </div>
                     </div>

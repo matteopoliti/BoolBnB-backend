@@ -17,6 +17,7 @@ class CreateApartmentSponsorshipTable extends Migration
             $table->unsignedBigInteger('sponsorship_id')->nullable();
             $table->foreign('sponsorship_id')->references('id')->on('sponsorships')->onDelete('cascade');
             $table->timestamps();
+            $table->dateTime('expiration_date');
         });
 
         Schema::enableForeignKeyConstraints();

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Apartment;
 use App\Models\ApartmentSponsorship;
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use Braintree\Gateway as BraintreeGateway;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
 
 
 class BraintreeController extends Controller
@@ -55,10 +57,17 @@ class BraintreeController extends Controller
         ]);
 
         if ($result->success) {
+            $sponsorship = Sponsorship::find(Session::get('sponsorship_id'));
+
+            $currentTime = Carbon::now();
+
+            $expirationDate = (clone $currentTime)->addHours($sponsorship->duration);
 
             $apartmentSponsorship = ApartmentSponsorship::create([
                 'apartment_id' => Session::get('apartment_id'),
                 'sponsorship_id' => Session::get('sponsorship_id'),
+                'created_at' => $currentTime,
+                'expiration_date' => $expirationDate
             ]);
 
             return redirect()->route('payment.success')->with('apartmentSponsorshipId', $apartmentSponsorship->id);
