@@ -28,9 +28,9 @@
                         <div class="col-md-6">
                             <div class="mb-4">
                                 @if (Str::startsWith($apartmentSponsorship->apartment->cover_image, 'https'))
-                                <img src="{{ $apartmentSponsorship->apartment->cover_image }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                <img src="{{ $apartmentSponsorship->apartment->cover_image }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-fluid rounded" style="width: 100px; height: auto;">
                                 @else
-                                <img src="{{ asset('storage/' . $apartmentSponsorship->apartment->cover_image) }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                <img src="{{ asset('storage/' . $apartmentSponsorship->apartment->cover_image) }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-fluid rounded" style="width: 100px; height: auto;">
                                 @endif
                             </div>
                             <h6>Dettagli dell'Appartamento:</h6>

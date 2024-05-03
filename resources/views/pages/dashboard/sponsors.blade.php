@@ -20,10 +20,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
-                                <img src="{{ $sponsorship->apartment->cover_image }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                <img src="{{ $sponsorship->apartment->cover_image }}" alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded mb-3" style="width: 100px; height: auto;">
                                 @else
-                                <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
-                                @endif                                <h5>Dettagli Appartamento:</h5>
+                                <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}" alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded mb-3" style="width: 100px; height: auto;">
+                                @endif
+                                <img src="{{ $sponsorship->apartment->cover_image }}" alt="Immagine Appartamento" class="img-fluid rounded mb-3">
+                                <h5>Dettagli Appartamento:</h5>
                                 <p><strong>Titolo:</strong> <a href="{{ route('dashboard.apartments.show', $sponsorship->apartment->slug) }}">{{ $sponsorship->apartment->title }}</p></a>
                             </div>
                             <div class="col-md-6">
