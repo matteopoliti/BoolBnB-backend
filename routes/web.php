@@ -59,8 +59,8 @@ Route::get('/braintree/payment/success', function () {
     return view('pages.braintree.payment', compact('apartmentSponsorship'));
 })->name('payment.success');
 
-Route::get('/{any}', function () {
-    return view('errors.404');
-})->where('any', '.*');
+// Route::get('/{any}', function () {
+//     return view('errors.404');
+// })->where('any', '.*');
 
 require __DIR__ . '/auth.php';
