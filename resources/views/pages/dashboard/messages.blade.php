@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-3 mt-3">
+    <div class="container mt-3">
         <h1 class="mb-4 fw-bold">Messaggi ({{ $totalMessages }})</h1>
         <div id="accordion">
             @foreach ($apartments as $apartment)

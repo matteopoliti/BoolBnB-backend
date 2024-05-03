@@ -2,11 +2,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-3 mt-3">
+<div class="container mt-3">
     <h1 class="mb-4 fw-bold">Lista Sponsorizzazioni</h1>
     <div class="accordion" id="sponsorshipAccordion">
         @foreach ($totalSponsorhips as $index => $sponsorship)
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-header" id="heading{{ $sponsorship->id }}">
                     <h5 class="mb-0">
                         <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $sponsorship->id }}" aria-expanded="{{ $index == 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $sponsorship->id }}">
