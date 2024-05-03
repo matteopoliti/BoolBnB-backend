@@ -12,14 +12,44 @@ class ApartmentController extends Controller
     public function index(Request $request)
     {
         $pagination_value = $this->determinePagination($request->input('from_where'));
-
         $category = $request->input('category');
 
-        $apartments = Apartment::with('services')->where('is_available', 1)
-            ->whereNull('deleted_at')
-            ->when($category, function ($query, $category) {
-                return $query->where('category', $category);
-            })->paginate($pagination_value);
+        // Se il parametro from_where è 'advancedSearch', includi gli appartamenti sponsorizzati
+        if ($request->input('from_where') === 'advancedSearch') {
+            $apartments = Apartment::with('services')
+                ->leftJoin('apartment_sponsorship', function ($join) {
+                    $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
+                        ->whereRaw('apartment_sponsorship.created_at = (
+                            SELECT MAX(created_at) FROM apartment_sponsorship
+                            WHERE apartment_id = apartments.id
+                         )');
+                })
+                ->where('is_available', 1)
+                ->whereNull('deleted_at')
+                ->when($category, function ($query, $category) {
+                    return $query->where('category', $category);
+                })
+                ->orderByRaw('CASE WHEN apartment_sponsorship.id IS NOT NULL THEN 0 ELSE 1 END')
+                ->orderByDesc('apartment_sponsorship.created_at') // Ordina per la data di creazione della relazione
+                ->paginate($pagination_value);
+        } else {
+            // Se il parametro from_where è 'homePage', includi solo gli appartamenti con sponsorizzazione
+            $apartments = Apartment::with('services')
+                ->join('apartment_sponsorship', function ($join) {
+                    $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
+                        ->whereRaw('apartment_sponsorship.created_at = (
+                            SELECT MAX(created_at) FROM apartment_sponsorship
+                            WHERE apartment_id = apartments.id
+                         )');
+                })
+                ->where('is_available', 1)
+                ->whereNull('deleted_at')
+                ->when($category, function ($query, $category) {
+                    return $query->where('category', $category);
+                })
+                ->orderByDesc('apartment_sponsorship.created_at') // Ordina per la data di creazione della relazione
+                ->paginate($pagination_value);
+        }
 
         $services = Service::all();
 

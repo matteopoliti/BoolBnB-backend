@@ -14,13 +14,15 @@ class ApartmentSponsorshipSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Ottieni tutti gli appartamenti e le sponsorizzazioni
-        $apartments = Apartment::all();
+        // Ottieni tutte le sponsorizzazioni
         $sponsorships = Sponsorship::all();
 
-        // Genera sponsorship casuali per ogni appartamento
-        foreach ($apartments as $apartment) {
-            // Genera un numero casuale di sponsorizzazioni per questo appartamento (da 1 a 5)
+        // Itera 250 volte
+        for ($j = 0; $j < 250; $j++) {
+            // Ottieni un appartamento casuale
+            $apartment = Apartment::inRandomOrder()->first();
+
+            // Genera un numero casuale di sponsorizzazioni per questo appartamento (da 1 a 3)
             $numSponsorships = rand(1, 3);
 
             for ($i = 0; $i < $numSponsorships; $i++) {
