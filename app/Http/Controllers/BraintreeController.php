@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\ApartmentSponsorship;
 use Illuminate\Http\Request;
 use Braintree\Gateway as BraintreeGateway;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
@@ -64,5 +65,21 @@ class BraintreeController extends Controller
         } else {
             return back()->withErrors('An error occurred with the payment.');
         }
+    }
+
+    public function showAllSponsorships()
+    {
+        $userId = Auth::id(); // ID dell'utente autenticato
+
+        $totalSponsorhips = ApartmentSponsorship::with(['apartment', 'sponsorship'])
+            ->whereHas('apartment', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+
+        // Return the view with apartments and their messages
+        return view('pages.dashboard.sponsors', compact('totalSponsorhips'));
     }
 }

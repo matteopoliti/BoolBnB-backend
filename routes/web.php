@@ -49,6 +49,10 @@ Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::cl
 Route::post('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
 Route::post('/braintree/payment', [BraintreeController::class, 'payment'])->name('payment.process');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/sponsors', [BraintreeController::class, 'showAllSponsorships'])->name('dashboard.sponsors');
+});
+
 Route::get('/braintree/payment/success', function () {
     $apartmentSponsorshipId = Session::get('apartmentSponsorshipId');
     $apartmentSponsorship = ApartmentSponsorship::with(['apartment', 'sponsorship'])
