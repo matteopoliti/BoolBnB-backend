@@ -27,7 +27,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-4">
-                                <img src="{{ $apartmentSponsorship->apartment->cover_image }}" alt="Immagine Appartamento" class="img-fluid rounded">
+                                @if (Str::startsWith($apartmentSponsorship->apartment->cover_image, 'https'))
+                                <img src="{{ $apartmentSponsorship->apartment->cover_image }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                @else
+                                <img src="{{ asset('storage/' . $apartmentSponsorship->apartment->cover_image) }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                @endif
                             </div>
                             <h6>Dettagli dell'Appartamento:</h6>
                             <ul class="list-group list-group-flush">

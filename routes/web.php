@@ -35,8 +35,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);;
+    Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 });
+
+Route::delete('/apartments/{slug}/soft-delete', [ApartmentController::class, 'softDelete'])->name('apartments.softDelete');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/messages', [MessageController::class, 'showAllMessages'])->name('dashboard.messages');

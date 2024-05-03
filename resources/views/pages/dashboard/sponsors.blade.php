@@ -5,7 +5,7 @@
 <div class="container mt-3">
     <h1 class="mb-4 fw-bold">Lista Sponsorizzazioni</h1>
     <div class="accordion" id="sponsorshipAccordion">
-        @foreach ($totalSponsorhips as $index => $sponsorship)
+        @foreach ($totalSponsorships as $index => $sponsorship)
             <div class="card mb-2">
                 <div class="card-header" id="heading{{ $sponsorship->id }}">
                     <h5 class="mb-0">
@@ -19,8 +19,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="{{ $sponsorship->apartment->cover_image }}" alt="Immagine Appartamento" class="img-fluid rounded mb-3">
-                                <h5>Dettagli Appartamento:</h5>
+                                @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
+                                <img src="{{ $sponsorship->apartment->cover_image }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                @else
+                                <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                                @endif                                <h5>Dettagli Appartamento:</h5>
                                 <p><strong>Titolo:</strong> <a href="{{ route('dashboard.apartments.show', $sponsorship->apartment->slug) }}">{{ $sponsorship->apartment->title }}</p></a>
                             </div>
                             <div class="col-md-6">

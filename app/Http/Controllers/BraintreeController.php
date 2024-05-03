@@ -71,15 +71,19 @@ class BraintreeController extends Controller
     {
         $userId = Auth::id(); // ID dell'utente autenticato
 
-        $totalSponsorhips = ApartmentSponsorship::with(['apartment', 'sponsorship'])
+        $totalSponsorships = ApartmentSponsorship::with(['apartment' => function ($query) {
+            $query->withTrashed(); // Carica relazioni anche con gli appartamenti soft-deleted
+        }, 'sponsorship'])
             ->whereHas('apartment', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
+                $query->withTrashed() // Qui è necessario includere withTrashed per considerare anche gli appartamenti eliminati
+                    ->where('user_id', $userId);
             })
             ->orderBy('created_at', 'desc')
             ->get();
 
 
+
         // Return the view with apartments and their messages
-        return view('pages.dashboard.sponsors', compact('totalSponsorhips'));
+        return view('pages.dashboard.sponsors', compact('totalSponsorships'));
     }
 }

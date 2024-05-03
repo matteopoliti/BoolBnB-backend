@@ -19,7 +19,9 @@ class ApartmentController extends Controller
     {
         $userId = Auth::id();
 
-        $apartments = Apartment::where('user_id', $userId)->get();
+        $apartments = Apartment::where('user_id', $userId)
+            ->whereNull('deleted_at')
+            ->get();
 
         $table_headers_values = [
             'Titolo',
@@ -186,16 +188,29 @@ class ApartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function softDelete($slug)
+    {
+        $apartment = Apartment::where('slug', $slug)->firstOrFail();
+
+        $apartment->delete();
+
+        return redirect()->route('dashboard.apartments.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Apartment $apartment)
     {
         $apartment->services()->sync([]);
+        $apartment->sponsorships()->sync([]);
 
         if ($apartment->cover_image) {
 
             Storage::delete($apartment->cover_image);
         }
 
-        $apartment->delete();
+        $apartment->forceDelete();
 
         return redirect()->route('dashboard.apartments.index');
     }
