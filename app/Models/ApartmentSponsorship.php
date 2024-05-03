@@ -14,12 +14,14 @@ class ApartmentSponsorship extends Model
     protected $fillable = [
         'apartment_id',
         'sponsorship_id',
+        'start_date',
         'expiration_date'
     ];
 
     protected $casts = [
         'created_at' => 'datetime', // Cast to datetime to ensure handling as Carbon instance
         'updated_at' => 'datetime', // Also cast updated_at for consistency
+        'start_date' => 'datetime', // Also cast updated_at for consistency
         'expiration_date' => 'datetime', // Also cast updated_at for consistency
     ];
 

@@ -58,15 +58,27 @@ class BraintreeController extends Controller
 
         if ($result->success) {
             $sponsorship = Sponsorship::find(Session::get('sponsorship_id'));
+            $apartmentId = Session::get('apartment_id');
 
+            // Prendi l'ultima sponsorizzazione di questo appartamento che non è ancora scaduta
+            $lastSponsorship = ApartmentSponsorship::where('apartment_id', $apartmentId)
+                ->where('expiration_date', '>', Carbon::now())
+                ->orderBy('expiration_date', 'desc')
+                ->first();
+
+            // Se esiste una sponsorizzazione attiva, imposta la `created_at` della nuova sponsorizzazione alla sua `expiration_date`
+            $startDate = $lastSponsorship ? Carbon::parse($lastSponsorship->expiration_date) : Carbon::now();
             $currentTime = Carbon::now();
 
-            $expirationDate = (clone $currentTime)->addHours($sponsorship->duration);
+            // Calcola la nuova `expiration_date`
+            $expirationDate = (clone $startDate)->addHours($sponsorship->duration);
 
+            // Crea la nuova sponsorizzazione
             $apartmentSponsorship = ApartmentSponsorship::create([
-                'apartment_id' => Session::get('apartment_id'),
-                'sponsorship_id' => Session::get('sponsorship_id'),
+                'apartment_id' => $apartmentId,
+                'sponsorship_id' => $sponsorship->id,
                 'created_at' => $currentTime,
+                'start_date' => $startDate,
                 'expiration_date' => $expirationDate
             ]);
 

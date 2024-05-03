@@ -20,9 +20,9 @@ class ApartmentController extends Controller
                 ->leftJoin('apartment_sponsorship', function ($join) {
                     $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
                         ->whereRaw('apartment_sponsorship.created_at = (
-                            SELECT MAX(created_at) FROM apartment_sponsorship
-                            WHERE apartment_id = apartments.id
-                         )');
+                        SELECT MAX(created_at) FROM apartment_sponsorship
+                        WHERE apartment_id = apartments.id
+                     )');
                 })
                 ->where('is_available', 1)
                 ->whereNull('deleted_at')
@@ -38,9 +38,9 @@ class ApartmentController extends Controller
                 ->join('apartment_sponsorship', function ($join) {
                     $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
                         ->whereRaw('apartment_sponsorship.created_at = (
-                            SELECT MAX(created_at) FROM apartment_sponsorship
-                            WHERE apartment_id = apartments.id
-                         )');
+                        SELECT MAX(created_at) FROM apartment_sponsorship
+                        WHERE apartment_id = apartments.id
+                     )');
                 })
                 ->where('is_available', 1)
                 ->whereNull('deleted_at')
@@ -59,6 +59,8 @@ class ApartmentController extends Controller
             'services' => $services
         ]);
     }
+
+
 
     public function filter(Request $request)
     {

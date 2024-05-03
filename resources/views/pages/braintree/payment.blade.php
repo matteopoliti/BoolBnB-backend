@@ -47,8 +47,10 @@
                                 <li class="list-group-item"><strong>Pacchetto:</strong> {{ $apartmentSponsorship->sponsorship->name }}</li>
                                 <li class="list-group-item"><strong>Durata:</strong> {{ $apartmentSponsorship->sponsorship->duration }} ore</li>
                                 <li class="list-group-item"><strong>Costo: </strong>{{ $apartmentSponsorship->sponsorship->amount }} €</li>
+                                <hr>
                                 <li class="list-group-item"><strong>Data Transazione:</strong> <span class="datetime">{{ $apartmentSponsorship->created_at->toIso8601String() }}</span></li>
-                                <li class="list-group-item"><strong>Data Scadenza:</strong> <span class="datetime">{{ $apartmentSponsorship->expiration_date->toIso8601String() }}</span></li>
+                                <li class="list-group-item"><strong>Inizio Sponsor:</strong> <span class="datetime">{{ $apartmentSponsorship->start_date->toIso8601String() }}</span></li>
+                                <li class="list-group-item"><strong>Fine Sponsor:</strong> <span class="datetime">{{ $apartmentSponsorship->expiration_date->toIso8601String() }}</span></li>
                             </ul>
                         </div>
                     </div>
