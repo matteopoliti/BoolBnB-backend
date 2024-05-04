@@ -46,7 +46,7 @@
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
 
-                <h2>Dashboard</h2>
+                <h2 class="mb-0">Dashboard</h2>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -68,9 +68,9 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"
-                                    href="{{ route('dashboard.apartments.index') }}">{{ __('Apartamenti') }}</a>
-                                <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profilo') }}</a>
+                              {{--  <a class="dropdown-item"
+                                     href="{{ route('dashboard.apartments.index') }}">{{ __('Apartamenti') }}</a> --}}
+                                    <a class="dropdown-item " href="{{ url('profile') }}"><i class="fa-solid fa-gear"></i> {{ __('Profilo') }}</a>
                             </div>
                         </li>
                     @endguest
@@ -139,31 +139,37 @@
 
 
         <div class="dashboard">
-            <div class="d-flex flex-column align-items-center flex-shrink-0 p-3 bg-body-tertiary" style="width: 400px;">
+            <div class="d-flex flex-column align-items-center  flex-shrink-0 bg-body-tertiary side-bar py-4 ps-2 " >
 
-                <ul class="nav nav-pills flex-column gap-4  mb-auto">
-                    <li>
-                        <a href="{{ route('dashboard.apartments.index') }}" class="nav-link link-body-emphasis">
+                <ul class="nav nav-pills flex-column gap-4 w-100 mb-auto justify-content-center">
+                    <li >
+                        <a href="{{ route('dashboard.apartments.index') }}" class="nav-link link-body-emphasis ">
                             <i class="fa-solid fa-house"></i>
-                            <span class="fs-3">{{ __('Appartamenti') }}</span>
+                            <span class="fs-5">{{ __('Appartamenti') }}</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-chart-simple"></i>
-                            <span class="fs-3">Statistiche</span>
+                            <span class="fs-5">Statistiche</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dashboard.messages') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-message"></i>
-                            <span class="fs-3">Messaggi</span>
+                            <span class="fs-5">Messaggi</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dashboard.sponsors') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-credit-card"></i>
-                            <span class="fs-3">Sponsor</span>
+                            <span class="fs-5">Sponsor</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link link-body-emphasis">
+                            <i class="fa-solid fa-trash"></i>
+                            <span class="fs-5">Cestino</span>
                         </a>
                     </li>
                 </ul>
@@ -181,11 +187,15 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item btn btn-danger" aria-labelledby="navbarDropdown">
+                            <li class="nav-item btn btn-outline-danger " aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                                        <i class="fa-solid fa-right-from-bracket log-out"></i>
+                                                        <span>
+                                                         {{ __('Logout') }}
+                                                        </span>
+
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -196,7 +206,7 @@
                     </ul>
                 </div>
             </div>
-            <main class=" overflow-auto w-100 mx-auto">
+            <main class=" overflow-auto ">
                 @yield('content')
             </main>
         </div>
