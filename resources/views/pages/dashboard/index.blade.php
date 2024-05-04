@@ -53,7 +53,7 @@
                                 </a>
                             </div>
                             <div class="col-6 p-1">
-                                <a href="{{ route('apartments.sponsorships', $apartment->slug) }}" class="btn btn-success btn-sm w-100">
+                                <a href="{{ route('apartments.sponsorships', $apartment->slug) }}" class="btn btn-success btn-sm w-100 {{ $apartment->is_available == 0 ? 'disabled' : '' }}">
                                     <i class="fa-solid fa-dollar"></i> Promuovi
                                 </a>
                             </div>
@@ -75,12 +75,12 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <strong>Questa operazione è irreversibile.</strong><br>
+                                {{-- <strong>Questa operazione è irreversibile.</strong><br> --}}
                                 Sei sicuro di voler eliminare l'appartamento: "{{ $apartment->title }}"?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                <form action="{{ route('dashboard.apartments.destroy', $apartment->slug) }}" method="POST">
+                                <form action="{{ route('apartments.softDelete', $apartment->slug) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Confermo</button>

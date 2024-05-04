@@ -15,7 +15,9 @@ class MessageController extends Controller
     public function showAllMessages()
     {
         $userId = Auth::id();  // Get the ID of the currently authenticated user
-        $apartments = Apartment::with('messages')
+        $apartments = Apartment::with(['messages' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+        }])
             ->where('is_available', 1)
             ->whereNull('deleted_at')
             ->where('user_id', $userId)->get();  // Eager load messages related to the user's apartments

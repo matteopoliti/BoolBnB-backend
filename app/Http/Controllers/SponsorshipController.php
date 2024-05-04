@@ -11,11 +11,14 @@ class SponsorshipController extends Controller
     public function index($slug)
     {
         $apartment = Apartment::where('slug', $slug)->firstOrFail();
-        
+
         $sponsorships = Sponsorship::all();
-        
-        return view('pages.dashboard.sponsorships', compact('sponsorships', 'apartment'));
+
+        $apartment_id =  $apartment->id;
+
+        return view('pages.dashboard.sponsorships', compact('sponsorships', 'apartment', 'apartment_id'));
     }
+
     public function store(Request $request, $apartmentId)
     {
         // Validazione del form input

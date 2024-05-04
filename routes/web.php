@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\ApartmentController;
+use App\Http\Controllers\BraintreeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorshipController;
+use App\Models\ApartmentSponsorship;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +24,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -32,15 +37,36 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);;
+    Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 });
+
+Route::delete('/apartments/{slug}/soft-delete', [ApartmentController::class, 'softDelete'])->name('apartments.softDelete');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/messages', [MessageController::class, 'showAllMessages'])->name('dashboard.messages');
 });
 
-Route::get('/apartments/{apartment}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
+Route::get('/apartments/{slug}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
 
 Route::post('/apartments/{apartmentId}/sponsorships', [SponsorshipController::class, 'store'])->name('sponsorships.store');
+
+Route::post('/braintree/token', [BraintreeController::class, 'token'])->name('braintree.token');
+Route::post('/braintree/payment', [BraintreeController::class, 'payment'])->name('payment.process');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/sponsors', [BraintreeController::class, 'showAllSponsorships'])->name('dashboard.sponsors');
+});
+
+Route::get('/braintree/payment/success', function () {
+    $apartmentSponsorshipId = Session::get('apartmentSponsorshipId');
+    $apartmentSponsorship = ApartmentSponsorship::with(['apartment', 'sponsorship'])
+        ->find($apartmentSponsorshipId);
+
+    return view('pages.braintree.payment', compact('apartmentSponsorship'));
+})->name('payment.success');
+
+// Route::get('/{any}', function () {
+//     return view('errors.404');
+// })->where('any', '.*');
 
 require __DIR__ . '/auth.php';
