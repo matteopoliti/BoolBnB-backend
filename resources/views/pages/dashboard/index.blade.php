@@ -14,52 +14,52 @@
                 <tr>
                     <th class="px-3">Immagine</th>
                     <th class="px-3">Titolo</th>
-                    <th class="px-3">Categoria</th>
-                    <th class="px-3">Indirizzo</th>
-                    <th class="px-3">Disponibilità</th>
+                    <th class="px-3 d-none d-md-table-cell">Categoria</th>
+                    <th class="px-3 d-none d-lg-table-cell">Indirizzo</th>
+                    <th class="px-3 d-none d-lg-table-cell">Visibile</th>
                     <th class="px-3">Azioni</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($apartments as $apartment)
-                <tr>
-                    <td class="h-100 align-middle">
+                <tr style="max-height:70px">
+                    <td class="align-middle">
                         @if (Str::startsWith($apartment->cover_image, 'https'))
-                        <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
+                        <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="img-thumbnail" style="width: 100px; height: 70px;">
                         @else
                         <img src="{{ asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
                         @endif
                     </td>
                     <td class="h-100 align-middle">{{ $apartment->title }}</td>
-                    <td class="text-capitalize h-100 align-middle">{{ $apartment->category }}</td>
-                    <td class="h-100 align-middle">{{ $apartment->full_address }}</td>
-                    <td class="h-100 align-middle">
+                    <td class="text-capitalize h-100 align-middle d-none d-md-table-cell">{{ $apartment->category }}</td>
+                    <td class="h-100 align-middle d-none d-lg-table-cell">{{ $apartment->full_address }}</td>
+                    <td class="h-100 align-middle d-none d-lg-table-cell">
                         @if ($apartment->is_available)
                             <i class="fa-solid fa-check"></i>
                         @else
                             <i class="fa-solid fa-xmark"></i>
                         @endif
                     </td>
-                    <td class="h-100">
+                    <td class="d-flex align-items-center">
                         <div class="d-flex flex-wrap">
-                            <div class="col-6 p-1">
+                            <div class="col-6 p-1 align-items-center">
                                 <a href="{{ route('dashboard.apartments.show', $apartment->slug) }}" class="btn btn-info btn-sm w-100">
-                                    <i class="fa-solid fa-circle-info"></i> Info
+                                    <i class="fa-solid fa-circle-info d-inline "></i><span class="d-none d-xxl-inline"> Info</span>
                                 </a>
                             </div>
-                            <div class="col-6 p-1">
+                            <div class="col-6 p-1 ">
                                 <a href="{{ route('dashboard.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn-sm w-100">
-                                    <i class="fa-solid fa-pen"></i> Modifica
+                                    <i class="fa-solid fa-pen d-inline "></i><span class="d-none d-xxl-inline"> Modifica</span>
                                 </a>
                             </div>
-                            <div class="col-6 p-1">
+                            <div class="col-6 p-1 align-items-center">
                                 <a href="{{ route('apartments.sponsorships', $apartment->slug) }}" class="btn btn-success btn-sm w-100 {{ $apartment->is_available == 0 ? 'disabled' : '' }}">
-                                    <i class="fa-solid fa-dollar"></i> Promuovi
+                                    <i class="fa-solid fa-dollar d-inline "></i><span class="d-none d-xxl-inline"> Promuovi</span>
                                 </a>
                             </div>
-                            <div class="col-6 p-1">
+                            <div class="col-6 p-1 align-items-center">
                                 <button type="button" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $apartment->id }}">
-                                    <i class="fa-solid fa-trash"></i> Elimina
+                                    <i class="fa-solid fa-trash d-inline"></i><span class="d-none d-xxl-inline"> Elimina</span>
                                 </button>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                             </div>
                             <div class="modal-body">
                                 {{-- <strong>Questa operazione è irreversibile.</strong><br> --}}
-                                Sei sicuro di voler eliminare l'appartamento: "{{ $apartment->title }}"?
+                                Sei sicuro di voler eliminare l'appartamento: <br>"<strong>{{ $apartment->title }}</strong>"?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
