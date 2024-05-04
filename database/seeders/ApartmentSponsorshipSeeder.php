@@ -19,7 +19,7 @@ class ApartmentSponsorshipSeeder extends Seeder
         $sponsorships = Sponsorship::all();
 
         // Inizializza la data di creazione al 1 gennaio 2024
-        $createdTime = Carbon::create(2018, 1, 1);
+        $createdTime = Carbon::create(2019, 1, 1);
 
         // Itera 250 volte
         for ($j = 0; $j < 250; $j++) {

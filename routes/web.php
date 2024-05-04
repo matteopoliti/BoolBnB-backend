@@ -24,6 +24,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -62,5 +64,9 @@ Route::get('/braintree/payment/success', function () {
 
     return view('pages.braintree.payment', compact('apartmentSponsorship'));
 })->name('payment.success');
+
+// Route::get('/{any}', function () {
+//     return view('errors.404');
+// })->where('any', '.*');
 
 require __DIR__ . '/auth.php';
