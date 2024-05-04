@@ -36,6 +36,13 @@
 
 .active-t4 {
     border-right: 4px hsla(174, 77%, 44%, 1) solid;
+    background-color: rgba(0, 0, 0, 0.05);
+
+    a,
+    span,
+    i {
+        color: hsla(174, 77%, 44%, 1);
+    }
 }
 
 .gradient-custom-2 {

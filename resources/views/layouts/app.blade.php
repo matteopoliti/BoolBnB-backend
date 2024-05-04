@@ -139,34 +139,34 @@
 
 
         <div class="dashboard">
-            <div class="d-flex flex-column align-items-center  flex-shrink-0 bg-body-tertiary side-bar py-4 ps-2 " >
+            <div class="d-flex flex-column align-items-center flex-shrink-0 bg-body-tertiary side-bar py-4" >
 
                 <ul class="nav nav-pills flex-column gap-4 w-100 mb-auto justify-content-center">
-                    <li >
+                    <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
                         <a href="{{ route('dashboard.apartments.index') }}" class="nav-link link-body-emphasis ">
                             <i class="fa-solid fa-house"></i>
                             <span class="fs-5">{{ __('Appartamenti') }}</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
                         <a href="#" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-chart-simple"></i>
                             <span class="fs-5">Statistiche</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('dashboard.messages') ? 'active-t4' : '' }} ps-2">
                         <a href="{{ route('dashboard.messages') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-message"></i>
                             <span class="fs-5">Messaggi</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('dashboard.sponsors') ? 'active-t4' : '' }} ps-2">
                         <a href="{{ route('dashboard.sponsors') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-credit-card"></i>
                             <span class="fs-5">Sponsor</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
                         <a href="#" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-trash"></i>
                             <span class="fs-5">Cestino</span>
