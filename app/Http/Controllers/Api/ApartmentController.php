@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -13,41 +14,33 @@ class ApartmentController extends Controller
     {
         $pagination_value = $this->determinePagination($request->input('from_where'));
         $category = $request->input('category');
+        $now = Carbon::now();
 
-        // Se il parametro from_where è 'advancedSearch', includi gli appartamenti sponsorizzati
-        if ($request->input('from_where') === 'advancedSearch') {
-            $apartments = Apartment::with('services')
-                ->leftJoin('apartment_sponsorship', function ($join) {
-                    $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
-                        ->whereRaw('apartment_sponsorship.created_at = (
+        $query = Apartment::with('services')
+            ->leftJoin('apartment_sponsorship', function ($join) {
+                $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
+                    ->whereRaw('apartment_sponsorship.created_at = (
                         SELECT MAX(created_at) FROM apartment_sponsorship
                         WHERE apartment_id = apartments.id
                      )');
-                })
-                ->where('is_available', 1)
-                ->whereNull('deleted_at')
-                ->when($category, function ($query, $category) {
-                    return $query->where('category', $category);
-                })
-                ->orderByRaw('CASE WHEN apartment_sponsorship.id IS NOT NULL THEN 0 ELSE 1 END')
-                ->orderByDesc('apartment_sponsorship.created_at') // Ordina per la data di creazione della relazione
+            })
+            ->select('apartments.*', 'apartment_sponsorship.expiration_date')
+            ->where('is_available', 1)
+            ->whereNull('deleted_at')
+            ->when($category, function ($query, $category) {
+                return $query->where('category', $category);
+            });
+
+        if ($request->input('from_where') === 'advancedSearch') {
+            $apartments = $query
+                ->orderByRaw('CASE WHEN apartment_sponsorship.expiration_date > ? THEN 0 ELSE 1 END', [$now])
+                ->orderByDesc('apartment_sponsorship.created_at')
+                ->orderBy('apartments.created_at')
                 ->paginate($pagination_value);
         } else {
-            // Se il parametro from_where è 'homePage', includi solo gli appartamenti con sponsorizzazione
-            $apartments = Apartment::with('services')
-                ->join('apartment_sponsorship', function ($join) {
-                    $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
-                        ->whereRaw('apartment_sponsorship.created_at = (
-                        SELECT MAX(created_at) FROM apartment_sponsorship
-                        WHERE apartment_id = apartments.id
-                     )');
-                })
-                ->where('is_available', 1)
-                ->whereNull('deleted_at')
-                ->when($category, function ($query, $category) {
-                    return $query->where('category', $category);
-                })
-                ->orderByDesc('apartment_sponsorship.created_at') // Ordina per la data di creazione della relazione
+            $apartments = $query
+                ->where('apartment_sponsorship.expiration_date', '>', $now)
+                ->orderByDesc('apartment_sponsorship.created_at')
                 ->paginate($pagination_value);
         }
 
@@ -60,11 +53,10 @@ class ApartmentController extends Controller
         ]);
     }
 
-
-
     public function filter(Request $request)
     {
         $pagination_value = $this->determinePagination($request->input('from_where'));
+        $now = Carbon::now();
 
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
@@ -78,6 +70,15 @@ class ApartmentController extends Controller
         $maxDistance = $radius * 1000;
 
         $query = Apartment::with('services')
+            ->leftJoin('apartment_sponsorship', function ($join) use ($now) {
+                $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
+                    ->whereRaw('apartment_sponsorship.created_at = (
+                    SELECT MAX(created_at) FROM apartment_sponsorship
+                    WHERE apartment_id = apartments.id
+                )')
+                    ->where('apartment_sponsorship.expiration_date', '>', $now);
+            })
+            ->select('apartments.*', 'apartment_sponsorship.created_at as sponsorship_created_at', 'apartment_sponsorship.expiration_date')
             ->whereNull('deleted_at')
             ->where('is_available', 1);
 
@@ -114,6 +115,10 @@ class ApartmentController extends Controller
                 ->having('distance', '<=', $maxDistance)
                 ->orderBy('distance');
         }
+
+        $query->orderByRaw('CASE WHEN apartment_sponsorship.expiration_date > ? THEN 0 ELSE 1 END', [$now])
+            ->orderByDesc('apartment_sponsorship.created_at')
+            ->orderBy('apartments.created_at');
 
         $apartments = $query->paginate($pagination_value);
 
