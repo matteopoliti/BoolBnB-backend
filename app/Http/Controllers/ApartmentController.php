@@ -23,13 +23,6 @@ class ApartmentController extends Controller
             ->whereNull('deleted_at')
             ->get();
 
-        $table_headers_values = [
-            'Titolo',
-            'Descrizione',
-            'Aggiunta',
-            'Ultima modifica'
-        ];
-
         $categories = [
             'villa',
             'appartamento',
@@ -40,7 +33,7 @@ class ApartmentController extends Controller
             'roulotte'
         ];
 
-        return view('pages.dashboard.index', compact('apartments', 'table_headers_values', 'categories'));
+        return view('pages.dashboard.index', compact('apartments', 'categories'));
     }
 
     /**
@@ -197,13 +190,38 @@ class ApartmentController extends Controller
         return redirect()->route('dashboard.apartments.index');
     }
 
+    public function trashed()
+    {
+        $trashedApartments = Apartment::onlyTrashed()->get();
+
+        return view('pages.dashboard.trashed', compact('trashedApartments'));
+    }
+
+    public function restore($slug)
+    {
+        $apartment = Apartment::onlyTrashed()
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $apartment->restore();
+
+        return redirect()->route('dashboard.apartments.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Apartment $apartment)
+    public function forceDelete($slug)
     {
-        $apartment->services()->sync([]);
-        $apartment->sponsorships()->sync([]);
+        $apartment = Apartment::onlyTrashed()
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        foreach ($apartment->messages as $message) {
+            $message->delete();
+        }
+
+        $apartment->services()->detach();
 
         if ($apartment->cover_image) {
 

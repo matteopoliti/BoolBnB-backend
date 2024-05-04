@@ -95,9 +95,14 @@ class BraintreeController extends Controller
         $totalSponsorships = ApartmentSponsorship::with(['apartment' => function ($query) {
             $query->withTrashed(); // Carica relazioni anche con gli appartamenti soft-deleted
         }, 'sponsorship'])
-            ->whereHas('apartment', function ($query) use ($userId) {
-                $query->withTrashed() // Qui è necessario includere withTrashed per considerare anche gli appartamenti eliminati
-                    ->where('user_id', $userId);
+            ->where(function ($query) use ($userId) {
+                $query->whereHas('apartment', function ($subQuery) use ($userId) {
+                    $subQuery->withTrashed() // Include appartamenti eliminati
+                        ->where('user_id', $userId);
+                })
+                    ->orWhere(function ($subQuery) {
+                        $subQuery->whereNull('apartment_id'); // Include record dove apartment_id è null
+                    });
             })
             ->orderBy('created_at', 'desc')
             ->get();

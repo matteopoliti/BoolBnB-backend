@@ -166,8 +166,8 @@
                             <span class="fs-5">Sponsor</span>
                         </a>
                     </li>
-                    <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
-                        <a href="#" class="nav-link link-body-emphasis">
+                    <li class="{{ request()->routeIs('dashboard.apartments.trashed') ? 'active-t4' : '' }} ps-2">
+                        <a href="{{ route('dashboard.apartments.trashed') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-trash"></i>
                             <span class="fs-5">Cestino</span>
                         </a>

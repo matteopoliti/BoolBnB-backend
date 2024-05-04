@@ -13,7 +13,7 @@ class CreateApartmentSponsorshipTable extends Migration
         Schema::create('apartment_sponsorship', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('apartment_id')->nullable();
-            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('cascade');
+            $table->foreign('apartment_id')->references('id')->on('apartments')->onDelete('set null');
             $table->unsignedBigInteger('sponsorship_id')->nullable();
             $table->foreign('sponsorship_id')->references('id')->on('sponsorships')->onDelete('cascade');
             $table->timestamps();
