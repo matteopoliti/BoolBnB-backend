@@ -24,8 +24,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -36,15 +34,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::resource('apartments', ApartmentController::class)->parameters(['apartments' => 'apartment:slug']);
 });
 
-Route::delete('/apartments/{slug}/soft-delete', [ApartmentController::class, 'softDelete'])->name('apartments.softDelete');
+Route::delete('/apartments/{slug}/soft-delete', [ApartmentController::class, 'softDelete'])->name('dashboard.apartments.softDelete');
+
+Route::get('apartments/trashed', [ApartmentController::class, 'trashed'])->name('dashboard.apartments.trashed');
+
+Route::put('apartments/{slug}/restore', [ApartmentController::class, 'restore'])->name('dashboard.apartments.restore');
+
+Route::delete('apartments/{slug}/forceDelete', [ApartmentController::class, 'forceDelete'])->name('dashboard.apartments.forceDelete');
+
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard/messages', [MessageController::class, 'showAllMessages'])->name('dashboard.messages');
+    Route::get('dashboard/messages', [MessageController::class, 'showAllMessages'])->name('dashboard.messages');
 });
+
 
 Route::get('/apartments/{slug}/sponsorships', [SponsorshipController::class, 'index'])->name('apartments.sponsorships');
 
@@ -64,9 +71,5 @@ Route::get('/braintree/payment/success', function () {
 
     return view('pages.braintree.payment', compact('apartmentSponsorship'));
 })->name('payment.success');
-
-// Route::get('/{any}', function () {
-//     return view('errors.404');
-// })->where('any', '.*');
 
 require __DIR__ . '/auth.php';

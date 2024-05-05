@@ -19,13 +19,18 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
-                                <img src="{{ $sponsorship->apartment->cover_image }}" alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded mb-3">
+                                @if($sponsorship->apartment)
+                                    @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
+                                    <img src="{{ $sponsorship->apartment->cover_image }}" alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded mb-3">
+                                    @else
+                                    <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}" alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded mb-3">
+                                    @endif
+                                    <h5>Dettagli Appartamento:</h5>
+                                    <p><strong>Titolo:</strong> <a href="{{ route('dashboard.apartments.show', $sponsorship->apartment->slug) }}">{{ $sponsorship->apartment->title }}</a></p>
                                 @else
-                                <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}" alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded mb-3">
+                                    <h5>Dettagli Appartamento:</h5>
+                                    <p><em>Appartamento non più disponibile.</em></p>
                                 @endif
-                                <h5>Dettagli Appartamento:</h5>
-                                <p><strong>Titolo:</strong> <a href="{{ route('dashboard.apartments.show', $sponsorship->apartment->slug) }}">{{ $sponsorship->apartment->title }}</p></a>
                             </div>
                             <div class="col-md-6">
                                 <h5>Dettagli Sponsorizzazione:</h5>
@@ -59,5 +64,5 @@
             });
         });
     });
-    </script>
+</script>
 @endsection

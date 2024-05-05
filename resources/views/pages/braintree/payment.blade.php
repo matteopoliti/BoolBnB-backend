@@ -64,18 +64,18 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const dates = document.querySelectorAll('.datetime');
-    dates.forEach(function(dateElement) {
-        const utcDate = new Date(dateElement.textContent);
-        dateElement.textContent = utcDate.toLocaleString('it-IT', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
+    document.addEventListener('DOMContentLoaded', function() {
+        const dates = document.querySelectorAll('.datetime');
+        dates.forEach(function(dateElement) {
+            const utcDate = new Date(dateElement.textContent);
+            dateElement.textContent = utcDate.toLocaleString('it-IT', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         });
     });
-});
 </script>
 @endsection
