@@ -28,6 +28,9 @@
                                     <h5>Dettagli Appartamento:</h5>
                                     <p><strong>Titolo:</strong> <a href="{{ route('dashboard.apartments.show', $sponsorship->apartment->slug) }}">{{ $sponsorship->apartment->title }}</a></p>
                                 @else
+                                    <div class="img-fluid rounded mb-3 position-relative" style="height: 412.98px; background-color: rgba(0, 0, 0, 0.05);">
+                                        <img src="{{ Vite::asset('resources/assets/img/404-Icon.png') }}" class="position-absolute top-50 start-50 translate-middle" style="max-height: 60px; width: 60px;"></img> 
+                                    </div>
                                     <h5>Dettagli Appartamento:</h5>
                                     <p><em>Appartamento non più disponibile.</em></p>
                                 @endif
