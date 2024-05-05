@@ -32,6 +32,10 @@ class Apartment extends Model
         'is_available',
     ];
 
+    protected $casts = [
+        'deleted_at' => 'datetime', // Cast to datetime to ensure handling as Carbon instance
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

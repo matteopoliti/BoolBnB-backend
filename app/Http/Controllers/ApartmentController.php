@@ -192,7 +192,9 @@ class ApartmentController extends Controller
 
     public function trashed()
     {
-        $trashedApartments = Apartment::onlyTrashed()->get();
+        $trashedApartments = Apartment::onlyTrashed()
+            ->orderBy('deleted_at', 'desc')
+            ->get();
 
         return view('pages.dashboard.trashed', compact('trashedApartments'));
     }
