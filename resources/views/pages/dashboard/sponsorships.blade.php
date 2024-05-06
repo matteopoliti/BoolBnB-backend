@@ -31,11 +31,11 @@
                 <div>
                     @foreach ($sponsorships as $sponsorship)
                         <div class="mb-3">
-                            <div class="card text-center sponsorship-card" data-id="{{ $sponsorship->id }}"> <!-- Aggiunto attributo data-id per memorizzare l'ID del tier -->
-                                <div class="card-header m-0 p-2">
+                            <div class="card text-center sponsorship-payment-card" data-id="{{ $sponsorship->id }}"> <!-- Aggiunto attributo data-id per memorizzare l'ID del tier -->
+                                <div class="card-header sponsorship-payment-card-header m-0 p-2">
                                     <h5 class="m-0 fw-bolder">{{ $sponsorship->name }}</h5>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body sponsorship-payment-card-body">
                                     <p class="card-text">{{ $sponsorship->duration }} ore di visibilità</p>
                                     <h5 class="card-title fw-semibold">{{ $sponsorship->amount }} €</h5>
                                 </div>
@@ -62,7 +62,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const cards = document.querySelectorAll('.sponsorship-card');
+        const cards = document.querySelectorAll('.sponsorship-payment-card');
         cards.forEach(card => {
             card.addEventListener('click', function() {
                 cards.forEach(c => c.classList.remove('selected'));
@@ -86,19 +86,4 @@
     });
 </script>
 
-<style>
-    .selected .card-header {
-        background-color: rgb(24, 196, 180, 0.8);
-        color: #0B262F;
-    }
 
-    .selected .card-body {
-        background-color: rgb(24, 196, 180, 0.2);
-        color: #0B262F;
-    }
-
-    /* Stile per il messaggio di errore */
-    #error-message {
-        display: none;
-    }
-</style>

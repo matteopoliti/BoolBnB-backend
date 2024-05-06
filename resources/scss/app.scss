@@ -163,3 +163,20 @@
         }
     }
 }
+
+
+//SECTION Sponsorship payment card
+.selected .sponsorship-payment-card-header {
+    background-color: rgb(24, 196, 180, 0.8);
+    color: #0B262F;
+}
+
+.selected .sponsorship-payment-card-body {
+    background-color: rgb(24, 196, 180, 0.2);
+    color: #0B262F;
+}
+
+/* Stile per il messaggio di errore */
+#error-message {
+    display: none;
+}
