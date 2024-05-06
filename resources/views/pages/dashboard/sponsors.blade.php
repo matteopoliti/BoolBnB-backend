@@ -13,8 +13,8 @@
                                 data-bs-target="#collapse{{ $sponsorship->id }}"
                                 aria-expanded="{{ $index == 0 ? 'true' : 'false' }}"
                                 aria-controls="collapse{{ $sponsorship->id }}">
-                                Sponsorizzazione {{ $sponsorship->apartment->title }} del <span
-                                    class="datetime">{{ $sponsorship->created_at->toIso8601String() }}</span>
+                                Sponsorizzazione {{ $sponsorship->apartment ? $sponsorship->apartment->title : '' }}
+                                del <span class="datetime">{{ $sponsorship->created_at->toIso8601String() }}</span>
                             </button>
                         </h5>
                     </div>
