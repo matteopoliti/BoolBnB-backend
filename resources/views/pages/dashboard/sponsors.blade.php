@@ -64,6 +64,10 @@
                                             class="datetime">{{ $sponsorship->expiration_date->toIso8601String() }}</span>
                                     </p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endforeach
         </div>
     </div>
