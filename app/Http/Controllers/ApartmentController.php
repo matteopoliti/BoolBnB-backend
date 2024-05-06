@@ -41,7 +41,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        $categories = [
+        $categories_apartment = [
             'villa',
             'appartamento',
             'agriturismo',
@@ -51,11 +51,22 @@ class ApartmentController extends Controller
             'roulotte'
         ];
 
+        $categories_images = [
+            'soggiorno',
+            'cucina',
+            'bagno',
+            'camera da letto',
+            'garage',
+            'giardino',
+            'varie'
+        ];
+
+
         $apiKey = env('TOMTOM_API_KEY');
 
         $services = Service::all();
 
-        return view('pages.dashboard.create', compact('categories', 'services', 'apiKey'));
+        return view('pages.dashboard.create', compact('categories_apartment', 'categories_images', 'services', 'apiKey'));
     }
 
     /**
