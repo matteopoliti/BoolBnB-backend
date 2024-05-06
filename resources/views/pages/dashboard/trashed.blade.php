@@ -8,22 +8,22 @@
     </p>
 
     <div class="mx-3 mt-3">
-        <table class="table table-bordered table-striped table-hover mt-3 text-center">
+        <table class="table table-striped table-hover mt-3 text-center">
             <thead>
-                <tr>
-                    <th class="px-3">Immagine</th>
+                <tr >
+                    <th class="px-3 d-none d-md-table-cell">Immagine</th>
                     <th class="px-3">Titolo</th>
-                    <th class="px-3">Categoria</th>
-                    <th class="px-3">Indirizzo</th>
-                    <th class="px-3">Data eliminazione</th>
-                    <th class="px-3">Data scadenza</th>
+                    <th class="px-3 d-none d-xl-table-cell">Categoria</th>
+                    <th class="px-3 d-none d-xxl-table-cell">Indirizzo</th>
+                    <th class="px-3 d-none d-lg-table-cell">Data eliminazione</th>
+                    <th class="px-3 ">Data scadenza</th>
                     <th class="px-3">Azioni</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
                 @foreach ($trashedApartments as $apartment)
                 <tr>
-                    <td class="h-100 align-middle">
+                    <td class="h-100 align-middle d-none d-md-table-cell">
                         @if (Str::startsWith($apartment->cover_image, 'https'))
                         <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="img-thumbnail" style="width: 100px; height: auto;">
                         @else
@@ -31,22 +31,32 @@
                         @endif
                     </td>
                     <td class="h-100 align-middle">{{ $apartment->title }}</td>
-                    <td class="text-capitalize h-100 align-middle">{{ $apartment->category }}</td>
-                    <td class="h-100 align-middle">{{ $apartment->full_address }}</td>
-                    <td class="h-100 align-middle datetime">{{ $apartment->deleted_at->toIso8601String() }}</td>
-                    <td class="h-100 align-middle expiration-date">{{ $apartment->deleted_at->toIso8601String() }}</td>
+                    <td class="text-capitalize h-100 align-middle d-none d-xl-table-cell">{{ $apartment->category }}</td>
+                    <td class="h-100 align-middle d-none d-xxl-table-cell">{{ $apartment->full_address }}</td>
+                    <td class="h-100 align-middle datetime d-none d-lg-table-cell">{{ $apartment->deleted_at->toIso8601String() }}</td>
+                    <td class="h-100 align-middle expiration-date ">{{ $apartment->deleted_at->toIso8601String() }}</td>
                     <td class="h-100">
-                        <div class="d-flex flex-wrap">
-                            <div class="col-6 p-1">
+                        <div class="d-md-block" style="height: 100%">
+                            <div class="col p-1" >
                                 <form action="{{ route('dashboard.apartments.restore', $apartment->slug) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-warning btn-sm w-100"><i class="fa-solid fa-wrench"></i> Ripristina</button>
+                                    <button type="submit" class="btn btn-outline-warning btn-sm text-center rounded" style="height: 50px; width:100%;">
+                                        <i class="fa-solid fa-wrench"></i> 
+                                        <br>
+                                        <span class="d-none d-lg-inline ">
+                                        Ripristina
+                                        </span>
+                                    </button>
                                 </form>
                             </div>
-                            <div class="col-6 p-1">
-                                <button type="button" class="btn btn-danger btn-sm w-100" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $apartment->id }}">
-                                    <i class="fa-solid fa-trash"></i> Elimina
+                            <div class="col p-1">
+                                <button type="button" class="btn btn-outline-danger btn-sm text-center rounded" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $apartment->id }}" style="height: 50px; width:100%;">
+                                    <i class="fa-solid fa-trash"></i> 
+                                    <br>
+                                    <span class="d-none d-lg-inline">
+                                        Elimina
+                                    </span>
                                 </button>
                             </div>
                         </div>
