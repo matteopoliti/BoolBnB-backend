@@ -173,7 +173,7 @@
                     <label for="cover_image" class="form-label">Immagine aggiuntive</label>
                     @foreach ($more_images as $index => $image)
                         <div class="col-4 mb-4" id="image-container-{{ $index }}">
-                            <input type="hidden" name="image_id[]" id="image_id" value="{{ $image->id }}">
+                            <input type="hidden" name="image_id[]" id="image_id_{{ $image->id }}" value="{{ $image->id }}">
                             <input type="hidden" name="status[]" id="status_image" value="not_edited">
                             <div class="position-relative">
                                 <div class="rounded overflow-hidden">
@@ -207,7 +207,7 @@
                                     @error('categories[]')
                                         is_invalid
                                     @enderror"
-                                    name="categories[]" id="categories[]">
+                                    name="categories[]" id="categories_{{ $index }}">
                                     <option value="" selected>Seleziona</option>
             
                                     @foreach ($categories_images as $item)
@@ -223,6 +223,8 @@
                     
 
                     <div class="col-4 mb-4" id="image-container-{{ $more_images->count() + 1 }}">
+                        <input type="hidden" name="image_id[]" id="none_id_{{ $more_images->count() + 1 }}" value="">
+                        <input type="hidden" name="status[]" id="status_image{{ $more_images->count() + 1 }}" value="">
                         <div class="position-relative">
                             <div class="rounded overflow-hidden">
                                 <img id="selectedImage{{ $more_images->count() + 1 }}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
@@ -250,7 +252,7 @@
                                 @error('categories[]')
                                     is_invalid
                                 @enderror"
-                                name="categories[]" id="categories[]" disabled>
+                                name="categories[]" id="categories_{{ $more_images->count() + 1 }}" disabled>
                                 <option value="" selected>Seleziona</option>
         
                                 @foreach ($categories_images as $item)
@@ -322,6 +324,48 @@
 
         document.addEventListener('DOMContentLoaded', function() {
 
+            const categorySelects = document.querySelectorAll('select[name="categories[]"]');
+
+            // Add an event listener to each select element
+            categorySelects.forEach(function(selectElement, index) {
+                selectElement.addEventListener('change', function(event) {
+                    // This function is called whenever a select element is changed
+
+                    // `event.target` refers to the select element that was changed
+                    const changedSelect = event.target;
+
+                    // Get the related image_id input for the changed select
+                    const parentDiv = changedSelect.closest('.col-4');
+                    const statusInput = parentDiv.querySelector('input[name="status[]"]');
+                    const imageIdInput = parentDiv.querySelector('input[name="image_id[]"]');
+
+                    if (statusInput.value == "image") {
+                        
+                        statusInput.value = "both"
+                        console.log(statusInput);
+
+                    } else if (statusInput.value == "both") {
+
+                        statusInput.value = "both"
+                        console.log(statusInput);
+
+                    } else if (imageIdInput.value == "none") {
+
+                        statusInput.value = "new"
+                        console.log(statusInput);
+                    } else {
+                        statusInput.value = "select"
+                        console.log(statusInput);
+                    }
+
+                    console.log('Changed select element index:', index);
+                    console.log('Associated status:', statusInput.value);
+
+                    // Perform additional actions here based on the change
+                    // For example, you can send an AJAX request or update other parts of the UI
+                });
+            });
+
             document.getElementById('apartmentForm').addEventListener('change', function(event) {
                 if (event.target.name === 'images[]') {
                     const input = event.target;
@@ -362,18 +406,18 @@
                 }
             });
 
+
+
             window.displaySelectedImage = function(event, elementId) {
                 const selectedImage = document.getElementById(elementId);
-
                 const uniqueId = 'image-input-' + imageCounter;  // ID univoco per il contenitore
 
                 const fileInput = event.target;
                 const reader = new FileReader();
 
                 reader.onload = function(e) {
-                    const imageElement = document.getElementById(elementId);
-                    if (imageElement) {
-                        imageElement.src = e.target.result;
+                    if (selectedImage) {
+                        selectedImage.src = e.target.result;
                     } else {
                         console.error('Element not found:', elementId);
                     }
@@ -383,11 +427,39 @@
                     reader.readAsDataURL(fileInput.files[0]);
                 }
 
+                const parentDiv = selectedImage.closest('.col-4');
+                const statusInput = parentDiv.querySelector('input[name="status[]"]');
+                const imageIdInput = parentDiv.querySelector('input[name="image_id[]"]');
+
+                console.log(statusInput);
 
                 if (selectedImage.src.startsWith('data:') || selectedImage.src.startsWith('http://127.0.0.1:8000/storage')) {
-                    console.log(selectedImage)
+                    
+                    if (statusInput.value == "select") {
+                        
+                        statusInput.value = "both"
+                        console.log(statusInput);
+
+                    } else if (statusInput.value == "both") {
+
+                        statusInput.value = "both"
+                        console.log(statusInput);
+
+                    } else if (imageIdInput.value == "none") {
+
+                        console.log(statusInput);
+                    } else {
+                        statusInput.value = "image"
+                        console.log(statusInput);
+                    }
+
                     return
+
                 } else {
+
+                    imageIdInput.value = "none";
+                    statusInput.value = "new"
+
                     // Altrimenti, crea un nuovo elemento solo se non esiste già
                     const parentElement = document.getElementById('moreImagesContainer');
                     const childElement = document.createElement('div');
@@ -401,6 +473,8 @@
 
                     childElement.innerHTML = `
                         <div class="position-relative">
+                            <input type="hidden" name="image_id[]" id="none_id_${currentImageCounter}" value="">
+                            <input type="hidden" name="status[]" id="status_image${currentImageCounter}" value="">
                             <div class="rounded overflow-hidden">
                                 <img id="selectedImage${currentImageCounter}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
                                     alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
@@ -422,7 +496,7 @@
                                 @error('categories[]')
                                     is_invalid
                                 @enderror"
-                                name="categories[]" id="categories[]" disabled>
+                                name="categories[]" id="categories_${currentImageCounter}" disabled>
                                 <option value="" selected>Seleziona</option>
 
                                 @foreach ($categories_images as $item)

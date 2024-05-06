@@ -108,20 +108,23 @@ class ApartmentController extends Controller
             $new_apartment->services()->attach($request->services);
         };
 
-        foreach ($request->file('images') as $index => $image) {
-            if ($image->isValid()) {
-                $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $image);
+        if ($request->has('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                if ($image->isValid()) {
+                    $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $image);
 
-                $validated_data['images'][$index] = $path;
+                    $validated_data['images'][$index] = $path;
 
-                // Creazione del record di immagine nel database
-                Image::create([
-                    'apartment_id' => $new_apartment->id,
-                    'path' => $path,
-                    'category' => $validated_data['categories'][$index],
-                ]);
+                    // Creazione del record di immagine nel database
+                    Image::create([
+                        'apartment_id' => $new_apartment->id,
+                        'path' => $path,
+                        'category' => $validated_data['categories'][$index],
+                    ]);
+                }
             }
         }
+
 
         return redirect()->route('dashboard.apartments.show', ['apartment' => $new_apartment->slug]);
     }
@@ -174,27 +177,6 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-
-        dd($request);
-
-        $more_images = [
-            [
-                'path' => 'Alice',
-                'category' => 'alice@example.com',
-                'id' => 25
-            ],
-            [
-                'path' => 'Bob',
-                'category' => 'bob@example.com',
-                'id' => 30
-            ],
-            [
-                'path' => 'Carol',
-                'category' => 'carol@example.com',
-                'id' => 22
-            ]
-        ];
-
         $validated_data = $request->validated();
 
         $slug = Str::slug($request->title, '-');
@@ -229,11 +211,77 @@ class ApartmentController extends Controller
             $validated_data['cover_image'] = $path;
         }
 
-
         $apartment->update($validated_data);
 
         if ($request->has('services')) {
             $apartment->services()->sync($request->services);
+        };
+
+        if ($request->has('images') || $request->has('categories')) {
+
+            foreach ($request->input('status') as $index => $status) {
+
+                if ($status == "new") {
+
+                    if ($validated_data['images'][$index]->isValid()) {
+                        $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $validated_data['images'][$index]);
+
+                        $validated_data['images'][$index] = $path;
+                        $category = $validated_data['categories'][$index];
+
+                        Image::create([
+                            'apartment_id' => $apartment->id,
+                            'path' => $path,
+                            'category' => $category,
+                        ]);
+                    };
+                } elseif ($status == "both" || $status == "image" || $status == "select") {
+
+                    if ($status == "both") {
+
+                        if ($validated_data['images'][$index]->isValid()) {
+                            $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $validated_data['images'][$index]);
+
+                            $validated_data['images'][$index] = $path;
+                            $category = $validated_data['categories'][$index];
+                            $image_id = $validated_data['image_id'][$index];
+
+                            $image = Image::find($image_id);
+
+                            $image->path = $path;
+                            $image->category = $category;
+
+                            $image->save();
+                        };
+                    } elseif ($status == "image") {
+
+                        if ($validated_data['images'][$index]->isValid()) {
+                            $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $validated_data['images'][$index]);
+
+                            $validated_data['images'][$index] = $path;
+                            $category = $validated_data['categories'][$index];
+                            $image_id = $validated_data['image_id'][$index];
+
+                            $image = Image::find($image_id);
+
+                            $image->path = $path;
+
+                            $image->save();
+                        };
+                    } elseif ($status == "select") {
+
+                        $category = $validated_data['categories'][$index];
+                        $image_id = $validated_data['image_id'][$index];
+
+                        $image = Image::find($image_id);
+
+                        $image->category = $category;
+
+                        $image->save();
+                    };
+                } else {
+                };
+            };
         };
 
         return redirect()->route('dashboard.apartments.show', ['apartment' => $apartment->slug]);
