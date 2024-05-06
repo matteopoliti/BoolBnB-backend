@@ -48,7 +48,7 @@
                         <input type="hidden" name="sponsorship_id" id="selected-sponsorship">
                         <input type="hidden" name="amount" id="selected-sponsorship-amount"> <!-- Aggiunto campo nascosto per l'importo -->
                         <input type="hidden" name="apartment_id" id="current-apartment-id" value="{{ $apartment_id }}"> <!-- Aggiunto campo nascosto per l'importo -->
-                        <button type="submit" class="btn btn-primary mt-3">Procedi al pagamento</button> <!-- Cambiato da 'a' a 'button' -->
+                        <button type="submit" class="btn btn-success mt-3">Procedi al pagamento</button> <!-- Cambiato da 'a' a 'button' -->
                     </form>
                     <!-- Div per il messaggio di errore -->
                     <div id="error-message" class="alert alert-danger mt-3" style="display: none;"></div>
