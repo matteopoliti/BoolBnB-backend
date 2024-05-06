@@ -63,16 +63,16 @@ class ApartmentController extends Controller
         $radius = $request->input('radius') * 1000; // Convert km to meters directly here
 
         $query = Apartment::with('services')
-            ->leftJoin('apartment_sponsorship', function ($join) use ($now) {
+            ->leftJoin('apartment_sponsorship', function ($join) {
                 $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
                     ->whereRaw('apartment_sponsorship.created_at = (
-                    SELECT MAX(created_at) FROM apartment_sponsorship
-                    WHERE apartment_id = apartments.id
-                )')
-                    ->where('apartment_sponsorship.expiration_date', '>', $now);
+                        SELECT MAX(created_at) FROM apartment_sponsorship
+                        WHERE apartment_id = apartments.id
+                     )');
             })
-            ->whereNull('deleted_at')
-            ->where('is_available', 1);
+            ->select('apartments.*', 'apartment_sponsorship.expiration_date')
+            ->where('is_available', 1)
+            ->whereNull('deleted_at');
 
         // Apply filters based on request inputs
         $query->when($request->filled('category'), function ($q) use ($request) {
