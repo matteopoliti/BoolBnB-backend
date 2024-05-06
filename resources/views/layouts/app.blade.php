@@ -39,9 +39,9 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('http://localhost:5174/') }}">
-                    <div class="logo_laravel">
-                        <img src="{{ Vite::asset('resources/assets/img/logo-boolbnb-nome-tiny.png') }}" alt=""
-                            class="w-50">
+                    <div class="logo_laravel ms-md-5">
+                        <img src="{{ Vite::asset('resources/assets/img/logo-boolbnb-nome.png') }}" alt=""
+                            class="" style="height: 60px;">
                     </div>
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
