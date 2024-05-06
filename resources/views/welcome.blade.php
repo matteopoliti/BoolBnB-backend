@@ -35,7 +35,7 @@
         </div>
         <div>
             <div class="container px-5">
-                <img src="{{ Vite::asset('resources/assets/img/Screenshot 2024-04-27 114738.png') }}"
+                <img src="{{ Vite::asset('resources/assets/img/Screenshot 2024-05-05 153637.png') }}"
                     class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500"
                     loading="lazy">
             </div>

@@ -46,7 +46,7 @@
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
 
-                <h2 class="mb-0">Dashboard</h2>
+                <h2 class="mb-0">Area Personale</h2>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -68,9 +68,10 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                              {{--  <a class="dropdown-item"
+                                {{--  <a class="dropdown-item"
                                      href="{{ route('dashboard.apartments.index') }}">{{ __('Apartamenti') }}</a> --}}
-                                    <a class="dropdown-item " href="{{ url('profile') }}"><i class="fa-solid fa-gear"></i> {{ __('Profilo') }}</a>
+                                <a class="dropdown-item " href="{{ url('profile') }}"><i class="fa-solid fa-gear"></i>
+                                    {{ __('Profilo') }}</a>
                             </div>
                         </li>
                     @endguest
@@ -139,7 +140,7 @@
 
 
         <div class="dashboard">
-            <div class="d-flex flex-column align-items-center flex-shrink-0 bg-body-tertiary side-bar py-4" >
+            <div class="d-flex flex-column align-items-center flex-shrink-0 bg-body-tertiary side-bar py-4">
 
                 <ul class="nav nav-pills flex-column gap-4 w-100 mb-auto justify-content-center">
                     <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
@@ -191,10 +192,10 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                                        <i class="fa-solid fa-right-from-bracket log-out"></i>
-                                                        <span>
-                                                         {{ __('Logout') }}
-                                                        </span>
+                                    <i class="fa-solid fa-right-from-bracket log-out"></i>
+                                    <span>
+                                        {{ __('Logout') }}
+                                    </span>
 
                                 </a>
 
