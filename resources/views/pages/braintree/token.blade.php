@@ -8,7 +8,7 @@
                 <div class="card-header">Checkout</div>
                 <div class="card-body">
                     <div id="dropin-container"></div>
-                    <button id="submit-button" class="btn btn-primary">Conferma pagamento</button>
+                    <button id="submit-button" class="btn btn-success">Conferma pagamento</button>
                     <!-- Form già presente nella pagina, nascosto -->
                     <form id="payment-form" style="display: none;" method="post" action="{{ route('payment.process') }}">
                         @csrf

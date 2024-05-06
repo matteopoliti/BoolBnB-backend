@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Image;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +42,7 @@ class ApartmentController extends Controller
      */
     public function create()
     {
-        $categories = [
+        $categories_apartment = [
             'villa',
             'appartamento',
             'agriturismo',
@@ -51,11 +52,22 @@ class ApartmentController extends Controller
             'roulotte'
         ];
 
+        $categories_images = [
+            'soggiorno',
+            'cucina',
+            'bagno',
+            'camera da letto',
+            'garage',
+            'giardino',
+            'varie'
+        ];
+
+
         $apiKey = env('TOMTOM_API_KEY');
 
         $services = Service::all();
 
-        return view('pages.dashboard.create', compact('categories', 'services', 'apiKey'));
+        return view('pages.dashboard.create', compact('categories_apartment', 'categories_images', 'services', 'apiKey'));
     }
 
     /**
@@ -85,7 +97,7 @@ class ApartmentController extends Controller
         $validated_data['longitude'] = $lon;
 
         if ($request->hasFile('cover_image')) {
-            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
+            $path = Storage::disk('public')->put("apartment_images/$slug", $request->cover_image);
 
             $validated_data['cover_image'] = $path;
         }
@@ -95,6 +107,24 @@ class ApartmentController extends Controller
         if ($request->has('services')) {
             $new_apartment->services()->attach($request->services);
         };
+
+        if ($request->has('images')) {
+            foreach ($request->file('images') as $index => $image) {
+                if ($image->isValid()) {
+                    $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $image);
+
+                    $validated_data['images'][$index] = $path;
+
+                    // Creazione del record di immagine nel database
+                    Image::create([
+                        'apartment_id' => $new_apartment->id,
+                        'path' => $path,
+                        'category' => $validated_data['categories'][$index],
+                    ]);
+                }
+            }
+        }
+
 
         return redirect()->route('dashboard.apartments.show', ['apartment' => $new_apartment->slug]);
     }
@@ -112,7 +142,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        $categories = [
+        $categories_apartment = [
             'villa',
             'appartamento',
             'agriturismo',
@@ -122,11 +152,24 @@ class ApartmentController extends Controller
             'roulotte'
         ];
 
+        $categories_images = [
+            'soggiorno',
+            'cucina',
+            'bagno',
+            'camera da letto',
+            'garage',
+            'giardino',
+            'varie'
+        ];
+
         $apiKey = env('TOMTOM_API_KEY');
 
         $services = Service::all();
 
-        return view('pages.dashboard.edit', compact('categories', 'apartment', 'services', 'apiKey'));
+        $more_images = Image::where('apartment_id', $apartment->id)
+            ->get();
+
+        return view('pages.dashboard.edit', compact('categories_apartment', 'categories_images', 'apartment', 'more_images', 'services', 'apiKey'));
     }
 
     /**
@@ -168,11 +211,77 @@ class ApartmentController extends Controller
             $validated_data['cover_image'] = $path;
         }
 
-
         $apartment->update($validated_data);
 
         if ($request->has('services')) {
             $apartment->services()->sync($request->services);
+        };
+
+        if ($request->has('images') || $request->has('categories')) {
+
+            foreach ($request->input('status') as $index => $status) {
+
+                if ($status == "new") {
+
+                    if ($validated_data['images'][$index]->isValid()) {
+                        $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $validated_data['images'][$index]);
+
+                        $validated_data['images'][$index] = $path;
+                        $category = $validated_data['categories'][$index];
+
+                        Image::create([
+                            'apartment_id' => $apartment->id,
+                            'path' => $path,
+                            'category' => $category,
+                        ]);
+                    };
+                } elseif ($status == "both" || $status == "image" || $status == "select") {
+
+                    if ($status == "both") {
+
+                        if ($validated_data['images'][$index]->isValid()) {
+                            $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $validated_data['images'][$index]);
+
+                            $validated_data['images'][$index] = $path;
+                            $category = $validated_data['categories'][$index];
+                            $image_id = $validated_data['image_id'][$index];
+
+                            $image = Image::find($image_id);
+
+                            $image->path = $path;
+                            $image->category = $category;
+
+                            $image->save();
+                        };
+                    } elseif ($status == "image") {
+
+                        if ($validated_data['images'][$index]->isValid()) {
+                            $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $validated_data['images'][$index]);
+
+                            $validated_data['images'][$index] = $path;
+                            $category = $validated_data['categories'][$index];
+                            $image_id = $validated_data['image_id'][$index];
+
+                            $image = Image::find($image_id);
+
+                            $image->path = $path;
+
+                            $image->save();
+                        };
+                    } elseif ($status == "select") {
+
+                        $category = $validated_data['categories'][$index];
+                        $image_id = $validated_data['image_id'][$index];
+
+                        $image = Image::find($image_id);
+
+                        $image->category = $category;
+
+                        $image->save();
+                    };
+                } else {
+                };
+            };
         };
 
         return redirect()->route('dashboard.apartments.show', ['apartment' => $apartment->slug]);
