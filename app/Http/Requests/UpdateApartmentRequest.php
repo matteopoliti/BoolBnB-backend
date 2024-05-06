@@ -36,6 +36,7 @@ class UpdateApartmentRequest extends FormRequest
             'cover_image' => ['image'],
             'services' => ['required', 'exists:services,id'],
             'is_available' => ['boolean'],
+            'categories.*' => ['sometimes', 'nullable', Rule::in(['soggiorno', 'cucina', 'bagno', 'camera da letto', 'garage', 'giardino', 'varie'])],
         ];
     }
 }

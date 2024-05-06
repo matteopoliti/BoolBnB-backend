@@ -46,7 +46,7 @@
                         name="category" id="category" required>
                         <option value="" selected>Seleziona</option>
 
-                        @foreach ($categories as $item)
+                        @foreach ($categories_apartment as $item)
                             <option value="{{ $item }}"
                                 {{ $item == old('category', $apartment->category) ? 'selected' : '' }}>
                                 {{ ucfirst($item) }}</option>
@@ -169,6 +169,99 @@
                     @enderror
                 </div>
 
+                <div class="row mt-4" id="moreImagesContainer">
+                    <label for="cover_image" class="form-label">Immagine aggiuntive</label>
+                    @foreach ($more_images as $index => $image)
+                        <div class="col-4 mb-4" id="image-container-{{ $index }}">
+                            <input type="hidden" name="image_id[]" id="image_id" value="{{ $image->id }}">
+                            <input type="hidden" name="status[]" id="status_image" value="not_edited">
+                            <div class="position-relative">
+                                <div class="rounded overflow-hidden">
+                                    @if (Str::startsWith($image->path, 'https'))
+                                        <img id="selectedImage{{ $index }}" src="{{ $image->path }}" alt="{{ $image->category }}" class="img-fluid object-fit-cover" style="height: 161.55px">
+                                    @else
+                                        <img id="selectedImage{{ $index }}" src="{{ asset('/storage/' . $image->path) }}" alt="{{ $image->category }}" class="img-fluid object-fit-cover" style="height: 161.55px">
+                                    @endif
+                                </div>
+                                <div class="position-absolute top-50 start-50 translate-middle">
+                                    <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                        <label class="form-label text-white m-1" for="customFile{{ $index }}">+</label>
+                                        <input type="file" name="images[]" class="form-control d-none" id="customFile{{ $index }}" onchange="displaySelectedImage(event, 'selectedImage{{ $index }}')" />
+                                    </div>
+                                    @error('images[]')
+                                    <div class="alert alert-danger mt-1">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                @if($image->path)
+                                    <div class="btn btn-outline-danger position-absolute top-0 end-0" onclick="removeElement('image-container-{{ $index }}')">
+                                        <i class="fas fa-x"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="mt-2 mb-3">
+                                <label for="categories[]" class="form-label">Categoria</label>
+                                <select
+                                    class="form-select form-select-lg
+                                    @error('categories[]')
+                                        is_invalid
+                                    @enderror"
+                                    name="categories[]" id="categories[]">
+                                    <option value="" selected>Seleziona</option>
+            
+                                    @foreach ($categories_images as $item)
+                                    <option value="{{ $item }}"
+                                        {{ $item == old('category', $image->category) ? 'selected' : '' }}>
+                                        {{ ucfirst($item) }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endforeach
+                    
+
+                    <div class="col-4 mb-4" id="image-container-{{ $more_images->count() + 1 }}">
+                        <div class="position-relative">
+                            <div class="rounded overflow-hidden">
+                                <img id="selectedImage{{ $more_images->count() + 1 }}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
+                            </div>
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                    <label class="form-label text-white m-1" for="customFile{{ $more_images->count() + 1 }}">+</label>
+                                    <input type="file" name="images[]" class="form-control d-none" id="customFile{{ $more_images->count() + 1 }}" onchange="displaySelectedImage(event, 'selectedImage{{ $more_images->count() + 1 }}')" />
+                                </div>
+                                @error('images[]')
+                                <div class="alert alert-danger mt-1">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('image-container-{{ $more_images->count() + 1 }}')">
+                                <i class="fas fa-x"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-3">
+                            <label for="categories[]" class="form-label">Categoria</label>
+                            <select
+                                class="form-select form-select-lg
+                                @error('categories[]')
+                                    is_invalid
+                                @enderror"
+                                name="categories[]" id="categories[]" disabled>
+                                <option value="" selected>Seleziona</option>
+        
+                                @foreach ($categories_images as $item)
+                                    <option value="{{ $item }}" {{ $item == old('categories[]') ? 'selected' : '' }}>
+                                        {{ ucfirst($item) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <label class="form-label">Servizi*</label>
                     <div class="form-check">
@@ -215,8 +308,44 @@
     </div>
 
     <script>
+        let imageCounter = {{ $more_images->count() + 2 }};
+
+        function removeElement(elementId) {
+            var elementToRemove = document.getElementById(elementId);
+            if (!elementToRemove) return; // Exit if the element does not exist
+
+            var fileInput = elementToRemove.querySelector('input[type="file"]');
+            var selectElement = elementToRemove.querySelector('select');
+
+            elementToRemove.parentNode.removeChild(elementToRemove);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
-            updateLabel()
+
+            document.getElementById('apartmentForm').addEventListener('change', function(event) {
+                if (event.target.name === 'images[]') {
+                    const input = event.target;
+                    const hasImage = input.files.length > 0;
+                    const parentDiv = input.closest('.col-4');
+
+                    const categorySelect = parentDiv.querySelector('select[name="categories[]"]');
+                    
+                    // Utilizzare l'ID univoco per selezionare il bottone
+                    var deleteButton = parentDiv.querySelector('.btn-outline-danger');
+
+                    if (hasImage) {
+                        categorySelect.removeAttribute('disabled');
+                        categorySelect.setAttribute('required', 'required');
+                        deleteButton.classList.remove('d-none')
+                    } else {
+                        categorySelect.removeAttribute('required');
+                        categorySelect.setAttribute('disabled', 'disabled');
+                    }
+                }
+            });
+
+            updateLabel();
+
             document.getElementById('apartmentForm').addEventListener('submit', function(event) {
                 const checkboxes = document.querySelectorAll('input[name="services[]"]');
                 let checked = false;
@@ -232,6 +361,83 @@
                     document.getElementById('servicesError').classList.add('d-none');
                 }
             });
+
+            window.displaySelectedImage = function(event, elementId) {
+                const selectedImage = document.getElementById(elementId);
+
+                const uniqueId = 'image-input-' + imageCounter;  // ID univoco per il contenitore
+
+                const fileInput = event.target;
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imageElement = document.getElementById(elementId);
+                    if (imageElement) {
+                        imageElement.src = e.target.result;
+                    } else {
+                        console.error('Element not found:', elementId);
+                    }
+                };
+
+                if (fileInput.files && fileInput.files[0]) {
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+
+
+                if (selectedImage.src.startsWith('data:') || selectedImage.src.startsWith('http://127.0.0.1:8000/storage')) {
+                    console.log(selectedImage)
+                    return
+                } else {
+                    // Altrimenti, crea un nuovo elemento solo se non esiste già
+                    const parentElement = document.getElementById('moreImagesContainer');
+                    const childElement = document.createElement('div');
+                    childElement.classList.add('col-4', 'mb-4');
+                    childElement.setAttribute('id', uniqueId);
+
+                    // Utilizza la variabile globale per generare ID univoci
+                    const currentImageCounter = imageCounter;
+
+                    console.log('immagine caricata')
+
+                    childElement.innerHTML = `
+                        <div class="position-relative">
+                            <div class="rounded overflow-hidden">
+                                <img id="selectedImage${currentImageCounter}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                    alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
+                            </div>
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                    <label class="form-label text-white m-1" for="customFile${currentImageCounter}">+</label>
+                                    <input type="file" name="images[]" class="form-control d-none" id="customFile${currentImageCounter}" onchange="displaySelectedImage(event, 'selectedImage${currentImageCounter}')" />
+                                </div>
+                            </div>
+                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('${uniqueId}')">
+                                <i class="fas fa-x"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-3">
+                            <label for="categories[]" class="form-label">Categoria</label>
+                            <select
+                                class="form-select form-select-lg
+                                @error('categories[]')
+                                    is_invalid
+                                @enderror"
+                                name="categories[]" id="categories[]" disabled>
+                                <option value="" selected>Seleziona</option>
+
+                                @foreach ($categories_images as $item)
+                                    <option value="{{ $item }}" {{ $item == old('categories[]') ? 'selected' : '' }}>
+                                        {{ ucfirst($item) }}</option>
+                                @endforeach
+                            </select>
+                        </div>`;
+
+                    parentElement.appendChild(childElement);
+
+                    // Incrementa la variabile globale per il prossimo ID
+                    imageCounter++;
+                }
+            };  
         });
 
         document.getElementById('full_address').addEventListener('input', function(event) {
@@ -303,5 +509,15 @@
                 checkBox.value = 0;
             }
         }
-    </script>
+</script>
+
+<style>
+    #moreImagesContainer>div .btn{
+        display: none 
+    }
+
+    #moreImagesContainer>div:hover .btn{
+        display: block 
+    }
+</style>
 @endsection

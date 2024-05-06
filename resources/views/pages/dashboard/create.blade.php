@@ -166,7 +166,8 @@
                     @enderror
                 </div> --}}
 
-                <div class="row" id="moreImagesContainer">
+                <div class="row mt-4" id="moreImagesContainer">
+                    <label for="cover_image" class="form-label">Immagine aggiuntive</label>
                     <div class="col-4 mb-4" id="image-container-1">
                         <div class="position-relative">
                             <div class="rounded overflow-hidden">
@@ -176,21 +177,26 @@
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
                                     <label class="form-label text-white m-1" for="customFile1">+</label>
-                                    <input type="file" name="image[]" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" />
+                                    <input type="file" name="images[]" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" />
                                 </div>
+                                @error('images[]')
+                                <div class="alert alert-danger mt-1">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                             <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('image-container-1')">
                                 <i class="fas fa-x"></i>
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="mt-2 mb-3">
                             <label for="categories[]" class="form-label">Categoria</label>
                             <select
                                 class="form-select form-select-lg
                                 @error('categories[]')
                                     is_invalid
                                 @enderror"
-                                name="categories[]" id="categories[]">
+                                name="categories[]" id="categories[]" disabled>
                                 <option value="" selected>Seleziona</option>
         
                                 @foreach ($categories_images as $item)
@@ -245,7 +251,7 @@
         document.addEventListener('DOMContentLoaded', function () {
 
             document.getElementById('apartmentForm').addEventListener('change', function(event) {
-                if (event.target.name === 'image[]') {
+                if (event.target.name === 'images[]') {
                     const input = event.target;
                     const hasImage = input.files.length > 0;
                     const parentDiv = input.closest('.col-4');
@@ -256,10 +262,12 @@
                     var deleteButton = parentDiv.querySelector('.btn-outline-danger');
 
                     if (hasImage) {
+                        categorySelect.removeAttribute('disabled');
                         categorySelect.setAttribute('required', 'required');
                         deleteButton.classList.remove('d-none')
                     } else {
                         categorySelect.removeAttribute('required');
+                        categorySelect.setAttribute('disabled', 'disabled');
                     }
                 }
             });
@@ -281,76 +289,76 @@
             });
 
             window.displaySelectedImage = function(event, elementId) {
-            const selectedImage = document.getElementById(elementId);
-            const fileInput = event.target;
+                const selectedImage = document.getElementById(elementId);
+                const fileInput = event.target;
 
-            const uniqueId = 'image-input-' + imageCounter;  // ID univoco per il contenitore
+                const uniqueId = 'image-input-' + imageCounter;  // ID univoco per il contenitore
 
 
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
+                if (fileInput.files && fileInput.files[0]) {
+                    const reader = new FileReader();
 
-                reader.onload = function(e) {
-                    selectedImage.src = e.target.result;
-                };
+                    reader.onload = function(e) {
+                        selectedImage.src = e.target.result;
+                    };
 
-                reader.readAsDataURL(fileInput.files[0]);
-            }
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
 
-            if (selectedImage.src.startsWith('data:')) {
-                console.log(selectedImage)
-                return
-            } else {
-                // Altrimenti, crea un nuovo elemento solo se non esiste già
-                const parentElement = document.getElementById('moreImagesContainer');
-                const childElement = document.createElement('div');
-                childElement.classList.add('col-4', 'mb-4');
-                childElement.setAttribute('id', uniqueId);
+                if (selectedImage.src.startsWith('data:')) {
+                    console.log(selectedImage)
+                    return
+                } else {
+                    // Altrimenti, crea un nuovo elemento solo se non esiste già
+                    const parentElement = document.getElementById('moreImagesContainer');
+                    const childElement = document.createElement('div');
+                    childElement.classList.add('col-4', 'mb-4');
+                    childElement.setAttribute('id', uniqueId);
 
-                // Utilizza la variabile globale per generare ID univoci
-                const currentImageCounter = imageCounter;
+                    // Utilizza la variabile globale per generare ID univoci
+                    const currentImageCounter = imageCounter;
 
-                console.log('immagine caricata')
+                    console.log('immagine caricata')
 
-                childElement.innerHTML = `
-                    <div class="position-relative">
-                        <div class="rounded overflow-hidden">
-                            <img id="selectedImage${currentImageCounter}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                                alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
-                        </div>
-                        <div class="position-absolute top-50 start-50 translate-middle">
-                            <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
-                                <label class="form-label text-white m-1" for="customFile${currentImageCounter}">+</label>
-                                <input type="file" name="image[]" class="form-control d-none" id="customFile${currentImageCounter}" onchange="displaySelectedImage(event, 'selectedImage${currentImageCounter}')" />
+                    childElement.innerHTML = `
+                        <div class="position-relative">
+                            <div class="rounded overflow-hidden">
+                                <img id="selectedImage${currentImageCounter}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                    alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
+                            </div>
+                            <div class="position-absolute top-50 start-50 translate-middle">
+                                <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                                    <label class="form-label text-white m-1" for="customFile${currentImageCounter}">+</label>
+                                    <input type="file" name="images[]" class="form-control d-none" id="customFile${currentImageCounter}" onchange="displaySelectedImage(event, 'selectedImage${currentImageCounter}')" />
+                                </div>
+                            </div>
+                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('${uniqueId}')">
+                                <i class="fas fa-x"></i>
                             </div>
                         </div>
-                        <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('${uniqueId}')">
-                            <i class="fas fa-x"></i>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="categories[]" class="form-label">Categoria</label>
-                        <select
-                            class="form-select form-select-lg
-                            @error('categories[]')
-                                is_invalid
-                            @enderror"
-                            name="categories[]" id="categories[]">
-                            <option value="" selected>Seleziona</option>
+                        <div class="mt-2 mb-3">
+                            <label for="categories[]" class="form-label">Categoria</label>
+                            <select
+                                class="form-select form-select-lg
+                                @error('categories[]')
+                                    is_invalid
+                                @enderror"
+                                name="categories[]" id="categories[]" disabled>
+                                <option value="" selected>Seleziona</option>
 
-                            @foreach ($categories_images as $item)
-                                <option value="{{ $item }}" {{ $item == old('categories[]') ? 'selected' : '' }}>
-                                    {{ ucfirst($item) }}</option>
-                            @endforeach
-                        </select>
-                    </div>`;
+                                @foreach ($categories_images as $item)
+                                    <option value="{{ $item }}" {{ $item == old('categories[]') ? 'selected' : '' }}>
+                                        {{ ucfirst($item) }}</option>
+                                @endforeach
+                            </select>
+                        </div>`;
 
-                parentElement.appendChild(childElement);
+                    parentElement.appendChild(childElement);
 
-                // Incrementa la variabile globale per il prossimo ID
-                imageCounter++;
-            }
-        };     
+                    // Incrementa la variabile globale per il prossimo ID
+                    imageCounter++;
+                }
+            };     
     });
 
     document.getElementById('full_address').addEventListener('input', function (event) {

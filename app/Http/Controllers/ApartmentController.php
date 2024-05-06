@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use App\Models\Image;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -96,7 +97,7 @@ class ApartmentController extends Controller
         $validated_data['longitude'] = $lon;
 
         if ($request->hasFile('cover_image')) {
-            $path = Storage::disk('public')->put('apartment_images', $request->cover_image);
+            $path = Storage::disk('public')->put("apartment_images/$slug", $request->cover_image);
 
             $validated_data['cover_image'] = $path;
         }
@@ -106,6 +107,21 @@ class ApartmentController extends Controller
         if ($request->has('services')) {
             $new_apartment->services()->attach($request->services);
         };
+
+        foreach ($request->file('images') as $index => $image) {
+            if ($image->isValid()) {
+                $path = Storage::disk('public')->put("apartment_images/$slug/more_images", $image);
+
+                $validated_data['images'][$index] = $path;
+
+                // Creazione del record di immagine nel database
+                Image::create([
+                    'apartment_id' => $new_apartment->id,
+                    'path' => $path,
+                    'category' => $validated_data['categories'][$index],
+                ]);
+            }
+        }
 
         return redirect()->route('dashboard.apartments.show', ['apartment' => $new_apartment->slug]);
     }
@@ -123,7 +139,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        $categories = [
+        $categories_apartment = [
             'villa',
             'appartamento',
             'agriturismo',
@@ -133,11 +149,24 @@ class ApartmentController extends Controller
             'roulotte'
         ];
 
+        $categories_images = [
+            'soggiorno',
+            'cucina',
+            'bagno',
+            'camera da letto',
+            'garage',
+            'giardino',
+            'varie'
+        ];
+
         $apiKey = env('TOMTOM_API_KEY');
 
         $services = Service::all();
 
-        return view('pages.dashboard.edit', compact('categories', 'apartment', 'services', 'apiKey'));
+        $more_images = Image::where('apartment_id', $apartment->id)
+            ->get();
+
+        return view('pages.dashboard.edit', compact('categories_apartment', 'categories_images', 'apartment', 'more_images', 'services', 'apiKey'));
     }
 
     /**
@@ -145,6 +174,27 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
+
+        dd($request);
+
+        $more_images = [
+            [
+                'path' => 'Alice',
+                'category' => 'alice@example.com',
+                'id' => 25
+            ],
+            [
+                'path' => 'Bob',
+                'category' => 'bob@example.com',
+                'id' => 30
+            ],
+            [
+                'path' => 'Carol',
+                'category' => 'carol@example.com',
+                'id' => 22
+            ]
+        ];
+
         $validated_data = $request->validated();
 
         $slug = Str::slug($request->title, '-');

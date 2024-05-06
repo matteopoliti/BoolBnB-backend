@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('apartment_id')->references('id')->on('apartments');
             $table->string('path', 255);
             $table->enum('category', ['soggiorno', 'cucina', 'bagno', 'camera da letto', 'garage', 'giardino', 'varie']);
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

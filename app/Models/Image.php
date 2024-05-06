@@ -10,6 +10,12 @@ class Image extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'apartment_id',
+        'path',
+        'category',
+    ];
+
     public function apartment(): BelongsTo
     {
         return $this->belongsTo(Apartment::class);

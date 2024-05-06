@@ -34,6 +34,8 @@ class StoreApartmentRequest extends FormRequest
             'full_address' => ['required', 'string', 'max:255'],
             'cover_image' => ['required', 'image'],
             'services' => ['required', 'exists:services,id'],
+            'categories.*' => ['sometimes', 'nullable', Rule::in(['soggiorno', 'cucina', 'bagno', 'camera da letto', 'garage', 'giardino', 'varie'])],
+            'images.*' => ['sometimes', 'image'],
         ];
     }
 }
