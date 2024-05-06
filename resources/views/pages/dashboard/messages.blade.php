@@ -6,9 +6,9 @@
         <div id="accordion">
             @foreach ($apartments as $apartment)
                 <div class="card mb-4 message-card">
-                    <div class="card-header message-card-header" id="heading{{ $apartment->id }}">
+                    <div class="card-header message-card-header m-0 p-0" id="heading{{ $apartment->id }}">
                         <h2 class="mb-0">
-                            <button class="btn w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $apartment->id }}" aria-expanded="true" aria-controls="collapse{{ $apartment->id }}">
+                            <button class="btn w-100 text-start m-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $apartment->id }}" aria-expanded="true" aria-controls="collapse{{ $apartment->id }}">
                                 @if (Str::startsWith($apartment->cover_image, 'https'))
                                     <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
                                 @else
@@ -25,7 +25,7 @@
                             @else
                                 <ul class="list-group list-group-flush gap-3">
                                     @foreach ($apartment->messages as $message)
-                                        <li class="list-group-item rounded">
+                                        <li class="list-group-item ">
                                             <p class="mb-4">{{ $message->message }}</p>
                                             <footer class="blockquote-footer mb-1">
                                                 Inviato da <cite>{{ $message->name }}</cite> il <span class="datetime">{{ $message->created_at->toIso8601String() }}</span> |
