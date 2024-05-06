@@ -134,3 +134,31 @@
         border-bottom: 3px solid #1AC6B6;
     }
 }
+
+// SECTION MESSAGES LIST
+.message-card {
+    .card-header {
+        border: 1px solid #1AC6B6; 
+    }
+
+    .message-card-header.active {
+        border: 3px solid #1AC6B6;
+        h2 {
+            .btn {
+                font-size: large;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .message-card-body {
+        background-color: white;
+        border-left: 3px solid #1AC6B6;
+        border-right: 3px solid #1AC6B6;
+        border-bottom: 3px solid #1AC6B6;
+        
+        li{
+            background-color: #E0F2F1;
+        }
+    }
+}
