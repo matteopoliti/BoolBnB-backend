@@ -46,10 +46,16 @@ class Apartment extends Model
         return $this->belongsToMany(Service::class);
     }
 
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
+
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
     }
+
     public function sponsorships(): BelongsToMany
     {
         return $this->belongsToMany(Sponsorship::class, 'apartment_sponsorship');
