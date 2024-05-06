@@ -4,7 +4,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card mb-3">
+            <div class="card border-success mb-3">
                 <div class="card-header bg-success text-white">Conferma Transazione</div>
                 <div class="card-body">
                     @if(session('success'))
@@ -35,22 +35,22 @@
                             </div>
                             <h6>Dettagli dell'Appartamento:</h6>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><strong>Titolo:</strong> {{ $apartmentSponsorship->apartment->title }}</li>
-                                <li class="list-group-item"><strong>Prezzo: </strong>{{ $apartmentSponsorship->apartment->price }} €</li>
-                                <li class="list-group-item"><strong>Indirizzo:</strong> {{ $apartmentSponsorship->apartment->full_address }}</li>
-                                <li class="list-group-item"><strong>Descrizione:</strong> {{ $apartmentSponsorship->apartment->description }}</li>
+                                <li class="list-group-item"><strong class="text-success">Titolo:</strong> {{ $apartmentSponsorship->apartment->title }}</li>
+                                <li class="list-group-item"><strong class="text-success">Prezzo: </strong>{{ $apartmentSponsorship->apartment->price }} €</li>
+                                <li class="list-group-item"><strong class="text-success">Indirizzo:</strong> {{ $apartmentSponsorship->apartment->full_address }}</li>
+                                <li class="list-group-item"><strong class="text-success">Descrizione:</strong> {{ $apartmentSponsorship->apartment->description }}</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <h6>Dettagli della Sponsorizzazione:</h6>
+                            <h6 class="text-success">Dettagli della Sponsorizzazione:</h6>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><strong>Pacchetto:</strong> {{ $apartmentSponsorship->sponsorship->name }}</li>
-                                <li class="list-group-item"><strong>Durata:</strong> {{ $apartmentSponsorship->sponsorship->duration }} ore</li>
-                                <li class="list-group-item"><strong>Costo: </strong>{{ $apartmentSponsorship->sponsorship->amount }} €</li>
+                                <li class="list-group-item"><strong class="text-success">Pacchetto:</strong> {{ $apartmentSponsorship->sponsorship->name }}</li>
+                                <li class="list-group-item"><strong class="text-success">Durata:</strong> {{ $apartmentSponsorship->sponsorship->duration }} ore</li>
+                                <li class="list-group-item"><strong class="text-success">Costo: </strong>{{ $apartmentSponsorship->sponsorship->amount }} €</li>
                                 <hr>
-                                <li class="list-group-item"><strong>Data Transazione:</strong> <span class="datetime">{{ $apartmentSponsorship->created_at->toIso8601String() }}</span></li>
-                                <li class="list-group-item"><strong>Inizio Sponsor:</strong> <span class="datetime">{{ $apartmentSponsorship->start_date->toIso8601String() }}</span></li>
-                                <li class="list-group-item"><strong>Fine Sponsor:</strong> <span class="datetime">{{ $apartmentSponsorship->expiration_date->toIso8601String() }}</span></li>
+                                <li class="list-group-item"><strong class="text-success">Data Transazione:</strong> <span class="datetime">{{ $apartmentSponsorship->created_at->toIso8601String() }}</span></li>
+                                <li class="list-group-item"><strong class="text-success">Inizio Sponsor:</strong> <span class="datetime">{{ $apartmentSponsorship->start_date->toIso8601String() }}</span></li>
+                                <li class="list-group-item"><strong class="text-success">Fine Sponsor:</strong> <span class="datetime">{{ $apartmentSponsorship->expiration_date->toIso8601String() }}</span></li>
                             </ul>
                         </div>
                     </div>
