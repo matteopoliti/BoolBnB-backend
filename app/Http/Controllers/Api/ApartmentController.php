@@ -60,14 +60,7 @@ class ApartmentController extends Controller
 
         $latitude = $request->input('latitude');
         $longitude = $request->input('longitude');
-        $radius = $request->input('radius');
-        $beds = $request->input('num_beds');
-        $rooms = $request->input('num_rooms');
-        $services = $request->input('services', []); // Default to an empty array if not provided
-        $category = $request->input('category');
-
-        $earthRadius = 6371000;
-        $maxDistance = $radius * 1000;
+        $radius = $request->input('radius') * 1000; // Convert km to meters directly here
 
         $query = Apartment::with('services')
             ->leftJoin('apartment_sponsorship', function ($join) use ($now) {
@@ -78,46 +71,50 @@ class ApartmentController extends Controller
                 )')
                     ->where('apartment_sponsorship.expiration_date', '>', $now);
             })
-            ->select('apartments.*', 'apartment_sponsorship.created_at as sponsorship_created_at', 'apartment_sponsorship.expiration_date')
             ->whereNull('deleted_at')
             ->where('is_available', 1);
 
-        if ($category) {
-            $query->where('category', $category);
-        }
-        if ($beds) {
-            $query->where('num_beds', '>=', $beds);
-        }
-        if ($rooms) {
-            $query->where('num_rooms', '>=', $rooms);
-        }
-        if (count($services) > 0) {
-            $query->when(!empty($services), function ($query) use ($services) {
-                foreach ($services as $service) {
-                    $query->whereHas('services', function ($q) use ($service) {
-                        $q->where('services.id', $service);
-                    });
-                }
-            });
-        }
+        // Apply filters based on request inputs
+        $query->when($request->filled('category'), function ($q) use ($request) {
+            $q->where('category', $request->input('category'));
+        });
 
+        $query->when($request->filled('num_beds'), function ($q) use ($request) {
+            $q->where('num_beds', '>=', $request->input('num_beds'));
+        });
+
+        $query->when($request->filled('num_rooms'), function ($q) use ($request) {
+            $q->where('num_rooms', '>=', $request->input('num_rooms'));
+        });
+
+        $query->when(!empty($request->input('services', [])), function ($q) use ($request) {
+            foreach ($request->input('services', []) as $service) {
+                $q->whereHas('services', function ($subQuery) use ($service) {
+                    $subQuery->where('services.id', $service);
+                });
+            }
+        });
+
+        // Add distance calculation and filter only if latitude and longitude are provided
         if ($latitude && $longitude && $radius) {
             $query->selectRaw("
-                *,
-                ($earthRadius * acos(
-                    cos(radians($latitude))
-                    * cos(radians(latitude))
-                    * cos(radians(longitude) - radians($longitude))
-                    + sin(radians($latitude))
-                    * sin(radians(latitude))
+                apartments.*,
+                (6371000 * acos(
+                    cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?))
+                    + sin(radians(?)) * sin(radians(latitude))
                 )) AS distance
-            ")
-                ->having('distance', '<=', $maxDistance)
-                ->orderBy('distance');
+            ", [$latitude, $longitude, $latitude])
+                ->having('distance', '<=', $radius);
         }
 
-        $query->orderByRaw('CASE WHEN apartment_sponsorship.expiration_date > ? THEN 0 ELSE 1 END', [$now])
-            ->orderByDesc('apartment_sponsorship.created_at')
+        // Ordering for sponsorship status first, then distance if applicable
+        $query->orderByRaw('CASE WHEN apartment_sponsorship.expiration_date > ? THEN 0 ELSE 1 END', [$now]);
+
+        if ($latitude && $longitude && $radius) {
+            $query->orderBy('distance');
+        }
+
+        $query->orderByDesc('apartment_sponsorship.created_at')
             ->orderBy('apartments.created_at');
 
         $apartments = $query->paginate($pagination_value);
@@ -127,6 +124,7 @@ class ApartmentController extends Controller
             'apartments' => $apartments
         ]);
     }
+
 
     public function show($slug)
     {
