@@ -51,7 +51,7 @@
                                 <div class="carousel-inner">
                                     @foreach ($images as $index => $image)
                                         <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                            <img src="{{ asset('storage/' . $image->path) }}" class="d-block w-100" alt="...">
+                                            <img src="{{ Str::startsWith($image->path, 'https') ? $image->path : asset('storage/' . $image->path) }}" class="d-block w-100" alt="image_{{ $image->id }}"style="height: 300px; object-fit: cover;">
                                         </div>
                                     @endforeach
                                 </div>
@@ -68,7 +68,7 @@
                                 @endif
                                 <!-- Display image count -->
                                 <div class="position-absolute top-0 end-0 bg-dark text-white p-2 rounded" style="background-color: rgba(0, 0, 0, 0.75); box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-                                    {{ $images->count() }} Image{{ $images->count() > 1 ? 's' : '' }}
+                                    {{ $images->count() }} Immagin{{ $images->count() > 1 ? 'i' : 'e' }}
                                 </div>
                             </div>
                             <hr>

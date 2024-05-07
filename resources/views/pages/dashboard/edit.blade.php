@@ -194,11 +194,13 @@
                                     </div>
                                     @enderror
                                 </div>
-                                @if($image->path)
-                                    <div class="btn btn-outline-danger position-absolute top-0 end-0" onclick="removeElement('image-container-{{ $index }}')">
-                                        <i class="fas fa-x"></i>
-                                    </div>
-                                @endif
+                                <form action="{{ route('images.delete', ['id' => $image->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger position-absolute top-0 end-0">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                             <div class="mt-2 mb-3">
                                 <label for="categories[]" class="form-label">Categoria</label>
@@ -222,18 +224,18 @@
                     @endforeach
                     
 
-                    <div class="col-4 mb-4" id="image-container-{{ $more_images->count() + 1 }}">
-                        <input type="hidden" name="image_id[]" id="none_id_{{ $more_images->count() + 1 }}" value="">
-                        <input type="hidden" name="status[]" id="status_image{{ $more_images->count() + 1 }}" value="">
+                    <div class="col-4 mb-4" id="image-container-{{ $more_images->count()}}">
+                        <input type="hidden" name="image_id[]" id="none_id_{{ $more_images->count()}}" value="">
+                        <input type="hidden" name="status[]" id="status_image{{ $more_images->count()}}" value="">
                         <div class="position-relative">
                             <div class="rounded overflow-hidden">
-                                <img id="selectedImage{{ $more_images->count() + 1 }}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                <img id="selectedImage{{ $more_images->count()}}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
                                 alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
                             </div>
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
-                                    <label class="form-label text-white m-1" for="customFile{{ $more_images->count() + 1 }}">+</label>
-                                    <input type="file" name="images[]" class="form-control d-none" id="customFile{{ $more_images->count() + 1 }}" onchange="displaySelectedImage(event, 'selectedImage{{ $more_images->count() + 1 }}')" />
+                                    <label class="form-label text-white m-1" for="customFile{{ $more_images->count()}}">+</label>
+                                    <input type="file" name="images[]" class="form-control d-none" id="customFile{{ $more_images->count()}}" onchange="displaySelectedImage(event, 'selectedImage{{ $more_images->count()}}')" />
                                 </div>
                                 @error('images[]')
                                 <div class="alert alert-danger mt-1">
@@ -241,7 +243,7 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('image-container-{{ $more_images->count() + 1 }}')">
+                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('image-container-{{ $more_images->count()}}')">
                                 <i class="fas fa-x"></i>
                             </div>
                         </div>
@@ -252,7 +254,7 @@
                                 @error('categories[]')
                                     is_invalid
                                 @enderror"
-                                name="categories[]" id="categories_{{ $more_images->count() + 1 }}" disabled>
+                                name="categories[]" id="categories_{{ $more_images->count()}}" disabled>
                                 <option value="" selected>Seleziona</option>
         
                                 @foreach ($categories_images as $item)
@@ -310,7 +312,8 @@
     </div>
 
     <script>
-        let imageCounter = {{ $more_images->count() + 2 }};
+
+        let imageCounter = {{ $more_images->count() + 1 }} || 0;
 
         function removeElement(elementId) {
             var elementToRemove = document.getElementById(elementId);
