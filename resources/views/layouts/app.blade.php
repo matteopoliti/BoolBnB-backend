@@ -149,12 +149,12 @@
                             <span class="fs-5">{{ __('Appartamenti') }}</span>
                         </a>
                     </li>
-                    <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
+                    {{-- <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
                         <a href="#" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-chart-simple"></i>
                             <span class="fs-5">Statistiche</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="{{ request()->routeIs('dashboard.messages') ? 'active-t4' : '' }} ps-2">
                         <a href="{{ route('dashboard.messages') }}" class="nav-link link-body-emphasis">
                             <i class="fa-solid fa-message"></i>

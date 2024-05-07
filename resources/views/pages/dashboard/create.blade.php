@@ -6,8 +6,8 @@
         <div class="container">
             <h1 class="mt-2 fw-bold">Aggiungi un nuovo appartamento:</h1>
 
-            <form action="{{ route('dashboard.apartments.store') }}" id="apartmentForm" method="POST" enctype="multipart/form-data"
-                class="mb-5">
+            <form action="{{ route('dashboard.apartments.store') }}" id="apartmentForm" method="POST"
+                enctype="multipart/form-data" class="mb-5">
 
                 @csrf
 
@@ -58,7 +58,7 @@
                             <input type="number" class="form-control @error('price') is-invalid @enderror" id="price"
                                 aria-describedby="price" name="price" value='{{ old('price') }}' required min="0">
                             <span class="input-group-text">.00</span>
-                          </div>
+                        </div>
                         @error('price')
                             <div class="alert alert-danger mt-1">
                                 {{ $message }}
@@ -69,7 +69,8 @@
                     <div class="col-3 ">
                         <label for="num_rooms" class="form-label">Stanze*</label>
                         <input type="number" class="form-control @error('num_rooms') is-invalid @enderror" id="num_rooms"
-                            aria-describedby="num_rooms" name="num_rooms" value='{{ old('num_rooms') }}' min="0" required>
+                            aria-describedby="num_rooms" name="num_rooms" value='{{ old('num_rooms') }}' min="0"
+                            required>
                         @error('num_rooms')
                             <div class="alert alert-danger mt-1">
                                 {{ $message }}
@@ -81,8 +82,9 @@
                         <label for="num_beds" class="form-label">Letti*</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-bed"></i></span>
-                            <input type="number" class="form-control @error('num_beds') is-invalid @enderror" id="num_beds"
-                                aria-describedby="num_beds" name="num_beds" value='{{ old('num_beds') }}' min="0" required>
+                            <input type="number" class="form-control @error('num_beds') is-invalid @enderror"
+                                id="num_beds" aria-describedby="num_beds" name="num_beds" value='{{ old('num_beds') }}'
+                                min="0" required>
                         </div>
                         @error('num_beds')
                             <div class="alert alert-danger mt-1">
@@ -112,12 +114,13 @@
                         <label for="full_address" class="form-label">Indirizzo completo*</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
-                            <input list="addressList" type="text" class="form-control @error('full_address') is-invalid @enderror"
-                                id="full_address" aria-describedby="full_address" name="full_address"
-                                value='{{ old('full_address') }}' maxlength="255" required>
+                            <input list="addressList" type="text"
+                                class="form-control @error('full_address') is-invalid @enderror" id="full_address"
+                                aria-describedby="full_address" name="full_address" value='{{ old('full_address') }}'
+                                maxlength="255" required>
                             <datalist id="addressList">
                             </datalist>
-                          </div>
+                        </div>
                         @error('full_address')
                             <div class="alert alert-danger mt-1">
                                 {{ $message }}
@@ -133,7 +136,7 @@
                                 aria-describedby="square_meters" name="square_meters" value='{{ old('square_meters') }}'
                                 required>
                             <span class="input-group-text">m<sup>2</sup></span>
-                          </div>
+                        </div>
                         @error('square_meters')
                             <div class="alert alert-danger mt-1">
                                 {{ $message }}
@@ -172,20 +175,23 @@
                         <div class="position-relative">
                             <div class="rounded overflow-hidden">
                                 <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                                alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
+                                    alt="example placeholder" class="img-fluid object-fit-cover"
+                                    style="height: 161.55px" />
                             </div>
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
                                     <label class="form-label text-white m-1" for="customFile1">+</label>
-                                    <input type="file" name="images[]" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" />
+                                    <input type="file" name="images[]" class="form-control d-none" id="customFile1"
+                                        onchange="displaySelectedImage(event, 'selectedImage')" />
                                 </div>
                                 @error('images[]')
-                                <div class="alert alert-danger mt-1">
-                                    {{ $message }}
-                                </div>
+                                    <div class="alert alert-danger mt-1">
+                                        {{ $message }}
+                                    </div>
                                 @enderror
                             </div>
-                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none" onclick="removeElement('image-container-1')">
+                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none"
+                                onclick="removeElement('image-container-1')">
                                 <i class="fas fa-x"></i>
                             </div>
                         </div>
@@ -198,9 +204,10 @@
                                 @enderror"
                                 name="categories[]" id="categories[]" disabled>
                                 <option value="" selected>Seleziona</option>
-        
+
                                 @foreach ($categories_images as $item)
-                                    <option value="{{ $item }}" {{ $item == old('categories[]') ? 'selected' : '' }}>
+                                    <option value="{{ $item }}"
+                                        {{ $item == old('categories[]') ? 'selected' : '' }}>
                                         {{ ucfirst($item) }}</option>
                                 @endforeach
                             </select>
@@ -211,11 +218,14 @@
                 <div class="mb-3">
                     <label class="form-label">Servizi*</label>
                     <div class="form-check">
-                        @foreach($services as $item)
-                            <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}" style="width: 15px">
-                            <input class="form-check-input" type="checkbox" name="services[]" id="service_{{ $item->id }}" value="{{ $item->id }}"
-                                {{ is_array(old('services')) && in_array($item->id, old('services')) ? 'checked' : ''}}>
-                            <label class="form-check-label" for="service_{{ $item->id }}">{{ ucfirst($item->name) }}</label><br>
+                        @foreach ($services as $item)
+                            <img src="{{ asset('/storage/' . $item->icon) }}" alt="{{ $item->name }}"
+                                style="width: 15px">
+                            <input class="form-check-input" type="checkbox" name="services[]"
+                                id="service_{{ $item->id }}" value="{{ $item->id }}"
+                                {{ is_array(old('services')) && in_array($item->id, old('services')) ? 'checked' : '' }}>
+                            <label class="form-check-label"
+                                for="service_{{ $item->id }}">{{ ucfirst($item->name) }}</label><br>
                         @endforeach
                     </div>
                     @error('services')
@@ -225,8 +235,8 @@
                         Seleziona almeno un servizio.
                     </div>
                 </div>
-                
-                <button type="submit" class="btn btn-primary mx-auto d-block">Aggiungi</button>
+
+                <button type="submit" class="btn gradient-custom-2 border-0 text-light mx-auto d-block">Aggiungi</button>
 
                 <div class="alert alert-secondary mt-3" role="alert">
                     Ricorda di compilare tutti i campi con *
@@ -248,7 +258,7 @@
             elementToRemove.parentNode.removeChild(elementToRemove);
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             document.getElementById('apartmentForm').addEventListener('change', function(event) {
                 if (event.target.name === 'images[]') {
@@ -257,7 +267,7 @@
                     const parentDiv = input.closest('.col-4');
 
                     const categorySelect = parentDiv.querySelector('select[name="categories[]"]');
-                    
+
                     // Utilizzare l'ID univoco per selezionare il bottone
                     var deleteButton = parentDiv.querySelector('.btn-outline-danger');
 
@@ -271,11 +281,11 @@
                     }
                 }
             });
-            
-            document.getElementById('apartmentForm').addEventListener('submit', function (event) {
+
+            document.getElementById('apartmentForm').addEventListener('submit', function(event) {
                 const checkboxes = document.querySelectorAll('input[name="services[]"]');
                 let checked = false;
-                checkboxes.forEach(function (checkbox) {
+                checkboxes.forEach(function(checkbox) {
                     if (checkbox.checked) {
                         checked = true;
                     }
@@ -292,7 +302,7 @@
                 const selectedImage = document.getElementById(elementId);
                 const fileInput = event.target;
 
-                const uniqueId = 'image-input-' + imageCounter;  // ID univoco per il contenitore
+                const uniqueId = 'image-input-' + imageCounter; // ID univoco per il contenitore
 
 
                 if (fileInput.files && fileInput.files[0]) {
@@ -358,73 +368,74 @@
                     // Incrementa la variabile globale per il prossimo ID
                     imageCounter++;
                 }
-            };     
-    });
+            };
+        });
 
-    document.getElementById('full_address').addEventListener('input', function (event) {
+        document.getElementById('full_address').addEventListener('input', function(event) {
 
-        const apiKey = "{{ $apiKey }}";
+            const apiKey = "{{ $apiKey }}";
 
-        const apiQuery = document.getElementById('full_address');
-        
-        let apiRequest = `https://api.tomtom.com/search/2/search/${apiQuery.value}.json?key=${apiKey}&language=it-IT&countrySet=IT`;
+            const apiQuery = document.getElementById('full_address');
 
-        const parentElement = document.getElementById('addressList');
+            let apiRequest =
+                `https://api.tomtom.com/search/2/search/${apiQuery.value}.json?key=${apiKey}&language=it-IT&countrySet=IT`;
 
-        if (apiQuery.value === ''){
+            const parentElement = document.getElementById('addressList');
 
-            while (parentElement.firstChild) {
-                parentElement.removeChild(parentElement.firstChild);
-            }
-
-            return
-        }
-
-        fetch(apiRequest)
-            .then(response => {
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                return response.json();
-            })
-            .then(data => {
-                
-                let apiResults = data.results
-
-                let arrayResults = []
-
-                apiResults.forEach(element => {
-                    arrayResults.push(element.address.freeformAddress)
-                });
-
-                console.log(arrayResults)
+            if (apiQuery.value === '') {
 
                 while (parentElement.firstChild) {
                     parentElement.removeChild(parentElement.firstChild);
                 }
 
-                arrayResults.forEach(element => {
-                    const childElement = document.createElement('option');
-                    parentElement.append(childElement);
-                    childElement.value = element;
+                return
+            }
+
+            fetch(apiRequest)
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    return response.json();
+                })
+                .then(data => {
+
+                    let apiResults = data.results
+
+                    let arrayResults = []
+
+                    apiResults.forEach(element => {
+                        arrayResults.push(element.address.freeformAddress)
+                    });
+
+                    console.log(arrayResults)
+
+                    while (parentElement.firstChild) {
+                        parentElement.removeChild(parentElement.firstChild);
+                    }
+
+                    arrayResults.forEach(element => {
+                        const childElement = document.createElement('option');
+                        parentElement.append(childElement);
+                        childElement.value = element;
+                    });
+                })
+                .catch(error => {
+
+                    console.error('There was a problem with the fetch operation:', error);
                 });
-            })
-            .catch(error => {
+        });
+    </script>
 
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    });
-</script>
+    <style>
+        #moreImagesContainer>div .btn {
+            display: none
+        }
 
-<style>
-    #moreImagesContainer>div .btn{
-        display: none 
-    }
-
-    #moreImagesContainer>div:hover .btn{
-        display: block 
-    }
-</style>
+        #moreImagesContainer>div:hover .btn {
+            display: block
+        }
+    </style>
 @endsection
