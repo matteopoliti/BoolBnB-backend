@@ -112,37 +112,36 @@
     }
 }
 
-
 //SECTION SPONSORSHIP LIST
-.sponsorship-card{
-    .card-header{
-        border: 1px solid #1AC6B6;
+.sponsorship-card {
+    .card-header {
+        border: 1px solid #1ac6b6;
     }
-    .sponsorship-card-header.active{    
-        border: 3px solid #1AC6B6;
-        h5{
-            .btn{
+    .sponsorship-card-header.active {
+        border: 3px solid #1ac6b6;
+        h5 {
+            .btn {
                 font-size: large;
                 font-weight: bold;
             }
         }
     }
-    .sponsorship-card-body{
-        background-color: #E0F2F1;
-        border-left: 3px solid #1AC6B6;
-        border-right: 3px solid #1AC6B6;
-        border-bottom: 3px solid #1AC6B6;
+    .sponsorship-card-body {
+        background-color: #e0f2f1;
+        border-left: 3px solid #1ac6b6;
+        border-right: 3px solid #1ac6b6;
+        border-bottom: 3px solid #1ac6b6;
     }
 }
 
 // SECTION MESSAGES LIST
 .message-card {
     .card-header {
-        border: 1px solid #1AC6B6; 
+        border: 1px solid #1ac6b6;
     }
 
     .message-card-header.active {
-        border: 3px solid #1AC6B6;
+        border: 3px solid #1ac6b6;
         h2 {
             .btn {
                 font-size: large;
@@ -152,28 +151,33 @@
     }
 
     .message-card-body {
-        background-color: #E0F2F1;
-        border-left: 3px solid #1AC6B6;
-        border-right: 3px solid #1AC6B6;
-        border-bottom: 3px solid #1AC6B6;
-        
-        li{
-            background-color: #E0F2F1;
-            border-bottom: 1px solid #1AC6B6;
+        border-left: 3px solid #1ac6b6;
+        border-right: 3px solid #1ac6b6;
+        border-bottom: 3px solid #1ac6b6;
+
+        li.even {
+            padding-block: 15px 20px;
+            background-color: #e0f2f1;
+            border-bottom: 1px solid #1ac6b5;
+        }
+
+        li.odd {
+            padding-block: 15px 20px;
+            background-color: #4db6ac9c;
+            border-bottom: 1px solid #1ac6b6;
         }
     }
 }
 
-
 //SECTION Sponsorship payment card
 .selected .sponsorship-payment-card-header {
     background-color: rgb(24, 196, 180, 0.8);
-    color: #0B262F;
+    color: #0b262f;
 }
 
 .selected .sponsorship-payment-card-body {
     background-color: rgb(24, 196, 180, 0.2);
-    color: #0B262F;
+    color: #0b262f;
 }
 
 /* Stile per il messaggio di errore */

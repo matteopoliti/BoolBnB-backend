@@ -24,8 +24,8 @@
                                 <p class="text-muted">Nessun messaggio per questo appartamento.</p>
                             @else
                                 <ul class="list-group list-group-flush gap-3">
-                                    @foreach ($apartment->messages as $message)
-                                        <li class="list-group-item ">
+                                    @foreach ($apartment->messages as $index => $message)
+                                        <li class="list-group-item {{ $index % 2 == 0 ? 'even' : 'odd' }}">
                                             <p class="mb-4">{{ $message->message }}</p>
                                             <footer class="blockquote-footer mb-1">
                                                 Inviato da <cite>{{ $message->name }}</cite> il <span class="datetime">{{ $message->created_at->toIso8601String() }}</span> |
