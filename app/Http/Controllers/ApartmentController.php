@@ -339,8 +339,24 @@ class ApartmentController extends Controller
             Storage::delete($apartment->cover_image);
         }
 
+        if ($apartment->images) {
+
+            foreach ($apartment->images as $image) {
+
+                Storage::delete($image->path);
+
+                $image->delete();
+            }
+        }
+
         $apartment->forceDelete();
 
         return redirect()->route('dashboard.apartments.index');
+    }
+
+    public function destroy($id)
+    {
+
+        return redirect()->route('images.delete', $id);
     }
 }

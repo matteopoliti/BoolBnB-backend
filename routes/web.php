@@ -5,6 +5,7 @@ use App\Http\Controllers\BraintreeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SponsorshipController;
+use App\Http\Controllers\ImageController;
 use App\Models\ApartmentSponsorship;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -46,6 +47,9 @@ Route::get('apartments/trashed', [ApartmentController::class, 'trashed'])->name(
 Route::put('apartments/{slug}/restore', [ApartmentController::class, 'restore'])->name('dashboard.apartments.restore');
 
 Route::delete('apartments/{slug}/forceDelete', [ApartmentController::class, 'forceDelete'])->name('dashboard.apartments.forceDelete');
+
+Route::delete('/images/{id}', [ImageController::class, 'delete'])->name('images.delete');;
+
 
 
 Route::middleware('auth')->group(function () {
