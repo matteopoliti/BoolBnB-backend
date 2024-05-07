@@ -18,12 +18,13 @@ class ApartmentController extends Controller
         $now = Carbon::now();
 
         $query = Apartment::with('services')
-            ->leftJoin('apartment_sponsorship', function ($join) {
+            ->leftJoin('apartment_sponsorship', function ($join) use ($now) {
                 $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
+                    ->where('apartment_sponsorship.expiration_date', '>', $now)
                     ->whereRaw('apartment_sponsorship.created_at = (
-                        SELECT MAX(created_at) FROM apartment_sponsorship
-                        WHERE apartment_id = apartments.id
-                     )');
+                     SELECT MAX(created_at) FROM apartment_sponsorship
+                     WHERE apartment_id = apartments.id
+                 )');
             })
             ->select('apartments.*', 'apartment_sponsorship.expiration_date')
             ->where('is_available', 1)
@@ -39,8 +40,9 @@ class ApartmentController extends Controller
                 ->orderBy('apartments.created_at')
                 ->paginate($pagination_value);
         } else {
+            // Sponsors prioritized in home view
             $apartments = $query
-                ->where('apartment_sponsorship.expiration_date', '>', $now)
+                ->whereNotNull('apartment_sponsorship.expiration_date')
                 ->orderByDesc('apartment_sponsorship.created_at')
                 ->paginate($pagination_value);
         }
