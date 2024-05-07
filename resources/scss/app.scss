@@ -79,12 +79,14 @@
     }
 
     .dashboard {
+        display: block;
+
         .side-bar {
             height: 100%;
             width: 80px;
         }
         main {
-            width: calc(100% - 80px);
+            width: 100%;
         }
         ul {
             li {
@@ -106,8 +108,19 @@
 @media (max-width: 576px) {
     .navbar {
         h2 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-right: 15px;
+        }
+        .navbar-nav{
+            display: none;
+        }
+    }
+    .dashboard{
+        main {
+                width: 100%;
+            }
+        .side-bar{
+            display: none !important;
         }
     }
 }
