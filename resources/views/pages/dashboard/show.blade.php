@@ -40,44 +40,64 @@
                 </div>
 
                 @if ($apartment->images->count() !== 0)
-                    <div class="card-body">
-                        <h5 class="card-title">Immagini dell'appartamento</h5>
-                        @php
-                            $categories = $apartment->images->groupBy('category');
-                        @endphp
-                        @foreach ($categories as $category => $images)
-                            <h6>{{ ucfirst($category) }}</h6>
-                            <div id="carousel{{ $loop->index }}" class="carousel slide" data-bs-ride="carousel" style="position: relative;">
-                                <div class="carousel-inner">
-                                    @foreach ($images as $index => $image)
-                                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                            <img src="{{ Str::startsWith($image->path, 'https') ? $image->path : asset('storage/' . $image->path) }}" class="d-block w-100" alt="image_{{ $image->id }}"style="height: 300px; object-fit: cover;">
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <!-- Hide controls if only one image -->
-                                @if ($images->count() > 1)
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ $loop->index }}" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ $loop->index }}" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                @endif
-                                <!-- Display image count -->
-                                <div class="position-absolute top-0 end-0 bg-dark text-white p-2 rounded" style="background-color: rgba(0, 0, 0, 0.75); box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-                                    {{ $images->count() }} Immagin{{ $images->count() > 1 ? 'i' : 'e' }}
-                                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Immagini dell'appartamento</h5>
+                    @php
+                        $categories = $apartment->images->groupBy('category');
+                    @endphp
+                    @foreach ($categories as $category => $images)
+                        <h6>{{ ucfirst($category) }}</h6>
+                        <div id="carousel{{ $loop->index }}" class="carousel slide" data-bs-ride="carousel" style="position: relative;">
+                            <div class="carousel-inner">
+                                @foreach ($images as $index => $image)
+                                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                        <img src="{{ Str::startsWith($image->path, 'https') ? $image->path : asset('storage/' . $image->path) }}" class="d-block w-100" alt="image_{{ $image->id }}" style="height: 300px; object-fit: cover;">
+                                        
+                                        <!-- Pulsante di eliminazione per ogni immagine -->
+                                        <form action="{{ route('images.delete', ['id' => $image->id]) }}" method="POST" style="position: absolute; top: 10px; left: 10px;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endforeach
                             </div>
-                            <hr>
-                        @endforeach
-                    </div>
-                @endif
-
+                            <!-- Controlli della carosello -->
+                            @if ($images->count() > 1)
+                                <button class="carousel-control-prev position-absolute top-50 start-0 translate-middle-y" type="button" data-bs-target="#carousel{{ $loop->index }}" data-bs-slide="prev" style="height: 100px; width: 50px">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next position-absolute top-50 end-0 translate-middle-y" type="button" data-bs-target="#carousel{{ $loop->index }}" data-bs-slide="next" style="height: 100px; width: 50px">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            @endif
+                            <!-- Display image count -->
+                            <div class="position-absolute top-0 end-0 bg-dark text-white p-2 rounded" style="background-color: rgba(0, 0, 0, 0.75); box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                {{ $images->count() }} Immagin{{ $images->count() > 1 ? 'i' : 'e' }}
+                            </div>
+                        </div>
+                        <hr>
+                    @endforeach
+                </div>
+            @endif
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .carousel.slide:hover form{
+        display: block
+
+    }
+
+    .carousel.slide form{
+        display: none
+
+    }
+</style>
 @endsection

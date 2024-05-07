@@ -201,14 +201,7 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                </div>
-                                <form action="{{ route('images.delete', ['id' => $image->id]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger position-absolute top-0 end-0">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                </div>                         
                             </div>
                             <div class="mt-2 mb-3">
                                 <label for="categories[]" class="form-label">Categoria</label>
@@ -342,6 +335,7 @@
             elementToRemove.parentNode.removeChild(elementToRemove);
         }
 
+
         document.addEventListener('DOMContentLoaded', function() {
 
             const categorySelects = document.querySelectorAll('select[name="categories[]"]');
@@ -454,7 +448,8 @@
                 console.log(statusInput);
 
                 if (selectedImage.src.startsWith('data:') || selectedImage.src.startsWith(
-                        'http://127.0.0.1:8000/storage')) {
+                        'http://127.0.0.1:8000/storage') || selectedImage.src.startsWith(
+                        'https://pixabay.com')) {
 
                     if (statusInput.value == "select") {
 

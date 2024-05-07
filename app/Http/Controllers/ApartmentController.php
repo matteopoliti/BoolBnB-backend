@@ -353,10 +353,4 @@ class ApartmentController extends Controller
 
         return redirect()->route('dashboard.apartments.index');
     }
-
-    public function destroy($id)
-    {
-
-        return redirect()->route('images.delete', $id);
-    }
 }

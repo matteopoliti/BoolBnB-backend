@@ -21,6 +21,6 @@ class ImageController extends Controller
 
         $image->delete();
 
-        return redirect()->route('dashboard.apartments.edit', $apartment->slug);
+        return redirect()->route('dashboard.apartments.show', $apartment->slug);
     }
 }
