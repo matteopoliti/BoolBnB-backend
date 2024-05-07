@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 col-lg-4 order-md-last">
+            <div class="col-md-5 col-lg-4 order-md-last mt-4 mt-lg-0 ">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-dark">Carrello</span>
                     <span class="badge gradient-custom-2 rounded-pill">1</span>
