@@ -7,6 +7,7 @@ use App\Models\Apartment;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
 {
@@ -66,9 +67,9 @@ class ApartmentController extends Controller
             ->leftJoin('apartment_sponsorship', function ($join) {
                 $join->on('apartments.id', '=', 'apartment_sponsorship.apartment_id')
                     ->whereRaw('apartment_sponsorship.created_at = (
-                        SELECT MAX(created_at) FROM apartment_sponsorship
-                        WHERE apartment_id = apartments.id
-                     )');
+                     SELECT MAX(created_at) FROM apartment_sponsorship
+                     WHERE apartment_id = apartments.id
+                 )');
             })
             ->select('apartments.*', 'apartment_sponsorship.expiration_date')
             ->where('is_available', 1)
@@ -95,15 +96,13 @@ class ApartmentController extends Controller
             }
         });
 
-        // Add distance calculation and filter only if latitude and longitude are provided
         if ($latitude && $longitude && $radius) {
-            $query->selectRaw("
-                apartments.*,
-                (6371000 * acos(
-                    cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?))
-                    + sin(radians(?)) * sin(radians(latitude))
-                )) AS distance
-            ", [$latitude, $longitude, $latitude])
+            $query->addSelect(DB::raw("
+            (6371000 * acos(
+                cos(radians($latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians($longitude))
+                + sin(radians($latitude)) * sin(radians(latitude))
+            )) AS distance
+        "))
                 ->having('distance', '<=', $radius);
         }
 
