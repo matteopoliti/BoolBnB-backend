@@ -124,10 +124,14 @@ class ApartmentController extends Controller
         ]);
     }
 
-
     public function show($slug)
     {
-        $apartment = Apartment::with('services')->where('is_available', 1)->where('slug', $slug)->first();
+        // Assicurati che l'appartamento non sia "soft deleted"
+        $apartment = Apartment::with(['services', 'images'])
+            ->where('is_available', 1)
+            ->where('slug', $slug)
+            ->whereNull('deleted_at') // Aggiungi esplicitamente questa condizione se necessario
+            ->first();
 
         if ($apartment) {
             return response()->json([
