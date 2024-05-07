@@ -34,14 +34,15 @@ class BraintreeController extends Controller
         $sponsorship_id = $request->sponsorship_id;  // Recupera l'importo dal form
         $apartment_id = $request->apartment_id;  // Recupera l'importo dal form
 
-        // Session::flush();
+        $apartment = Apartment::find($apartment_id);
+        $sponsorship = Sponsorship::find($sponsorship_id);
 
         Session::put('payment_amount', $amount);  // Salva l'importo nella sessione
         Session::put('sponsorship_id', $sponsorship_id);  // Salva l'importo nella sessione
         Session::put('apartment_id', $apartment_id);  // Salva l'importo nella sessione
 
         $token = $this->gateway->clientToken()->generate();
-        return view('pages.braintree.token', ['token' => $token]);
+        return view('pages.braintree.token', ['token' => $token, 'apartment' => $apartment,  'sponsorship' => $sponsorship]);
     }
 
     public function payment(Request $request)
