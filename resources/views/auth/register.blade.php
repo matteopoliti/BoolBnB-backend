@@ -1,7 +1,7 @@
 @extends('layouts.access')
 
 @section('content')
-    <section class="text-center text-lg-start" style="padding-top: 130px;">
+    <section class="text-center text-lg-start py-sm-5 my-lg-5">
         <style>
             .cascading-right {
                 margin-right: -50px;
@@ -145,9 +145,9 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="col-lg-6 mb-5 mb-lg-0 d-lg-block d-none">
                     <img src="{{ Vite::asset('resources/assets/img/motoki-tonn-OVK3wg9r4FA-unsplash.jpg') }}"
-                        class="w-100 rounded-4 shadow-4" alt="sfondo case" height="850" />
+                        class="object-fit rounded-4 shadow-4" alt="sfondo case" height="850" />
                 </div>
             </div>
         </div>
