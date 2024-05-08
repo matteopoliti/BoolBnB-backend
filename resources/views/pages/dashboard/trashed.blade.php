@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid mt-3">
-    <h1 class="mx-3 fw-bold">Appartamenti eliminati &#40;{{ count($trashedApartments) }}&#41;</h1>
+    <h1 class="mx-3 fw-bold">Cestino &#40;{{ count($trashedApartments) }}&#41;</h1>
     <p class="text-muted mx-3">
         Tutti gli appartamenti elencati qui verranno eliminati definitivamente <strong>30 giorni</strong> dopo la loro data di inserimento nel cestino.
     </p>

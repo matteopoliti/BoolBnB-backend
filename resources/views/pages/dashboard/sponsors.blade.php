@@ -8,22 +8,20 @@
             @foreach ($totalSponsorships as $index => $sponsorship)
                 <div class="card mb-2 sponsorship-card">
                     <div class="card-header sponsorship-card-header d-flex align-items-center" id="heading{{ $sponsorship->id }}">
-                        @if ($sponsorship->apartment)
-                            @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
-                                <img src="{{ $sponsorship->apartment->cover_image }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
+                            @if ($sponsorship->apartment)
+                                @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
+                                    <img src="{{ $sponsorship->apartment->cover_image }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
+                                @else
+                                    <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
+                                @endif
+                            
                             @else
-                                <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}" alt="{{ $sponsorship->apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
+                                <div class="img-thumbnail col-2 position-relative" style="width: 150px; height:100px; max-height: 100px; object-fit:cover; background-color: rgba(0, 0, 0, 0.05);">
+                                    <img
+                                        src="{{ Vite::asset('resources/assets/img/404-Icon.png') }}" class="position-absolute top-50 start-50 translate-middle" style="max-height: 40px; width: 40px;">
+                                    </img>
+                                </div>
                             @endif
-                        
-                        @else
-
-                            <div class="img-thumbnail me-2 col-2" style="width: 150px; height:100px; max-height: 100px; object-fit:cover; background-color: rgba(0, 0, 0, 0.05);">
-                                <img
-                                    src="{{ Vite::asset('resources/assets/img/404-Icon.png') }}" class="position-absolute top-50 start-50 translate-middle" style="max-height: 60px; width: 60px;">
-                                </img>
-                            </div>
-
-                        @endif
                         <h5 class="mb-0">
                             <button class="btn w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $sponsorship->id }}" aria-expanded="{{ $index == 0 ? 'true' : 'false' }}" aria-controls="collapse{{ $sponsorship->id }}">
                                 Sponsorizzazione: <strong>{{ $sponsorship->apartment ? $sponsorship->apartment->title : '' }}</strong> del <span class="datetime fw-bold">{{ $sponsorship->created_at->toIso8601String() }}</span>
@@ -37,13 +35,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     @if ($sponsorship->apartment)
-                                        @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
-                                            <img src="{{ $sponsorship->apartment->cover_image }}"
-                                                alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded">
-                                        @else
-                                            <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}"
-                                                alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded">
-                                        @endif
+                                        <figure>
+                                            @if (Str::startsWith($sponsorship->apartment->cover_image, 'https'))
+                                                <img src="{{ $sponsorship->apartment->cover_image }}"
+                                                    alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded">
+                                            @else
+                                                <img src="{{ asset('storage/' . $sponsorship->apartment->cover_image) }}"
+                                                    alt="{{ $sponsorship->apartment->slug }}" class="img-fluid rounded">
+                                            @endif
+                                        </figure>
                                     @else
                                         <div class="img-fluid rounded mb-3 position-relative" style="height: 412.98px; background-color: rgba(0, 0, 0, 0.05);">
                                             <img src="{{ Vite::asset('resources/assets/img/404-Icon.png') }}" class="position-absolute top-50 start-50 translate-middle" style="max-height: 60px; width: 60px;"></img>

@@ -9,12 +9,16 @@
                     <div class="card-header message-card-header m-0 p-0" id="heading{{ $apartment->id }}">
                         <h2 class="mb-0">
                             <button class="btn w-100 text-start m-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $apartment->id }}" aria-expanded="true" aria-controls="collapse{{ $apartment->id }}">
-                                @if (Str::startsWith($apartment->cover_image, 'https'))
-                                    <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
-                                @else
-                                    <img src="{{ asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2" style="width: 100px; height: auto;">
-                                @endif
-                                <strong>{{ $apartment->title }} {{ $apartment->messages->isEmpty() ? '' : ($apartment->messages->count() == 1 ? '- 1 Messaggio' : '- ' . $apartment->messages->count() . ' Messaggi') }}</strong>
+                                <div class="d-flex align-items-center">
+                                    <figure class="mb-0 me-2">
+                                        @if (Str::startsWith($apartment->cover_image, 'https'))
+                                            <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
+                                        @else
+                                            <img src="{{ asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2" style="width: 100px; height: auto;">
+                                        @endif
+                                    </figure>
+                                    <strong>{{ $apartment->title }} {{ $apartment->messages->isEmpty() ? '' : ($apartment->messages->count() == 1 ? '- 1 Messaggio' : '- ' . $apartment->messages->count() . ' Messaggi') }}</strong>
+                                </div>
                             </button>
                         </h2>
                     </div>
