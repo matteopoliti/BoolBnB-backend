@@ -11,7 +11,7 @@
 
                 @csrf
 
-                <div class="my-3">
+                <div class="my-3 col-12">
                     <label for="title" class="form-label">Titolo*</label>
                     <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                         aria-describedby="title" name="title" value='{{ old('title') }}' maxlength="100" required>
@@ -22,7 +22,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 col-12">
                     <label for="description" class="form-label">Descrizione</label>
                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
                     @error('description')
@@ -33,7 +33,7 @@
                 </div>
 
 
-                <div class="mb-3">
+                <div class="mb-3 col-12">
                     <label for="category" class="form-label">Categoria*</label>
                     <select
                         class="form-select form-select-lg
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="row my-3">
-                    <div class=" col-3 ">
+                    <div class=" col-3 col-6 col-lg-3">
                         <label for="price" class="form-label">Prezzo/Notte*</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text">€</span>
@@ -66,7 +66,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-3 ">
+                    <div class="col-3 col-6 col-lg-3">
                         <label for="num_rooms" class="form-label">Stanze*</label>
                         <input type="number" class="form-control @error('num_rooms') is-invalid @enderror" id="num_rooms"
                             aria-describedby="num_rooms" name="num_rooms" value='{{ old('num_rooms') }}' min="0"
@@ -78,7 +78,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-3 ">
+                    <div class="col-3 col-6 col-lg-3">
                         <label for="num_beds" class="form-label">Letti*</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-bed"></i></span>
@@ -93,7 +93,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-3 ">
+                    <div class="col-3 col-6 col-lg-3">
                         <label for="num_bathrooms" class="form-label">Bagni*</label>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-bath"></i></i></span>
@@ -110,7 +110,7 @@
                 </div>
 
                 <div class="row my-3">
-                    <div class=" col-6">
+                    <div class="col-12 col-lg-6">
                         <label for="full_address" class="form-label">Indirizzo completo*</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
@@ -128,7 +128,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6 mt-3 mt-lg-0">
                         <label for="square_meters" class="form-label">Metri quadri*</label>
                         <div class="input-group mb-3">
                             <input type="number" step="0.01" min="0"
@@ -145,7 +145,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="col-12 mb-3">
                     <label for="cover_image" class="form-label">Immagine di copertina*</label>
                     <input type="file" name="cover_image" id="cover_image"
                         class="form-control
@@ -171,12 +171,13 @@
 
                 <div class="row mt-4" id="moreImagesContainer">
                     <label for="cover_image" class="form-label">Immagine aggiuntive</label>
-                    <div class="col-4 mb-4" id="image-container-1">
+                    
+                    <div class="col-12 col-sm-10 col-lg-6 col-xxl-4 mb-4 text-center mx-auto" id="image-container-1">
                         <div class="position-relative">
                             <div class="rounded overflow-hidden">
-                                <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                <img id="selectedImage" src="{{ Vite::asset('resources/assets/img/add-img.jpg') }}"
                                     alt="example placeholder" class="img-fluid object-fit-cover"
-                                    style="height: 161.55px" />
+                                    style="max-width: fit-content; max-height:300px;" />
                             </div>
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
@@ -195,7 +196,7 @@
                                 <i class="fas fa-x"></i>
                             </div>
                         </div>
-                        <div class="mt-2 mb-3">
+                        <div class="mt-2 mb-3 col-12">
                             <label for="categories[]" class="form-label">Categoria</label>
                             <select
                                 class="form-select form-select-lg
@@ -264,7 +265,7 @@
                 if (event.target.name === 'images[]') {
                     const input = event.target;
                     const hasImage = input.files.length > 0;
-                    const parentDiv = input.closest('.col-4');
+                    const parentDiv = input.closest('.col-12');
 
                     const categorySelect = parentDiv.querySelector('select[name="categories[]"]');
 
@@ -322,7 +323,7 @@
                     // Altrimenti, crea un nuovo elemento solo se non esiste già
                     const parentElement = document.getElementById('moreImagesContainer');
                     const childElement = document.createElement('div');
-                    childElement.classList.add('col-4', 'mb-4');
+                    childElement.classList.add('col-12', 'mb-4', 'col-sm-10', 'col-lg-6', 'col-xxl-4', 'text-center', 'mx-auto');
                     childElement.setAttribute('id', uniqueId);
 
                     // Utilizza la variabile globale per generare ID univoci
@@ -333,8 +334,8 @@
                     childElement.innerHTML = `
                         <div class="position-relative">
                             <div class="rounded overflow-hidden">
-                                <img id="selectedImage${currentImageCounter}" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                                    alt="example placeholder" class="img-fluid object-fit-cover" style="height: 161.55px"/>
+                                <img id="selectedImage${currentImageCounter}" src="{{ Vite::asset('resources/assets/img/add-img.jpg') }}"
+                                    alt="example placeholder" class="img-fluid object-fit-cover" style="max-width:fit-content; max-height: 300px"/>
                             </div>
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <div data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded">
@@ -346,7 +347,7 @@
                                 <i class="fas fa-x"></i>
                             </div>
                         </div>
-                        <div class="mt-2 mb-3">
+                        <div class="mt-2 mb-3 col-12 mx-auto">
                             <label for="categories[]" class="form-label">Categoria</label>
                             <select
                                 class="form-select form-select-lg
