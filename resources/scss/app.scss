@@ -69,7 +69,7 @@
 
 /***********************************************************/
 /*****************************  TABLET VIEW   **************************/
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     /******** NAVBAR AND DASHBOARD ***/
     .navbar {
         flex-wrap: nowrap;
@@ -79,12 +79,9 @@
     }
 
     .dashboard {
-        .side-bar {
-            height: 100%;
-            width: 80px;
-        }
+        display: block;
         main {
-            width: calc(100% - 80px);
+            width: 100%;
         }
         ul {
             li {
@@ -106,8 +103,19 @@
 @media (max-width: 576px) {
     .navbar {
         h2 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-right: 15px;
+        }
+        .navbar-nav.right{
+            display: none;
+        }
+    }
+    .dashboard{
+        main {
+                width: 100%;
+            }
+        .side-bar{
+            display: none !important;
         }
     }
 }
