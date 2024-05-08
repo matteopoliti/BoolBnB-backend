@@ -349,6 +349,8 @@ class ApartmentController extends Controller
             }
         }
 
+        Storage::deleteDirectory("apartment_images/$slug");
+
         $apartment->forceDelete();
 
         return redirect()->route('dashboard.apartments.index');
