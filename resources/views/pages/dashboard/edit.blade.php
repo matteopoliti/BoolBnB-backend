@@ -173,6 +173,7 @@
 
                 <div class="row mt-4" id="moreImagesContainer">
                     <label for="cover_image" class="form-label">Immagine aggiuntive</label>
+                    
                     @foreach ($more_images as $index => $image)
                         <div class="col-12 col-sm-10 col-lg-6 col-xxl-4 mb-4 text-center mx-auto" id="image-container-{{ $index }}">
                             <input type="hidden" name="image_id[]" id="image_id_{{ $image->id }}"
@@ -182,12 +183,12 @@
                                 <div class="rounded overflow-hidden">
                                     @if (Str::startsWith($image->path, 'https'))
                                         <img id="selectedImage{{ $index }}" src="{{ $image->path }}"
-                                            alt="{{ $image->category }}" class="img-fluid object-fit-cover more-images-display"
+                                            alt="{{ $image->category }}" class="img-fluid object-fit-center more-images-display rounded "
                                             style="max-width: fit-content; max-height:300px;">
                                     @else
                                         <img id="selectedImage{{ $index }}"
                                             src="{{ asset('/storage/' . $image->path) }}" alt="{{ $image->category }}"
-                                            class="img-fluid object-fit-cover" >
+                                            class="img-fluid rounded" style="max-width: fit-content; max-height:300px;">
                                     @endif
                                 </div>
                                 <div class="position-absolute top-50 start-50 translate-middle">
@@ -227,18 +228,24 @@
                     @endforeach
 
 
-                    <div class="col-12 mb-4 text-center mx-auto" id="image-container-{{ $more_images->count() }}">
+                    <div class="col-12 col-sm-10 col-lg-6 col-xxl-4 mb-4 text-center mx-auto" id="image-container-{{ $more_images->count() }}">
                         <input type="hidden" name="image_id[]" id="none_id_{{ $more_images->count() }}"
                             value="">
                         <input type="hidden" name="status[]" id="status_image{{ $more_images->count() }}"
                             value="">
                         <div class="position-relative">
-                            <div class="rounded overflow-hidden">
+                            <div class="rounded overflow-hidden position-relative">
                                 <img id="selectedImage{{ $more_images->count() }}"
                                     src="{{ Vite::asset('resources/assets/img/add-img.jpg') }}"
                                     alt="example placeholder" class="img-fluid object-fit-cover"
-                                    style="max-height: 200px" />
+                                    style="max-width:fit-content; max-height: 300px" />       
+
+                                <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none"
+                                    onclick="removeElement('image-container-{{ $more_images->count() }}')">
+                                    <i class="fas fa-x"></i>
+                                </div>
                             </div>
+
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <div data-mdb-button-init data-mdb-ripple-init class="btn gradient-custom-2 btn-rounded">
                                     <label class=" form-label text-white m-1"
@@ -253,12 +260,9 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="btn btn-outline-danger position-absolute top-0 end-0 d-none"
-                                onclick="removeElement('image-container-{{ $more_images->count() }}')">
-                                <i class="fas fa-x"></i>
-                            </div>
+
                         </div>
-                        <div class="mt-2 mb-3 col-12 col-sm-10 col-lg-6 col-xxl-4 mx-auto">
+                        <div class="mt-2 mb-3 col-12">
                             <label for="categories[]" class="form-label">Categoria</label>
                             <select
                                 class="form-select form-select-lg
@@ -433,7 +437,7 @@
 
                 reader.onload = function(e) {
                     if (selectedImage) {
-                        selectedImage.src = e.target.result;
+                        selectedImage.src = e.target.result;    
                     } else {
                         console.error('Element not found:', elementId);
                     }
@@ -495,7 +499,7 @@
                             <input type="hidden" name="status[]" id="status_image${currentImageCounter}" value="">
                             <div class="rounded overflow-hidden">
                                 <img id="selectedImage${currentImageCounter}" src="{{ Vite::asset('resources/assets/img/add-img.jpg') }}"
-                                    alt="example placeholder" class="img-fluid object-fit-cover" style="height: 200px"/>
+                                    alt="example placeholder" class="img-fluid object-fit-cover" style="max-width:fit-content; max-height: 300px"/>
                             </div>
                             <div class="position-absolute top-50 start-50 translate-middle">
                                 <div data-mdb-button-init data-mdb-ripple-init class="btn gradient-custom-2 btn-rounded">
@@ -507,7 +511,8 @@
                                 <i class="fas fa-x"></i>
                             </div>
                         </div>
-                        <div class="mt-2 mb-3 col-12 col-sm-10 col-lg-6 col-xxl-4 mx-auto">
+
+                        <div class="mt-2 mb-3 col-12 mx-auto">
                             <label for="categories[]" class="form-label">Categoria</label>
                             <select
                                 class="form-select form-select-lg
@@ -610,10 +615,6 @@
 
         #moreImagesContainer>div:hover .btn {
             display: block
-        }
-        #selectedImage{{ $index }}{
-            max-width: fit-content; 
-            max-height:300px;
         }
     </style>
 @endsection
