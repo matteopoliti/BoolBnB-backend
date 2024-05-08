@@ -155,9 +155,9 @@
                 <div class="mb-3 col-12">
                     <figure class="my-3 col-12" >
                         @if (Str::startsWith($apartment->cover_image, 'https'))
-                            <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="col-12">
+                            <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="col-12 rounded">
                         @else
-                            <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}">
+                            <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}" class="col-12 rounded">
                         @endif
                     </figure>
                     <label for="cover_image" class="form-label">Immagine di copertina*</label>
@@ -355,7 +355,7 @@
                     const changedSelect = event.target;
 
                     // Get the related image_id input for the changed select
-                    const parentDiv = changedSelect.closest('.col-4');
+                    const parentDiv = changedSelect.closest(`#image-container-${index}`);
                     const statusInput = parentDiv.querySelector('input[name="status[]"]');
                     const imageIdInput = parentDiv.querySelector('input[name="image_id[]"]');
 

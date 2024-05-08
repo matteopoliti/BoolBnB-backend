@@ -27,7 +27,7 @@
                      {{-- SPONSOR DETAILS --}}
                      <h5 class="text-dark">Dettagli della Sponsorizzazione:</h5>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><strong class="text-success">Pacchetto:</strong> {{ $apartmentSponsorship->sponsorship->name }}</li>
@@ -35,7 +35,7 @@
                                 <li class="list-group-item border-bottom-0"><strong class="text-success">Costo: </strong>{{ $apartmentSponsorship->sponsorship->amount }} €</li>
                             </ul>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-lg-6">
                                 <ul class="list-group list-group-flush" >
                                     <li class="list-group-item"><strong class="text-success">Data Transazione:</strong> <span class="datetime">{{ $apartmentSponsorship->created_at->toIso8601String() }}</span></li>
                                     <li class="list-group-item"><strong class="text-success">Inizio Sponsor:</strong> <span class="datetime">{{ $apartmentSponsorship->start_date->toIso8601String() }}</span></li>
@@ -54,9 +54,9 @@
                                 <div class="col-lg-3 col-sm-12 px-2 pb-2">
                                     <div class="ps-3" >
                                         @if (Str::startsWith($apartmentSponsorship->apartment->cover_image, 'https'))
-                                        <img  style="max-height: 300px" src="{{ $apartmentSponsorship->apartment->cover_image }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-fluid">
+                                        <img  style="max-height: 300px" src="{{ $apartmentSponsorship->apartment->cover_image }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-fluid pe-3">
                                         @else
-                                        <img  style="max-height: 300px" src="{{ asset('storage/' . $apartmentSponsorship->apartment->cover_image) }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-fluid">
+                                        <img  style="max-height: 300px" src="{{ asset('storage/' . $apartmentSponsorship->apartment->cover_image) }}" alt="{{ $apartmentSponsorship->apartment->slug }}" class="img-fluid pe-3">
                                         @endif
                                     </div>
                                 </div>

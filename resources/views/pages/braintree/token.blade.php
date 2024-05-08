@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-lg-8">
                 <div class="card gradient-custom-2 p-3">
                     <div class="card-body">
                         <div id="dropin-container"></div>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 col-lg-4 order-md-last mt-4 mt-lg-0 ">
+            <div class="col-lg-4 order-md-last mt-4 mt-lg-0 ">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-dark">Carrello</span>
                     <span class="badge gradient-custom-2 rounded-pill">1</span>

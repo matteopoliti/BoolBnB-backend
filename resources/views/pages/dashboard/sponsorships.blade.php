@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- Card -->
-                <div class="d-md-flex justify-content-md-center gap-3">
+                <div class="d-lg-flex justify-content-md-center gap-3">
                     @foreach ($sponsorships as $sponsorship)
                         <div class="mb-3 w-md-50 ">
                             <div style="cursor: pointer" class="card text-center sponsorship-payment-card" data-id="{{ $sponsorship->id }}"> <!-- Aggiunto attributo data-id per memorizzare l'ID del tier -->
