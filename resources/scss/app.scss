@@ -80,11 +80,6 @@
 
     .dashboard {
         display: block;
-
-        .side-bar {
-            height: 100%;
-            width: 80px;
-        }
         main {
             width: 100%;
         }
@@ -111,7 +106,7 @@
             font-size: 1.2rem;
             margin-right: 15px;
         }
-        .navbar-nav{
+        .navbar-nav.right{
             display: none;
         }
     }

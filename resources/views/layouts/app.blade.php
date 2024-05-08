@@ -49,7 +49,7 @@
                 <h2 class="mb-0">Area Personale</h2>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto d-sm-none d-md-block">
+                <ul class="navbar-nav ml-auto d-sm-none d-md-block right">
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
@@ -77,7 +77,7 @@
                     @endguest
 
                 </ul>
-                <div>
+                <div class="d-md-none">
 
                     <a class="btn btn-outline-dark d-md-none" data-bs-toggle="offcanvas" href="#offcanvasExample"
                         role="button" aria-controls="offcanvasExample">
@@ -92,7 +92,7 @@
                         </div>
                         <div class="offcanvas-body">
                             <div
-                                class="d-flex flex-column align-items-center flex-shrink-0 side-bar py-4 d-md-none d-md-block">
+                                class="d-flex flex-column align-items-center flex-shrink-0 side-bar py-4 d-md-none h-100">
 
                                 <ul class="nav nav-pills flex-column gap-4 w-100 mb-auto justify-content-center">
                                     <li
@@ -133,8 +133,8 @@
                                     </li>
                                 </ul>
                                 <hr>
-                                <div class="dropdown">
-                                    <ul class="navbar-nav ml-auto">
+                                <div class="row w-100">
+                                    <ul class="navbar-nav ml-auto col-6">
                                         <!-- Authentication Links -->
                                         @guest
                                             <li class="nav-item">
@@ -147,85 +147,65 @@
                                                 </li>
                                             @endif
                                         @else
-                                            <li class="nav-item btn btn-outline-danger " aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                                    onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                                    <i class="fa-solid fa-right-from-bracket log-out"></i>
-                                                    <span>
-                                                        {{ __('Logout') }}
-                                                    </span>
-
+                                            <li class="nav-item dropup">
+                                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
+                                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false" v-pre>
+                                                    {{ ucfirst(Auth::user()->name) }}
                                                 </a>
 
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                    class="d-none">
-                                                    @csrf
-                                                </form>
+                                                <div class="dropdown-menu position-absolute"
+                                                    aria-labelledby="navbarDropdown">
+                                                    {{--  <a class="dropdown-item"
+                                         href="{{ route('dashboard.apartments.index') }}">{{ __('Apartamenti') }}</a> --}}
+                                                    <a class="dropdown-item " href="{{ url('profile') }}"><i
+                                                            class="fa-solid fa-gear"></i>
+                                                        {{ __('Profilo') }}</a>
+                                                </div>
                                             </li>
                                         @endguest
+
                                     </ul>
+                                    <div class=" col-6 ">
+                                        <ul class="navbar-nav ml-auto">
+                                            <!-- Authentication Links -->
+                                            @guest
+                                                <li class="nav-item">
+                                                    <a class="nav-link"
+                                                        href="{{ route('login') }}">{{ __('Login') }}</a>
+                                                </li>
+                                                @if (Route::has('register'))
+                                                    <li class="nav-item">
+                                                        <a class="nav-link"
+                                                            href="{{ route('register') }}">{{ __('Register') }}</a>
+                                                    </li>
+                                                @endif
+                                            @else
+                                                <li class="nav-item btn btn-outline-danger "
+                                                    aria-labelledby="navbarDropdown">
+                                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                                        onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();">
+                                                        <i class="fa-solid fa-right-from-bracket log-out"></i>
+                                                        <span>
+                                                            {{ __('Logout') }}
+                                                        </span>
+
+                                                    </a>
+
+                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                        class="d-none">
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                            @endguest
+                                        </ul>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
 
-                        {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                                <span class="navbar-toggler-icon"></span>
-                            </button> --}}
-
-                        {{-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <!-- Left Side Of Navbar -->
-                                <ul class="navbar-nav me-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('/') }}">{{ __('Home') }}</a>
-                                    </li>
-    
-                                    <li class="nav-item">
-                                        <a class="nav-link"
-                                            href="{{ route('dashboard.apartments.index') }}">{{ __('My Apartment') }}</a>
-                                    </li>
-                                </ul>
-    
-    
-    
-                                <!-- Right Side Of Navbar -->
-                                <ul class="navbar-nav ml-auto">
-                                    <!-- Authentication Links -->
-                                    @guest
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                        </li>
-                                        @if (Route::has('register'))
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                            </li>
-                                        @endif
-                                    @else
-                                        <li class="nav-item dropdown">
-                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                {{ Auth::user()->name }}
-                                            </a>
-    
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="{{ url('dashboard') }}">{{ __('Dashboard') }}</a>
-                                                <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profile') }}</a>
-                                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                                    onclick="event.preventDefault();
-                                                                document.getElementById('logout-form').submit();">
-                                                    {{ __('Logout') }}
-                                                </a>
-    
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                    @csrf
-                                                </form>
-                                            </div>
-                                        </li>
-                                    @endguest
-                                </ul>
-                            </div> --}}
                     </div>
                 </div>
         </nav>
@@ -233,8 +213,7 @@
 
 
         <div class="dashboard">
-            <div
-                class="d-flex flex-column align-items-center flex-shrink-0 bg-body-tertiary side-bar py-4 d-sm-none d-md-block">
+            <div class="d-md-flex flex-column align-items-center flex-shrink-0 bg-body-tertiary side-bar py-4 d-none">
 
                 <ul class="nav nav-pills flex-column gap-4 w-100 mb-auto justify-content-center">
                     <li class="{{ request()->routeIs('dashboard.apartments.index') ? 'active-t4' : '' }} ps-2">
