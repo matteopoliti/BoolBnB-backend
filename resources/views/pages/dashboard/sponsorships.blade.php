@@ -2,15 +2,15 @@
 
 @section('content')
     <div class="container mt-5">
-        <div class="row">
+        <div class="row m-0 px-2">
             <!-- Card dell'appartamento -->
-            <div class="col-lg-8">
+            <div class="col-lg-5 mb-2">
                 <div class="card">
                     @if (Str::startsWith($apartment->cover_image, 'https'))
-                        <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="card-img-top">
+                        <img style="max-height:500px" src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="card-img-top img-fluid">
                     @else
                         <img src="{{ asset('/storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}"
-                            class="card-img-top">
+                            class="card-img-top img-fluid">
                     @endif
                     <div class="card-body">
                         <h4 class="card-title fw-bolder">{{ $apartment->title }}</h4>
@@ -21,19 +21,19 @@
             </div>
 
             <!-- Checkout -->
-            <div class="col-lg-4 d-flex flex-column justify-content-around">
+            <div class="col-lg-7 d-flex flex-column justify-content-center p-3 pt-0">
 
                 <div class="text-center mb-3 fs-6">
-                    Fare click sulla card per selezionare il piano di sponsorizzazione desiderato
+                    <h6>Fare click sulla card per selezionare il piano di sponsorizzazione desiderato</h6>
                 </div>
 
                 <!-- Card -->
-                <div>
+                <div class="d-md-flex justify-content-md-center gap-3">
                     @foreach ($sponsorships as $sponsorship)
-                        <div class="mb-3">
-                            <div class="card text-center sponsorship-payment-card" data-id="{{ $sponsorship->id }}"> <!-- Aggiunto attributo data-id per memorizzare l'ID del tier -->
+                        <div class="mb-3 w-md-50 ">
+                            <div style="cursor: pointer" class="card text-center sponsorship-payment-card" data-id="{{ $sponsorship->id }}"> <!-- Aggiunto attributo data-id per memorizzare l'ID del tier -->
                                 <div class="card-header sponsorship-payment-card-header m-0 p-2">
-                                    <h5 class="m-0 fw-bolder">{{ $sponsorship->name }}</h5>
+                                    <h5 class="m-0 fs-6 fw-bolder">{{ $sponsorship->name }}</h5>
                                 </div>
                                 <div class="card-body sponsorship-payment-card-body">
                                     <p class="card-text">{{ $sponsorship->duration }} ore di visibilità</p>
@@ -42,17 +42,19 @@
                             </div>
                         </div>
                     @endforeach
-                    <form action="{{ route('braintree.token') }}" method="POST" id="sponsorship-form"
-                        class="text-center">
-                        @csrf
-                        <input type="hidden" name="sponsorship_id" id="selected-sponsorship">
-                        <input type="hidden" name="amount" id="selected-sponsorship-amount"> <!-- Aggiunto campo nascosto per l'importo -->
-                        <input type="hidden" name="apartment_id" id="current-apartment-id" value="{{ $apartment_id }}"> <!-- Aggiunto campo nascosto per l'importo -->
-                        <button type="submit" class="btn btn-success mt-3">Procedi al pagamento</button> <!-- Cambiato da 'a' a 'button' -->
-                    </form>
-                    <!-- Div per il messaggio di errore -->
-                    <div id="error-message" class="alert alert-danger mt-3" style="display: none;"></div>
+                  
                 </div>
+                <form action="{{ route('braintree.token') }}" method="POST" id="sponsorship-form"
+                class="text-center">
+                @csrf
+                <input type="hidden" name="sponsorship_id" id="selected-sponsorship">
+                <input type="hidden" name="amount" id="selected-sponsorship-amount"> <!-- Aggiunto campo nascosto per l'importo -->
+                <input type="hidden" name="apartment_id" id="current-apartment-id" value="{{ $apartment_id }}"> <!-- Aggiunto campo nascosto per l'importo -->
+              
+                <button type="submit" class="btn btn-success mt-3">Procedi al pagamento</button> <!-- Cambiato da 'a' a 'button' -->
+            </form>
+            <!-- Div per il messaggio di errore -->
+            <div id="error-message" class="alert alert-danger mt-3" style="display: none;"></div>
 
             </div>
 
