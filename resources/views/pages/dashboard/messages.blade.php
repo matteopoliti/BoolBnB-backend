@@ -14,7 +14,7 @@
                                         @if (Str::startsWith($apartment->cover_image, 'https'))
                                             <img src="{{ $apartment->cover_image }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
                                         @else
-                                            <img src="{{ asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2" style="width: 100px; height: auto;">
+                                            <img src="{{ asset('storage/' . $apartment->cover_image) }}" alt="{{ $apartment->slug }}" class="img-thumbnail me-2 col-2" style="width: 150px; height:auto; max-height: 100px; object-fit:cover;">
                                         @endif
                                     </figure>
                                     <strong>{{ $apartment->title }} {{ $apartment->messages->isEmpty() ? '' : ($apartment->messages->count() == 1 ? '- 1 Messaggio' : '- ' . $apartment->messages->count() . ' Messaggi') }}</strong>
